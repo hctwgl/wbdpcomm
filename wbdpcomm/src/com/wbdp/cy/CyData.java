@@ -37,7 +37,7 @@ import io.netty.channel.ChannelHandlerContext;
  * 车云网通信协议消息类型判断类，判断不同消息并调用不同的解析方法
  * 
  * @author 汪赛军
- * 
+ * 做出了一点点修改
  */
 public class CyData {
 	private static Logger logger = Logger.getLogger(CyData.class);
