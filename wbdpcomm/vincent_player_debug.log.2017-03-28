@@ -1,0 +1,84 @@
+2017-03-28 15:43:08  [ main:0 ] - [ DEBUG ]  Using Log4J as the default logging framework
+2017-03-28 15:43:08  [ main:6 ] - [ DEBUG ]  -Dio.netty.eventLoopThreads: 8
+2017-03-28 15:43:08  [ main:22 ] - [ DEBUG ]  -Dio.netty.noKeySetOptimization: false
+2017-03-28 15:43:08  [ main:24 ] - [ DEBUG ]  -Dio.netty.selectorAutoRebuildThreshold: 512
+2017-03-28 15:43:08  [ main:203 ] - [ DEBUG ]  -Dio.netty.machineId: a8:6b:ad:21:b5:8f:00:00 (auto-detected)
+2017-03-28 15:43:08  [ main:212 ] - [ DEBUG ]  -Dio.netty.processId: 35084 (auto-detected)
+2017-03-28 15:43:08  [ main:277 ] - [ DEBUG ]  -Dio.netty.initialSeedUniquifier: 0x49f2ce7c580521bd
+2017-03-28 15:43:08  [ main:310 ] - [ DEBUG ]  -Dio.netty.threadLocalDirectBufferSize: 65536
+2017-03-28 15:43:08  [ main:335 ] - [ DEBUG ]  Platform: Windows
+2017-03-28 15:43:08  [ main:336 ] - [ DEBUG ]  Java version: 7
+2017-03-28 15:43:08  [ main:336 ] - [ DEBUG ]  -Dio.netty.noUnsafe: false
+2017-03-28 15:43:08  [ main:338 ] - [ DEBUG ]  java.nio.ByteBuffer.cleaner: available
+2017-03-28 15:43:08  [ main:339 ] - [ DEBUG ]  java.nio.Buffer.address: available
+2017-03-28 15:43:08  [ main:339 ] - [ DEBUG ]  sun.misc.Unsafe.theUnsafe: available
+2017-03-28 15:43:08  [ main:339 ] - [ DEBUG ]  sun.misc.Unsafe.copyMemory: available
+2017-03-28 15:43:08  [ main:340 ] - [ DEBUG ]  java.nio.Bits.unaligned: true
+2017-03-28 15:43:08  [ main:341 ] - [ DEBUG ]  sun.misc.Unsafe: available
+2017-03-28 15:43:08  [ main:341 ] - [ DEBUG ]  -Dio.netty.noJavassist: false
+2017-03-28 15:43:08  [ main:365 ] - [ DEBUG ]  Javassist: available
+2017-03-28 15:43:08  [ main:366 ] - [ DEBUG ]  -Dio.netty.noPreferDirect: false
+2017-03-28 15:43:08  [ nioEventLoopGroup-2-1:387 ] - [ DEBUG ]  -Dio.netty.leakDetectionLevel: simple
+2017-03-28 15:43:36  [ main:0 ] - [ DEBUG ]  Using Log4J as the default logging framework
+2017-03-28 15:43:36  [ main:4 ] - [ DEBUG ]  -Dio.netty.eventLoopThreads: 8
+2017-03-28 15:43:36  [ main:17 ] - [ DEBUG ]  -Dio.netty.noKeySetOptimization: false
+2017-03-28 15:43:36  [ main:19 ] - [ DEBUG ]  -Dio.netty.selectorAutoRebuildThreshold: 512
+2017-03-28 15:43:36  [ main:197 ] - [ DEBUG ]  -Dio.netty.machineId: a8:6b:ad:21:b5:8f:00:00 (auto-detected)
+2017-03-28 15:43:36  [ main:206 ] - [ DEBUG ]  -Dio.netty.processId: 15356 (auto-detected)
+2017-03-28 15:43:36  [ main:271 ] - [ DEBUG ]  -Dio.netty.initialSeedUniquifier: 0xea4326cecc7775e3
+2017-03-28 15:43:36  [ main:280 ] - [ DEBUG ]  -Dio.netty.threadLocalDirectBufferSize: 65536
+2017-03-28 15:43:36  [ main:303 ] - [ DEBUG ]  Platform: Windows
+2017-03-28 15:43:36  [ main:304 ] - [ DEBUG ]  Java version: 7
+2017-03-28 15:43:36  [ main:305 ] - [ DEBUG ]  -Dio.netty.noUnsafe: false
+2017-03-28 15:43:36  [ main:306 ] - [ DEBUG ]  java.nio.ByteBuffer.cleaner: available
+2017-03-28 15:43:36  [ main:306 ] - [ DEBUG ]  java.nio.Buffer.address: available
+2017-03-28 15:43:36  [ main:307 ] - [ DEBUG ]  sun.misc.Unsafe.theUnsafe: available
+2017-03-28 15:43:36  [ main:307 ] - [ DEBUG ]  sun.misc.Unsafe.copyMemory: available
+2017-03-28 15:43:36  [ main:307 ] - [ DEBUG ]  java.nio.Bits.unaligned: true
+2017-03-28 15:43:36  [ main:309 ] - [ DEBUG ]  sun.misc.Unsafe: available
+2017-03-28 15:43:36  [ main:309 ] - [ DEBUG ]  -Dio.netty.noJavassist: false
+2017-03-28 15:43:37  [ main:328 ] - [ DEBUG ]  Javassist: available
+2017-03-28 15:43:37  [ main:328 ] - [ DEBUG ]  -Dio.netty.noPreferDirect: false
+2017-03-28 15:43:37  [ nioEventLoopGroup-2-1:349 ] - [ DEBUG ]  -Dio.netty.leakDetectionLevel: simple
+2017-03-28 15:44:29  [ main:0 ] - [ DEBUG ]  Using Log4J as the default logging framework
+2017-03-28 15:44:29  [ main:15 ] - [ DEBUG ]  -Dio.netty.eventLoopThreads: 8
+2017-03-28 15:44:29  [ main:33 ] - [ DEBUG ]  -Dio.netty.noKeySetOptimization: false
+2017-03-28 15:44:29  [ main:34 ] - [ DEBUG ]  -Dio.netty.selectorAutoRebuildThreshold: 512
+2017-03-28 15:44:29  [ main:200 ] - [ DEBUG ]  -Dio.netty.machineId: a8:6b:ad:21:b5:8f:00:00 (auto-detected)
+2017-03-28 15:44:29  [ main:209 ] - [ DEBUG ]  -Dio.netty.processId: 33844 (auto-detected)
+2017-03-28 15:44:29  [ main:273 ] - [ DEBUG ]  -Dio.netty.initialSeedUniquifier: 0xf6f7a7bf7828a49e
+2017-03-28 15:44:29  [ main:281 ] - [ DEBUG ]  -Dio.netty.threadLocalDirectBufferSize: 65536
+2017-03-28 15:44:29  [ main:302 ] - [ DEBUG ]  Platform: Windows
+2017-03-28 15:44:29  [ main:303 ] - [ DEBUG ]  Java version: 7
+2017-03-28 15:44:29  [ main:303 ] - [ DEBUG ]  -Dio.netty.noUnsafe: false
+2017-03-28 15:44:29  [ main:305 ] - [ DEBUG ]  java.nio.ByteBuffer.cleaner: available
+2017-03-28 15:44:29  [ main:305 ] - [ DEBUG ]  java.nio.Buffer.address: available
+2017-03-28 15:44:29  [ main:305 ] - [ DEBUG ]  sun.misc.Unsafe.theUnsafe: available
+2017-03-28 15:44:29  [ main:306 ] - [ DEBUG ]  sun.misc.Unsafe.copyMemory: available
+2017-03-28 15:44:29  [ main:306 ] - [ DEBUG ]  java.nio.Bits.unaligned: true
+2017-03-28 15:44:29  [ main:307 ] - [ DEBUG ]  sun.misc.Unsafe: available
+2017-03-28 15:44:29  [ main:307 ] - [ DEBUG ]  -Dio.netty.noJavassist: false
+2017-03-28 15:44:29  [ main:325 ] - [ DEBUG ]  Javassist: available
+2017-03-28 15:44:29  [ main:326 ] - [ DEBUG ]  -Dio.netty.noPreferDirect: false
+2017-03-28 15:44:29  [ nioEventLoopGroup-2-1:365 ] - [ DEBUG ]  -Dio.netty.leakDetectionLevel: simple
+2017-03-28 15:46:26  [ main:0 ] - [ DEBUG ]  Using Log4J as the default logging framework
+2017-03-28 15:46:26  [ main:5 ] - [ DEBUG ]  -Dio.netty.eventLoopThreads: 8
+2017-03-28 15:46:26  [ main:20 ] - [ DEBUG ]  -Dio.netty.noKeySetOptimization: false
+2017-03-28 15:46:26  [ main:22 ] - [ DEBUG ]  -Dio.netty.selectorAutoRebuildThreshold: 512
+2017-03-28 15:46:27  [ main:204 ] - [ DEBUG ]  -Dio.netty.machineId: a8:6b:ad:21:b5:8f:00:00 (auto-detected)
+2017-03-28 15:46:27  [ main:213 ] - [ DEBUG ]  -Dio.netty.processId: 9944 (auto-detected)
+2017-03-28 15:46:27  [ main:285 ] - [ DEBUG ]  -Dio.netty.initialSeedUniquifier: 0x513d10e9465e7013
+2017-03-28 15:46:27  [ main:295 ] - [ DEBUG ]  -Dio.netty.threadLocalDirectBufferSize: 65536
+2017-03-28 15:46:27  [ main:316 ] - [ DEBUG ]  Platform: Windows
+2017-03-28 15:46:27  [ main:317 ] - [ DEBUG ]  Java version: 7
+2017-03-28 15:46:27  [ main:317 ] - [ DEBUG ]  -Dio.netty.noUnsafe: false
+2017-03-28 15:46:27  [ main:318 ] - [ DEBUG ]  java.nio.ByteBuffer.cleaner: available
+2017-03-28 15:46:27  [ main:318 ] - [ DEBUG ]  java.nio.Buffer.address: available
+2017-03-28 15:46:27  [ main:319 ] - [ DEBUG ]  sun.misc.Unsafe.theUnsafe: available
+2017-03-28 15:46:27  [ main:319 ] - [ DEBUG ]  sun.misc.Unsafe.copyMemory: available
+2017-03-28 15:46:27  [ main:320 ] - [ DEBUG ]  java.nio.Bits.unaligned: true
+2017-03-28 15:46:27  [ main:321 ] - [ DEBUG ]  sun.misc.Unsafe: available
+2017-03-28 15:46:27  [ main:321 ] - [ DEBUG ]  -Dio.netty.noJavassist: false
+2017-03-28 15:46:27  [ main:342 ] - [ DEBUG ]  Javassist: available
+2017-03-28 15:46:27  [ main:342 ] - [ DEBUG ]  -Dio.netty.noPreferDirect: false
+2017-03-28 15:46:27  [ nioEventLoopGroup-2-1:364 ] - [ DEBUG ]  -Dio.netty.leakDetectionLevel: simple

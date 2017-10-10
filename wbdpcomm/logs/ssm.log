@@ -1,0 +1,2 @@
+[ERROR] [2017-08-28 15:49:30][com.wbdp.server.WiseDataServer]java.net.BindException: Address already in use: bind
+[ERROR] [2017-08-28 15:51:09][com.wbdp.server.WiseDataServer]java.net.BindException: Address already in use: bind
