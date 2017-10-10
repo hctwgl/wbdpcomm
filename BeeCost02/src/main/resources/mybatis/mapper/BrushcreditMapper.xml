@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.wbdp.wx.mapper.BrushcreditMapper">
+
+    <!-- <sql id="wbdpBrushcreditBaseColumnSql">
+        ID,
+        ClientWX,
+        RecomCode,
+        PacMonthlyPrice,
+        PacPeriods,
+        PacPrice,
+        OnlineSign,
+        BrushTime
+    </sql>
+
+    <sql id="wbdpBrushcreditBaseWhereSql">
+        <if test="map!=null">
+            <where>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.id)">
+                    ID = #{map.id}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.clientWx)">
+                    AND ClientWX = #{map.clientWx}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.recomCode)">
+                    AND RecomCode = #{map.recomCode}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.pacMonthlyPrice)">
+                    AND PacMonthlyPrice = #{map.pacMonthlyPrice}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.pacPeriods)">
+                    AND PacPeriods = #{map.pacPeriods}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.pacPrice)">
+                    AND PacPrice = #{map.pacPrice}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.onlineSign)">
+                    AND OnlineSign = #{map.onlineSign}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.brushTime)">
+                    AND BrushTime = #{map.brushTime}
+                </if>
+            </where>
+        </if>
+    </sql>
+
+    <insert id="insertWbdpBrushcredit" parameterType="com.wisedp.modle.entity.WbdpBrushcredit">
+        INSERT INTO wbdp_brushcredit(
+        <include refid="wbdpBrushcreditBaseColumnSql"/>
+        )VALUES(
+            #{id},
+            #{clientWx},
+            #{recomCode},
+            #{pacMonthlyPrice},
+            #{pacPeriods},
+            #{pacPrice},
+            #{onlineSign},
+            #{brushTime}
+        )
+    </insert>
+
+    
+    <delete id="deleteWbdpBrushcreditById" parameterType="Long">
+        DELETE FROM wbdp_brushcredit WHERE ID = #{id}
+    </delete>
+
+    <update id="updateWbdpBrushcredit" parameterType="com.wisedp.modle.entity.WbdpBrushcredit">
+        UPDATE wbdp_brushcredit
+        <set>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(clientWx)">
+                ClientWX = #{clientWx} ,
+            </if>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(recomCode)">
+                RecomCode = #{recomCode} ,
+            </if>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(pacMonthlyPrice)">
+                PacMonthlyPrice = #{pacMonthlyPrice} ,
+            </if>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(pacPeriods)">
+                PacPeriods = #{pacPeriods} ,
+            </if>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(pacPrice)">
+                PacPrice = #{pacPrice} ,
+            </if>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(onlineSign)">
+                OnlineSign = #{onlineSign} ,
+            </if>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(brushTime)">
+                BrushTime = #{brushTime},
+            </if>
+        </set>
+        WHERE ID = #{id}
+    </update>
+
+    <select id="searchWbdpBrushcreditByParams" parameterType="map" resultMap="wbdpBrushcreditMap">
+        SELECT
+        <include refid="wbdpBrushcreditBaseColumnSql"/>
+        FROM wbdp_brushcredit
+        <include refid="wbdpBrushcreditBaseWhereSql"/>
+    </select> -->
+	<!--新增维泽任性刷到数据库  -->
+	<insert id="saveBrush" parameterType="com.wbdp.wx.entity.Brushcredit">
+		insert into wbdp_brushcredit(ClientWX,RecomCode,PacMonthlyPrice,PacPeriods,PacPrice,OnlineSign,BrushTime,StartTime,EndTime,FaceStatus,FaceImg)
+		values
+		(#{clientWx},#{recomCode},#{pacMonthlyPrice},#{pacPeriods},#{pacPrice},#{onlineSign},#{brushTime},#{startTime},#{endTime},#{faceStatus},#{faceImg});
+	</insert>
+	<!--获取维泽任性刷借款合同中所需数据  -->
+	<select id="getContract" parameterType="java.lang.String" resultType="java.util.Map">
+		SELECT BeeName,Phone,CONCAT(LEFT(BeeCard,10),"****",RIGHT(BeeCard,4)) AS BeeCard,CONCAT(LEFT(BankCard,8),"****",RIGHT(BankCard,7)) AS BankCard,CONCAT(Province,City,`Area`,DetAddress)AS Address 
+		FROM  contract_view WHERE BeeWX=#{openid};
+	</select>
+	<!--查询用户任性刷记录  -->
+	<select id="getUserBrush" parameterType="java.lang.String" resultType="com.wbdp.wx.entity.Brushcredit">
+		select RecomCode,PacMonthlyPrice,PacPeriods,PacPrice,OnlineSign,DATE_FORMAT(BrushTime,'%Y-%c-%d %H:%i:%s') as BrushTime,DATE_FORMAT(StartTime,'%Y-%m-%d') as StartTime,DATE_FORMAT(EndTime,'%Y-%m-%d') as  EndTime
+		,FaceStatus from wbdp_brushcredit where ClientWX = #{openid} order by BrushTime desc;
+	</select>
+	
+	<!--根据时间和微信号查询用户的套餐信息  -->
+	<select id="getPushBrush" resultType="com.wbdp.wx.entity.Brushcredit">
+		select ID,ClientWX,RecomCode,PacMonthlyPrice,PacPeriods,PacPrice,PhoneModel,OnlineSign,DATE_FORMAT(BrushTime,'%Y-%c-%d %H:%i:%s') as BrushTime,DATE_FORMAT(StartTime,'%Y-%m-%d') as StartTime,DATE_FORMAT(EndTime,'%Y-%m-%d') as  EndTime
+		,FaceStatus from wbdp_brushcredit where ClientWX = #{openid} and BrushTime = #{time};
+	</select>
+	
+	<!--根据公拉私用户刷脸情况修改任性刷状态  -->
+	<update id="updatePhshBrush" parameterType="com.wbdp.wx.entity.Brushcredit">
+		update wbdp_brushcredit
+		<set>
+			<if test="faceStatus != null">
+				FaceStatus = #{faceStatus},
+			</if>
+			<if test="faceImg != null">
+				FaceImg = #{faceImg},
+			</if>
+		</set>
+		WHERE ID = #{id};
+	</update>
+    <resultMap type="com.wbdp.wx.entity.Brushcredit" id="wbdpBrushcreditMap">
+        <id column="ID" property="id"/>
+        <result column="ClientWX" property="clientWx"/>
+        <result column="RecomCode" property="recomCode"/>
+        <result column="PacMonthlyPrice" property="pacMonthlyPrice"/>
+        <result column="PacPeriods" property="pacPeriods"/>
+        <result column="PacPrice" property="pacPrice"/>
+        <result column="OnlineSign" property="onlineSign"/>
+        <result column="BrushTime" property="brushTime"/>
+        <result column="StartTime" property="startTime"/>
+        <result column="EndTime" property="endTime"/>
+         <result column="FaceStatus" property="faceStatus"/>
+    </resultMap>
+
+</mapper>

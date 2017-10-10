@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wbdp.wx.mapper.BeeAddressMapper" >
+  <resultMap id="BaseResultMap" type="com.wbdp.wx.entity.BeeAddress" >
+    <id column="ID" property="id" jdbcType="BIGINT" />
+    <result column="BeeID" property="beeid" jdbcType="BIGINT" />
+    <result column="Province" property="province" jdbcType="VARCHAR" />
+    <result column="City" property="city" jdbcType="VARCHAR" />
+    <result column="Area" property="area" jdbcType="VARCHAR" />
+    <result column="DetAddress" property="detaddress" jdbcType="VARCHAR" />
+    <result column="CreatDate" property="creatdate" jdbcType="TIMESTAMP" />
+    <result column="type" property="type" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, BeeID, Province, City, Area, DetAddress, CreatDate, type
+  </sql>
+  <!--插入用户信息-->
+  <insert id="insertAddressInfo" >
+    insert into wbl_beeaddress ( BeeID, Province,
+    City, Area, DetAddress,
+    CreatDate, type)
+    values (#{beeid,jdbcType=BIGINT}, #{province,jdbcType=VARCHAR},
+    #{city,jdbcType=VARCHAR}, #{area,jdbcType=VARCHAR}, #{detaddress,jdbcType=VARCHAR},
+    #{creatdate,jdbcType=TIMESTAMP}, #{type,jdbcType=INTEGER})
+  </insert>
+  <!--获取用户地址信息-->
+  <select id="selectUserAddressByBeeid" resultType="com.wbdp.wx.model.UserAddress" >
+    select Province as province, City as city, Area as area, DetAddress as detailsAddress,type
+    from wbl_beeaddress
+    where BeeID = #{beeid}
+  </select>
+  <!--获取用户收货地址信息-->
+  <select id="selectUserGoodsAddressByBeeid" resultType="com.wbdp.wx.model.UserGoodAddress" parameterType="java.lang.Long">
+    select Province as province, City as city, Area as area, DetAddress as detailsAddress,b.BeeName as name,b.Phone as phone
+    from wbl_beeaddress ba
+    join wbl_bee b on b.ID = ba.BeeID
+    where ba.BeeID = #{beeid} and type=2;
+  </select>
+  <!---基本资料修改-->
+  <update id="updateAddressInfo" >
+    update wbl_beeaddress
+    set Province = #{province,jdbcType=VARCHAR},
+    City = #{city,jdbcType=INTEGER},
+    Area = #{area,jdbcType=VARCHAR},
+    DetAddress = #{detaddress,jdbcType=INTEGER}
+    where BeeID = #{beeid,jdbcType=BIGINT} and type = #{type,jdbcType=INTEGER}
+  </update>
+</mapper>

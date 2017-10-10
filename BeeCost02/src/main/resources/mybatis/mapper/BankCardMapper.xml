@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wbdp.wx.mapper.BankCardMapper" >
+  <resultMap id="BaseResultMap" type="com.wbdp.wx.entity.BankCard" >
+    <id column="ID" property="id" jdbcType="BIGINT" />
+    <result column="BeeID" property="beeid" jdbcType="BIGINT" />
+    <result column="Bank" property="bank" jdbcType="VARCHAR" />
+    <result column="OpenBank" property="openbank" jdbcType="VARCHAR" />
+    <result column="BankCard" property="bankcard" jdbcType="VARCHAR" />
+    <result column="City" property="city" jdbcType="VARCHAR" />
+    <result column="CreatBy" property="creatby" jdbcType="VARCHAR" />
+    <result column="CreatDate" property="creatdate" jdbcType="TIMESTAMP" />
+    <result column="UpDateBy" property="updateby" jdbcType="VARCHAR" />
+    <result column="UpDateTime" property="updatetime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, BeeID, Bank, OpenBank, BankCard, City, CreatBy, CreatDate, UpDateBy, UpDateTime
+  </sql>
+  <!--插入用户银行卡信息-->
+  <insert id="insertbankcard" parameterType="com.wbdp.wx.entity.BankCard" >
+    insert into wbl_bankcard (BeeID, Bank,
+    OpenBank, BankCard,
+    CreatBy, CreatDate)
+    values (#{beeid,jdbcType=BIGINT}, #{bank,jdbcType=VARCHAR},
+    #{openbank,jdbcType=VARCHAR}, #{bankcard,jdbcType=VARCHAR},
+    #{creatby,jdbcType=VARCHAR}, #{creatdate,jdbcType=TIMESTAMP})
+  </insert>
+  <!--查询用户银行卡信息-->
+  <select id="selectUserBankCardByBeeID" resultType="com.wbdp.wx.model.UserBankCard" parameterType="java.lang.Long" >
+    select Bank as bankType,OpenBank as openBank,BankCard as bankCard
+    from wbl_bankcard
+    where BeeID = #{beeid,jdbcType=BIGINT}
+  </select>
+  <!--修改用户银行卡信息-->
+  <update id="updateUserBankCarByBeeID">
+    update wbl_bankcard
+    set
+    Bank = #{bank,jdbcType=VARCHAR},
+    OpenBank = #{openbank,jdbcType=VARCHAR},
+    <if test="bankcard != 'bankCard'" >
+    	BankCard = #{bankcard,jdbcType=VARCHAR},
+    </if>
+    UpDateBy = #{updateby,jdbcType=VARCHAR},
+    UpDateTime = #{updatetime,jdbcType=TIMESTAMP}
+    where BeeID = #{beeid,jdbcType=BIGINT}
+  </update>
+
+
+
+</mapper>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wbdp.wx.mapper.OrderDetailMapper" >
+  <resultMap id="BaseResultMap" type="com.wbdp.wx.entity.OrderDetail" >
+    <id column="ID" property="id" jdbcType="BIGINT" />
+    <result column="OrderID" property="orderid" jdbcType="BIGINT" />
+    <result column="GoodsID" property="goodsid" jdbcType="BIGINT" />
+    <result column="Price" property="price" jdbcType="INTEGER" />
+    <result column="Number" property="number" jdbcType="INTEGER" />
+    <result column="CreatBy" property="creatby" jdbcType="VARCHAR" />
+    <result column="CreatDate" property="creatdate" jdbcType="TIMESTAMP" />
+    <result column="UpDateBy" property="updateby" jdbcType="VARCHAR" />
+    <result column="UpDateTime" property="updatetime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, OrderID, GoodsID, Price, Number, CreatBy, CreatDate, UpDateBy, UpDateTime
+  </sql>
+
+  <insert id="insertOrderDetail">
+    insert into wbl_orderdetail (OrderID, GoodsID,
+    Price, Number, CreatBy,
+    CreatDate
+    )
+    values (#{orderid,jdbcType=BIGINT}, #{goodsid,jdbcType=BIGINT},
+    #{price,jdbcType=INTEGER}, #{number,jdbcType=INTEGER}, #{creatby,jdbcType=VARCHAR},
+    #{creatdate,jdbcType=TIMESTAMP}
+    )
+  </insert>
+
+
+
+</mapper>

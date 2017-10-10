@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wbdp.wx.mapper.ShoppingCartMapper" >
+  <resultMap id="BaseResultMap" type="com.wbdp.wx.entity.ShoppingCart" >
+    <id column="ID" property="id" jdbcType="BIGINT" />
+    <result column="BeeID" property="beeid" jdbcType="BIGINT" />
+    <result column="GoodsID" property="goodsid" jdbcType="BIGINT" />
+    <result column="Number" property="number" jdbcType="INTEGER" />
+    <result column="CartState" property="cartstate" jdbcType="INTEGER" />
+    <result column="CreatBy" property="creatby" jdbcType="VARCHAR" />
+    <result column="CreatDate" property="creatdate" jdbcType="TIMESTAMP" />
+    <result column="UpDateBy" property="updateby" jdbcType="VARCHAR" />
+    <result column="UpDateTime" property="updatetime" jdbcType="TIMESTAMP" />
+    <result column="GoodsskuID" property="goodsskuid" jdbcType="BIGINT" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, BeeID, GoodsID, Number, CartState, CreatBy, CreatDate, UpDateBy, UpDateTime, 
+    GoodsskuID,Periods
+  </sql>
+  <!--添加购物车-->
+  <insert id="insertOrderByCSO">
+    insert into wbl_shoppingcart (BeeID, GoodsID,
+    Number, CartState, CreatBy,
+    CreatDate,GoodsskuID,Periods,Package_SkuID)
+    values (#{beeid,jdbcType=BIGINT}, #{goodsid,jdbcType=BIGINT},
+    #{number,jdbcType=INTEGER}, #{cartstate,jdbcType=INTEGER}, #{creatby,jdbcType=VARCHAR},
+    #{creatdate,jdbcType=TIMESTAMP},
+    (select gsku.ID as id from wbl_goodssku gsku where gsku.GoodsID = #{goodsid}
+    and gsku.ValueIDStr like #{cType}
+    and gsku.ValueIDStr like #{sType}
+    and gsku.SupID = #{supID}
+    ),#{periods,jdbcType=INTEGER},#{pID,jdbcType=BIGINT})
+  </insert>
+  <!--查询用户购物车-->
+  <select id="selectOrderByBeeid" resultType="com.wbdp.wx.model.UserOrder" >
+   select gi.Url as goodImg,g.ID as goodID,g.GoodsName as goodName,s.Periods as periods,
+       s.Number as numer,s.CartState as state,gs.Price as goodPrice,gs.ValueIDStr as valueIDStr,s.ID as shopcartID,gs.SupID as supID,
+       gss.Supplier as supplier,p.CallPackage as wpackage,
+       s.Package_SkuID as pID,p.PacPrice as pacPrice
+      from wbl_shoppingcart s
+     join wbl_goods g on g.ID = s.GoodsID
+     join wbl_goodsimage gi on s.GoodsID = gi.GoodsID
+     join wbl_goodssku gs on s.GoodsskuID = gs.ID
+     join wbl_supplier gss on gs.SupID = gss.ID
+     join wbl_package_sku ps on  ps.ID = s.Package_SkuID
+     join wbl_package p on  p.ID = ps.PacID
+    where s.BeeID =#{beeid} and s.CartState = 1;
+  </select>
+  <!--根据套餐ID查询套餐价格  -->
+  <select id="selectPriceByID" parameterType="java.lang.Long" resultType="java.lang.Integer">
+  	select PacPrice from wbl_package where ID = #{pid};
+  </select>
+  <update id="updateStatefoByID" >
+    update wbl_shoppingcart
+    set CartState = #{cartState}
+    where ID = #{id}
+  </update>
+	
+	
+</mapper>

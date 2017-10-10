@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.wbdp.wx.mapper.SalemanMapper">
+
+    <!-- <sql id="wblSalemanBaseColumnSql">
+        ID,
+        SaleManWX,
+        Phone,
+        Sex,
+        SaleManCard,
+        Recommend,
+        SupplierID,
+        CreatBy,
+        CreatDate,
+        UpDateBy,
+        UpDateTime
+    </sql>
+
+    <sql id="wblSalemanBaseWhereSql">
+        <if test="map!=null">
+            <where>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.id)">
+                    ID = #{map.id}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.saleManWx)">
+                    AND SaleManWX = #{map.saleManWx}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.phone)">
+                    AND Phone = #{map.phone}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.sex)">
+                    AND Sex = #{map.sex}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.saleManCard)">
+                    AND SaleManCard = #{map.saleManCard}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.recommend)">
+                    AND Recommend = #{map.recommend}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.supplierId)">
+                    AND SupplierID = #{map.supplierId}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.creatBy)">
+                    AND CreatBy = #{map.creatBy}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.creatDate)">
+                    AND CreatDate = #{map.creatDate}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.upDateBy)">
+                    AND UpDateBy = #{map.upDateBy}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.upDateTime)">
+                    AND UpDateTime = #{map.upDateTime}
+                </if>
+            </where>
+        </if>
+    </sql>
+
+    <insert id="insertWblSaleman" parameterType="com.wisedp.modle.entity.WblSaleman">
+        INSERT INTO wbl_saleman(
+        <include refid="wblSalemanBaseColumnSql"/>
+        )VALUES(
+            #{id},
+            #{saleManWx},
+            #{phone},
+            #{sex},
+            #{saleManCard},
+            #{recommend},
+            #{supplierId},
+            #{creatBy},
+            #{creatDate},
+            #{upDateBy},
+            #{upDateTime}
+        )
+    </insert>
+
+    
+    <delete id="deleteWblSalemanById" parameterType="Long">
+        DELETE FROM wbl_saleman WHERE ID = #{id}
+    </delete>
+
+    <update id="updateWblSaleman" parameterType="com.wisedp.modle.entity.WblSaleman">
+        UPDATE wbl_saleman
+        <set>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(saleManWx)">
+                SaleManWX = #{saleManWx} ,
+            </if>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(phone)">
+                Phone = #{phone} ,
+            </if>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(sex)">
+                Sex = #{sex} ,
+            </if>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(saleManCard)">
+                SaleManCard = #{saleManCard} ,
+            </if>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(recommend)">
+                Recommend = #{recommend} ,
+            </if>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(supplierId)">
+                SupplierID = #{supplierId} ,
+            </if>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(creatBy)">
+                CreatBy = #{creatBy} ,
+            </if>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(creatDate)">
+                CreatDate = #{creatDate} ,
+            </if>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(upDateBy)">
+                UpDateBy = #{upDateBy} ,
+            </if>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(upDateTime)">
+                UpDateTime = #{upDateTime} ,
+            </if>
+        </set>
+        WHERE ID = #{id}
+    </update>
+
+    <select id="searchWblSalemanByParams" parameterType="map" resultMap="wblSalemanMap">
+        SELECT
+        <include refid="wblSalemanBaseColumnSql"/>
+        FROM wbl_saleman
+        <include refid="wblSalemanBaseWhereSql"/>
+    </select> -->
+	<!--根据手机号查询业务员推荐码  -->
+	<select id="selectSalemanByPhone" parameterType="java.lang.String" resultType="com.wbdp.wx.model.Saleman">
+		select Phone,Recommend from wbl_saleman where Phone=#{phone} AND SaleManType = 3;
+	</select>
+    <resultMap type="com.wbdp.wx.model.Saleman" id="wblSalemanMap">
+        <id column="ID" property="id"/>
+        <result column="SaleManWX" property="saleManWx"/>
+        <result column="Phone" property="phone"/>
+        <result column="Sex" property="sex"/>
+        <result column="SaleManCard" property="saleManCard"/>
+        <result column="Recommend" property="recommend"/>
+        <result column="SupplierID" property="supplierId"/>
+        <result column="CreatBy" property="creatBy"/>
+        <result column="CreatDate" property="creatDate"/>
+        <result column="UpDateBy" property="upDateBy"/>
+        <result column="UpDateTime" property="upDateTime"/>
+    </resultMap>
+
+</mapper>

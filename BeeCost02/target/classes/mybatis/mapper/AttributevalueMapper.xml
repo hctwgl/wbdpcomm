@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wbdp.wx.mapper.AttributevalueMapper" >
+  <resultMap id="BaseResultMap" type="com.wbdp.wx.entity.Attributevalue" >
+    <id column="ID" property="id" jdbcType="BIGINT" />
+    <result column="AttributeID" property="attributeid" jdbcType="BIGINT" />
+    <result column="AttributeValue" property="attributevalue" jdbcType="VARCHAR" />
+    <result column="CreatDate" property="creatdate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, AttributeID, AttributeValue, CreatDate
+  </sql>
+  <!--查询手机品牌-->
+  <select id="selectPhoneAttribute" resultType="com.wbdp.wx.model.PhoneBrand">
+    select a.ID as phoneTypeID,a.AttributeValue as attributeValue from wbl_attributevalue a where a.AttributeID=2;
+  </select>
+  <!--查询运营商-->
+  <select id="selectOperator" resultType="com.wbdp.wx.model.Operator">
+    select a.ID as operatorID,a.AttributeValue as operatorName from wbl_attributevalue a where a.AttributeID=7;
+  </select>
+  <!--查询属性值-->
+  <select id="selectValueByID" resultType="java.lang.String" parameterType="java.lang.Long" >
+    select AttributeValue as value
+    from wbl_attributevalue
+    where ID = #{id,jdbcType=BIGINT}
+  </select>
+
+</mapper>

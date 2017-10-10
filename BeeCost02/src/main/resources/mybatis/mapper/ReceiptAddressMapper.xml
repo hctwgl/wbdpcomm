@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wbdp.wx.mapper.ReceiptAddressMapper" >
+  <resultMap id="BaseResultMap" type="com.wbdp.wx.entity.ReceiptAddress" >
+    <id column="ID" property="id" jdbcType="BIGINT" />
+    <result column="BeeID" property="beeid" jdbcType="BIGINT" />
+    <result column="phone" property="phone" jdbcType="VARCHAR" />
+    <result column="ReceiptName" property="receiptname" jdbcType="VARCHAR" />
+    <result column="Province" property="province" jdbcType="VARCHAR" />
+    <result column="City" property="city" jdbcType="VARCHAR" />
+    <result column="Area" property="area" jdbcType="VARCHAR" />
+    <result column="DetAddress" property="detaddress" jdbcType="VARCHAR" />
+    <result column="CreatDate" property="creatdate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, BeeID, phone, ReceiptName, Province, City, Area, DetAddress, CreatDate
+  </sql>
+  <!--修改收货地址-->
+  <update id="updateReceiptAddressByID">
+    update wbl_receiptaddress
+    set
+    phone = #{phone,jdbcType=VARCHAR},
+    ReceiptName = #{receiptname,jdbcType=VARCHAR},
+    Province = #{province,jdbcType=VARCHAR},
+    City = #{city,jdbcType=VARCHAR},
+    Area = #{area,jdbcType=VARCHAR},
+    DetAddress = #{detaddress,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  <!--添加收货地址-->
+  <insert id="insertReceiptAddress">
+    insert into wbl_receiptaddress (BeeID, phone,
+    ReceiptName, Province, City,
+    Area, DetAddress, CreatDate
+    )
+    values (#{beeid,jdbcType=BIGINT}, #{phone,jdbcType=VARCHAR},
+    #{receiptname,jdbcType=VARCHAR}, #{province,jdbcType=VARCHAR}, #{city,jdbcType=VARCHAR},
+    #{area,jdbcType=VARCHAR}, #{detaddress,jdbcType=VARCHAR}, #{creatdate,jdbcType=TIMESTAMP}
+    )
+  </insert>
+  <!--查询收货地址-->
+  <select id="selectReceiptAddressByBeeid" resultType="com.wbdp.wx.model.UserGoodAddress" parameterType="java.lang.Long" >
+    select ID as id, Province as province, City as city, Area as area, DetAddress as detailsAddress,ReceiptName as name,phone
+    from wbl_receiptaddress
+    where BeeID = #{beeid}
+  </select>
+  <!--查询收货地址-->
+  <select id="selectSingleGoodsAddress" resultType="com.wbdp.wx.model.UserGoodAddress" parameterType="java.lang.Long" >
+    select ID as id, Province as province, City as city, Area as area, DetAddress as detailsAddress,ReceiptName as name,phone
+    from wbl_receiptaddress
+    where ID = #{id}
+  </select>
+
+
+
+
+</mapper>

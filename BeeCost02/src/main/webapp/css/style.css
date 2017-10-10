@@ -1,0 +1,13 @@
+@charset "utf-8";
+/* CSS 定制的公共样式 */
+*{list-style-type:none;}
+.clear{ clear:both; margin:0; padding:0; font-size:0px; line-height:0px; height:0px; overflow:hidden;} 
+.clearfix:after {content:".";display:block;height:0;clear:both;visibility:hidden;}
+*html .clearfix {zoom:1;}
+*+html .clearfix {zoom:1;}
+
+/* 时间轴样式 */
+.course_nr li{ float:left; background:url(../img/page1-2icon_03.png) no-repeat center top; padding-top:30px; width:140px; text-align:center; position:relative; margin-top:65px;}
+.shiji{ position:absolute; width:100%; left:0; top:-20px; display:none;}
+
+

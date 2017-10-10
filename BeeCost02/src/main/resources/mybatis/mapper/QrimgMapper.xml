@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.wbdp.wx.mapper.QrimgMapper">
+
+    <!-- <sql id="wblQrimgBaseColumnSql">
+        ID,
+        BeeWX,
+        ImgUrl,
+        PacPeriods,
+        PacMonthlyPrice,
+        PacPrice,
+        CreatDate
+    </sql>
+
+    <sql id="wblQrimgBaseWhereSql">
+        <if test="map!=null">
+            <where>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.id)">
+                    ID = #{map.id}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.beeWx)">
+                    AND BeeWX = #{map.beeWx}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.imgUrl)">
+                    AND ImgUrl = #{map.imgUrl}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.pacPeriods)">
+                    AND PacPeriods = #{map.pacPeriods}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.pacMonthlyPrice)">
+                    AND PacMonthlyPrice = #{map.pacMonthlyPrice}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.pacPrice)">
+                    AND PacPrice = #{map.pacPrice}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.creatDate)">
+                    AND CreatDate = #{map.creatDate}
+                </if>
+            </where>
+        </if>
+    </sql>
+
+    <insert id="insertWblQrimg" parameterType="com.wisedp.modle.entity.WblQrimg">
+        INSERT INTO wbl_qrimg(
+        <include refid="wblQrimgBaseColumnSql"/>
+        )VALUES(
+            #{id},
+            #{beeWx},
+            #{imgUrl},
+            #{pacPeriods},
+            #{pacMonthlyPrice},
+            #{pacPrice},
+            #{creatDate}
+        )
+    </insert>
+
+    
+    <delete id="deleteWblQrimgById" parameterType="Long">
+        DELETE FROM wbl_qrimg WHERE ID = #{id}
+    </delete>
+
+    <update id="updateWblQrimg" parameterType="com.wisedp.modle.entity.WblQrimg">
+        UPDATE wbl_qrimg
+        <set>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(beeWx)">
+                BeeWX = #{beeWx} ,
+            </if>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(imgUrl)">
+                ImgUrl = #{imgUrl} ,
+            </if>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(pacPeriods)">
+                PacPeriods = #{pacPeriods} ,
+            </if>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(pacMonthlyPrice)">
+                PacMonthlyPrice = #{pacMonthlyPrice} ,
+            </if>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(pacPrice)">
+                PacPrice = #{pacPrice} ,
+            </if>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(creatDate)">
+                CreatDate = #{creatDate} ,
+            </if>
+        </set>
+        WHERE ID = #{id}
+    </update>
+
+    <select id="searchWblQrimgByParams" parameterType="map" resultMap="wblQrimgMap">
+        SELECT
+        <include refid="wblQrimgBaseColumnSql"/>
+        FROM wbl_qrimg
+        <include refid="wblQrimgBaseWhereSql"/>
+    </select> -->
+	<!--保存业务员套餐二维码数据  -->
+	<insert id="saveQRCode" parameterType="com.wbdp.wx.model.Qrimg">
+		insert into wbl_qrimg(BeeWX,ImgUrl,PacPeriods,PacMonthlyPrice,PacPrice,CreatDate)
+		values(
+			#{beeWx},
+			#{imgUrl},
+			#{pacPeriods},
+			#{pacMonthlyPrice},
+			#{pacPrice},
+			#{creatDate}
+		);
+	</insert>
+	
+	<!--通过openID查询业务员二维码数据  -->
+	<select id="selectQrimgByOpenid" parameterType="java.lang.String" resultType="com.wbdp.wx.model.Qrimg">
+		select * from wbl_qrimg where BeeWX=#{openid} ORDER BY CreatDate DESC;
+	</select>
+	
+	<!--删除二维码信息  -->
+	<delete id="deleteQrimgByID" parameterType="java.lang.Long">
+		 DELETE FROM wbl_qrimg WHERE ID = #{id};
+	</delete>
+    <resultMap type="com.wbdp.wx.model.Qrimg" id="wblQrimgMap">
+        <id column="ID" property="id"/>
+        <result column="BeeWX" property="beeWx"/>
+        <result column="ImgUrl" property="imgUrl"/>
+        <result column="PacPeriods" property="pacPeriods"/>
+        <result column="PacMonthlyPrice" property="pacMonthlyPrice"/>
+        <result column="PacPrice" property="pacPrice"/>
+        <result column="CreatDate" property="creatDate"/>
+    </resultMap>
+
+</mapper>

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wbdp.wx.mapper.SocialdataMapper" >
+  <resultMap id="BaseResultMap" type="com.wbdp.wx.entity.Socialdata" >
+    <id column="ID" property="id" jdbcType="BIGINT" />
+    <result column="BeeID" property="beeid" jdbcType="BIGINT" />
+    <result column="SocialAccount" property="socialaccount" jdbcType="VARCHAR" />
+    <result column="SocialPassWord" property="socialpassword" jdbcType="VARCHAR" />
+    <result column="Base" property="base" jdbcType="INTEGER" />
+    <result column="Balance" property="balance" jdbcType="INTEGER" />
+    <result column="Company" property="company" jdbcType="VARCHAR" />
+    <result column="PayTime" property="paytime" jdbcType="INTEGER" />
+    <result column="SocialState" property="socialstate" jdbcType="INTEGER" />
+    <result column="CreatBy" property="creatby" jdbcType="VARCHAR" />
+    <result column="CreatDate" property="creatdate" jdbcType="TIMESTAMP" />
+    <result column="UpdateBy" property="updateby" jdbcType="VARCHAR" />
+    <result column="UpdateTime" property="updatetime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, BeeID, SocialAccount, SocialPassWord, Base, Balance, Company, PayTime, SocialState,
+    CreatBy, CreatDate, UpdateBy, UpdateTime
+  </sql>
+  <!--增加社保账户-->
+  <insert id="insertSocialAccount">
+    insert into wbl_socialdata (BeeID, SocialAccount,
+    SocialPassWord,CreatBy, CreatDate)
+    values ( #{beeid,jdbcType=BIGINT}, #{socialaccount,jdbcType=VARCHAR},
+    #{socialpassword,jdbcType=VARCHAR}, #{creatby,jdbcType=VARCHAR}, #{creatdate,jdbcType=TIMESTAMP})
+  </insert>
+  <!--通过beeid查询社保账户-->
+  <select id="selectSSAByBeeID" resultType="com.wbdp.wx.model.SocialSecurityAccount">
+    select SocialAccount as SSA,SocialPassWord as password
+    from wbl_socialdata
+    where BeeID = #{beeid,jdbcType=BIGINT}
+  </select>
+  <!--通过beeid修改社保账户-->
+  <update id="updateSSAByBeeID">
+    update wbl_socialdata
+    set
+    SocialAccount = #{socialaccount,jdbcType=VARCHAR},
+    SocialPassWord = #{socialpassword,jdbcType=VARCHAR},
+    UpdateBy = #{updateby,jdbcType=VARCHAR},
+    UpdateTime = #{updatetime,jdbcType=TIMESTAMP}
+    where BeeID = #{beeid,jdbcType=BIGINT}
+  </update>
+
+
+</mapper>

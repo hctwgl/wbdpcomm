@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wbdp.wx.mapper.OrderMapper" >
+  <resultMap id="BaseResultMap" type="com.wbdp.wx.entity.Order" >
+    <id column="ID" property="id" jdbcType="BIGINT" />
+    <result column="BeeID" property="beeid" jdbcType="BIGINT" />
+    <result column="Money" property="money" jdbcType="INTEGER" />
+    <result column="ActualMoney" property="actualmoney" jdbcType="INTEGER" />
+    <result column="OrderDate" property="orderdate" jdbcType="TIMESTAMP" />
+    <result column="OrderState" property="orderstate" jdbcType="INTEGER" />
+    <result column="salesManCode" property="salesmancode" jdbcType="VARCHAR" />
+    <result column="Number" property="number" jdbcType="INTEGER" />
+    <result column="skuID" property="skuid" jdbcType="BIGINT" />
+    <result column="Address" property="address" jdbcType="VARCHAR" />
+    <result column="CreatBy" property="creatby" jdbcType="VARCHAR" />
+    <result column="CreatDate" property="creatdate" jdbcType="TIMESTAMP" />
+    <result column="UpDateBy" property="updateby" jdbcType="VARCHAR" />
+    <result column="UpDateTime" property="updatetime" jdbcType="TIMESTAMP" />
+    <result column="GoodsID" property="goodsid" jdbcType="BIGINT" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, BeeID, Money,Periods,ActualMoney, OrderDate, OrderState, salesManCode, Number, skuID,
+    Address, CreatBy, CreatDate, UpDateBy, UpDateTime, GoodsID
+  </sql>
+  <!--新增订单  -->
+  <insert id="insertOrder" parameterType="map">
+  	insert into wbl_order(BeeID, Money,Periods,
+    ActualMoney, OrderDate, OrderState,
+    salesManCode, Number, skuID, CreatBy, CreatDate,GoodsID,Package_SkuID,OnlineSign)
+    values 
+    (#{map.beeid},#{map.money},#{map.periods},#{map.actualmoney},#{map.orderdate},#{map.orderstate},#{map.salesmancode},#{map.number}
+    ,#{map.skuid},#{map.creatby}
+    ,#{map.creatdate},#{map.goodsid},#{map.pID},#{map.onlineSign});
+  </insert>
+  <!--插入订单-->
+  <!-- <insert id="insertOrder">
+    insert into wbl_order ( BeeID, Money,Periods,
+    ActualMoney, OrderDate, OrderState,
+    salesManCode, Number, skuID, CreatBy, CreatDate,GoodsID,Package_SkuID,OnlineSign)
+    values (#{beeid,jdbcType=BIGINT}, #{money,jdbcType=INTEGER},#{periods,jdbcType=INTEGER},
+    #{actualmoney,jdbcType=INTEGER}, #{orderdate,jdbcType=TIMESTAMP}, #{orderstate,jdbcType=INTEGER},
+    #{salesmancode,jdbcType=VARCHAR}, #{number,jdbcType=INTEGER}, #{skuid,jdbcType=BIGINT},
+    #{creatby,jdbcType=VARCHAR}, #{creatdate,jdbcType=TIMESTAMP}, #{goodsid,jdbcType=BIGINT},#{pID,jdbcType=BIGINT},#{onlineSign,jdbcType=VARCHAR})
+  </insert> -->
+  <!--查询订单-->
+  <select id="selectOrdersByBeeID" resultType="com.wbdp.wx.model.UserOrder">
+    select gi.Url as goodImg,g.ID as goodID,g.GoodsName as goodName,
+       o.Number as numer,o.OrderState as state,gs.Price as goodPrice,gs.ValueIDStr as valueIDStr,
+       o.Periods as periods,o.Package_SkuID as pID,p.CallPackage as wpackage,p.PacPrice as pacPrice,
+       gss.Supplier as supplier,date_format(o.CreatDate,'%Y-%c-%d %h:%i:%s') as orderDate,o.ID as oID
+    from wbl_order o
+     join wbl_goods g on g.ID = o.GoodsID
+     join wbl_goodsimage gi on o.GoodsID = gi.GoodsID
+     join wbl_goodssku gs on o.skuID = gs.ID
+     join wbl_supplier gss on gs.SupID = gss.ID
+     join wbl_package_sku ps on  ps.ID = o.Package_SkuID
+     join wbl_package p on  p.ID = ps.PacID
+    where o.BeeID = #{beeid,jdbcType=BIGINT};
+  </select>
+  <!--查询订单详情-->
+  <select id="selectOrdersByOID" resultType="com.wbdp.wx.model.UserOrder">
+    select gi.Url as goodImg,g.ID as goodID,g.GoodsName as goodName,
+       o.Number as numer,o.OrderState as state,gs.Price as goodPrice,gs.ValueIDStr as valueIDStr,
+       o.Periods as periods,o.Package_SkuID as pID,p.CallPackage as wpackage,p.PacPrice as pacPrice,
+       gss.Supplier as supplier,date_format(o.CreatDate,'%Y-%c-%d %h:%i:%s') as orderDate,o.ID as oID,p.Details as details
+    from wbl_order o
+     join wbl_goods g on g.ID = o.GoodsID
+     join wbl_goodsimage gi on o.GoodsID = gi.GoodsID
+     join wbl_goodssku gs on o.skuID = gs.ID
+     join wbl_supplier gss on gs.SupID = gss.ID
+     join wbl_package_sku ps on  ps.ID = o.Package_SkuID
+     join wbl_package p on  p.ID = ps.PacID
+    where o.ID = #{oID,jdbcType=BIGINT};
+  </select>
+</mapper>

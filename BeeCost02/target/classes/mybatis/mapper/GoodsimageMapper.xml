@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wbdp.wx.mapper.GoodsimageMapper" >
+  <resultMap id="BaseResultMap" type="com.wbdp.wx.entity.Goodsimage" >
+    <id column="ID" property="id" jdbcType="BIGINT" />
+    <result column="Url" property="url" jdbcType="VARCHAR" />
+    <result column="GoodsID" property="goodsid" jdbcType="BIGINT" />
+    <result column="ValueID" property="valueid" jdbcType="BIGINT" />
+    <result column="CreatDate" property="creatdate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, Url, GoodsID, ValueID, CreatDate
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from wbl_goodsimage
+    where ID = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from wbl_goodsimage
+    where ID = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.wbdp.wx.entity.Goodsimage" >
+    insert into wbl_goodsimage (ID, Url, GoodsID, 
+      ValueID, CreatDate)
+    values (#{id,jdbcType=BIGINT}, #{url,jdbcType=VARCHAR}, #{goodsid,jdbcType=BIGINT}, 
+      #{valueid,jdbcType=BIGINT}, #{creatdate,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wbdp.wx.entity.Goodsimage" >
+    insert into wbl_goodsimage
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="url != null" >
+        Url,
+      </if>
+      <if test="goodsid != null" >
+        GoodsID,
+      </if>
+      <if test="valueid != null" >
+        ValueID,
+      </if>
+      <if test="creatdate != null" >
+        CreatDate,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="url != null" >
+        #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsid != null" >
+        #{goodsid,jdbcType=BIGINT},
+      </if>
+      <if test="valueid != null" >
+        #{valueid,jdbcType=BIGINT},
+      </if>
+      <if test="creatdate != null" >
+        #{creatdate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wbdp.wx.entity.Goodsimage" >
+    update wbl_goodsimage
+    <set >
+      <if test="url != null" >
+        Url = #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsid != null" >
+        GoodsID = #{goodsid,jdbcType=BIGINT},
+      </if>
+      <if test="valueid != null" >
+        ValueID = #{valueid,jdbcType=BIGINT},
+      </if>
+      <if test="creatdate != null" >
+        CreatDate = #{creatdate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wbdp.wx.entity.Goodsimage" >
+    update wbl_goodsimage
+    set Url = #{url,jdbcType=VARCHAR},
+      GoodsID = #{goodsid,jdbcType=BIGINT},
+      ValueID = #{valueid,jdbcType=BIGINT},
+      CreatDate = #{creatdate,jdbcType=TIMESTAMP}
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

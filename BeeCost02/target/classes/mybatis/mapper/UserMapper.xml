@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.wbdp.wx.mapper.UserMapper">
+
+   <!--  <sql id="wblUserBaseColumnSql">
+        ID,
+        UserName,
+        PassWord,
+        Company,
+        Phone,
+        OfficePhone,
+        UserType,
+        RecomCode,
+        UserState,
+        CreatBy,
+        CreatDate,
+        UpDateBy,
+        UpDateTime
+    </sql>
+
+    <sql id="wblUserBaseWhereSql">
+        <if test="map!=null">
+            <where>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.id)">
+                    ID = #{map.id}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.userName)">
+                    AND UserName = #{map.userName}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.passWord)">
+                    AND PassWord = #{map.passWord}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.company)">
+                    AND Company = #{map.company}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.phone)">
+                    AND Phone = #{map.phone}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.officePhone)">
+                    AND OfficePhone = #{map.officePhone}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.userType)">
+                    AND UserType = #{map.userType}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.recomCode)">
+                    AND RecomCode = #{map.recomCode}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.userState)">
+                    AND UserState = #{map.userState}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.creatBy)">
+                    AND CreatBy = #{map.creatBy}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.creatDate)">
+                    AND CreatDate = #{map.creatDate}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.upDateBy)">
+                    AND UpDateBy = #{map.upDateBy}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.upDateTime)">
+                    AND UpDateTime = #{map.upDateTime}
+                </if>
+            </where>
+        </if>
+    </sql>
+
+    <insert id="insertWblUser" parameterType="com.wisedp.modle.entity.WblUser">
+        INSERT INTO wbl_user(
+        <include refid="wblUserBaseColumnSql"/>
+        )VALUES(
+            #{id},
+            #{userName},
+            #{passWord},
+            #{company},
+            #{phone},
+            #{officePhone},
+            #{userType},
+            #{recomCode},
+            #{userState},
+            #{creatBy},
+            #{creatDate},
+            #{upDateBy},
+            #{upDateTime}
+        )
+    </insert>
+
+    
+    <delete id="deleteWblUserById" parameterType="Long">
+        DELETE FROM wbl_user WHERE ID = #{id}
+    </delete>
+
+    <update id="updateWblUser" parameterType="com.wisedp.modle.entity.WblUser">
+        UPDATE wbl_user
+        <set>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(userName)">
+                UserName = #{userName} ,
+            </if>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(passWord)">
+                PassWord = #{passWord} ,
+            </if>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(company)">
+                Company = #{company} ,
+            </if>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(phone)">
+                Phone = #{phone} ,
+            </if>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(officePhone)">
+                OfficePhone = #{officePhone} ,
+            </if>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(userType)">
+                UserType = #{userType} ,
+            </if>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(recomCode)">
+                RecomCode = #{recomCode} ,
+            </if>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(userState)">
+                UserState = #{userState} ,
+            </if>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(creatBy)">
+                CreatBy = #{creatBy} ,
+            </if>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(creatDate)">
+                CreatDate = #{creatDate} ,
+            </if>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(upDateBy)">
+                UpDateBy = #{upDateBy} ,
+            </if>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(upDateTime)">
+                UpDateTime = #{upDateTime} ,
+            </if>
+        </set>
+        WHERE ID = #{id}
+    </update>
+
+    <select id="searchWblUserByParams" parameterType="map" resultMap="wblUserMap">
+        SELECT
+        <include refid="wblUserBaseColumnSql"/>
+        FROM wbl_user
+        <include refid="wblUserBaseWhereSql"/>
+    </select> -->
+	<!--根据业务员推荐码查询业务员手机号  -->
+	<select id="getUserPhone" parameterType="java.lang.String" resultType="java.lang.String">
+		select Phone from wbl_user where RecomCode = #{recomCode};
+	</select>
+   <!--  <resultMap type="com.wisedp.modle.entity.WblUser" id="wblUserMap">
+        <id column="ID" property="id"/>
+        <result column="UserName" property="userName"/>
+        <result column="PassWord" property="passWord"/>
+        <result column="Company" property="company"/>
+        <result column="Phone" property="phone"/>
+        <result column="OfficePhone" property="officePhone"/>
+        <result column="UserType" property="userType"/>
+        <result column="RecomCode" property="recomCode"/>
+        <result column="UserState" property="userState"/>
+        <result column="CreatBy" property="creatBy"/>
+        <result column="CreatDate" property="creatDate"/>
+        <result column="UpDateBy" property="upDateBy"/>
+        <result column="UpDateTime" property="upDateTime"/>
+    </resultMap> -->
+
+</mapper>
