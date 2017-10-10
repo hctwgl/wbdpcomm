@@ -1,0 +1,300 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.wbdp.tsp.dao.WbdpScoreMapper">
+
+    <sql id="wbdpScoreBaseColumnSql">
+        VehicleID,
+        PlateNumber,
+        ScoreDate,
+        SuddenBrake,
+        SbScore,
+        RapidSpeed,
+        RsScore,
+        SuddenTurn,
+        StScore,
+        OverSpeed,
+        OsScore,
+        MeanSpeed,
+        MsScore,
+        DriveTime,
+        DtScore,
+        NightDrive,
+        NdScore,
+        FatigueDrive,
+        FdScore,
+        IdleTime,
+        ItScore,
+        DriveScore,
+        SaveDate
+    </sql>
+
+    <sql id="wbdpScoreBaseWhereSql">
+        <if test="map!=null">
+            <where>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.id)">
+                    ID = #{map.id}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.vehicleId)">
+                    AND VehicleID = #{map.vehicleId}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.plateNumber)">
+                    AND PlateNumber = #{map.plateNumber}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.scoreDate)">
+                    AND ScoreDate = #{map.scoreDate}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.suddenBrake)">
+                    AND SuddenBrake = #{map.suddenBrake}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.sbScore)">
+                    AND SbScore = #{map.sbScore}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.rapidSpeed)">
+                    AND RapidSpeed = #{map.rapidSpeed}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.rsScore)">
+                    AND RsScore = #{map.rsScore}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.suddenTurn)">
+                    AND SuddenTurn = #{map.suddenTurn}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.stScore)">
+                    AND StScore = #{map.stScore}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.overSpeed)">
+                    AND OverSpeed = #{map.overSpeed}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.osScore)">
+                    AND OsScore = #{map.osScore}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.meanSpeed)">
+                    AND MeanSpeed = #{map.meanSpeed}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.msScore)">
+                    AND MsScore = #{map.msScore}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.driveTime)">
+                    AND DriveTime = #{map.driveTime}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.dtScore)">
+                    AND DtScore = #{map.dtScore}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.nightDrive)">
+                    AND NightDrive = #{map.nightDrive}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.ndScore)">
+                    AND NdScore = #{map.ndScore}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.fatigueDrive)">
+                    AND FatigueDrive = #{map.fatigueDrive}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.fdScore)">
+                    AND FdScore = #{map.fdScore}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.idleTime)">
+                    AND IdleTime = #{map.idleTime}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.itScore)">
+                    AND ItScore = #{map.itScore}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.driveScore)">
+                    AND DriveScore = #{map.driveScore}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.saveDate)">
+                    AND SaveDate = #{map.saveDate}
+                </if>
+            </where>
+        </if>
+    </sql>
+
+    <insert id="insertWbdpScore" parameterType="com.wbdp.tsp.entity.WbdpScore">
+        INSERT INTO wbdp_score(
+        <include refid="wbdpScoreBaseColumnSql"/>
+        )VALUES(
+            #{id},
+            #{vehicleId},
+            #{plateNumber},
+            #{scoreDate},
+            #{suddenBrake},
+            #{sbScore},
+            #{rapidSpeed},
+            #{rsScore},
+            #{suddenTurn},
+            #{stScore},
+            #{overSpeed},
+            #{osScore},
+            #{meanSpeed},
+            #{msScore},
+            #{driveTime},
+            #{dtScore},
+            #{nightDrive},
+            #{ndScore},
+            #{fatigueDrive},
+            #{fdScore},
+            #{idleTime},
+            #{itScore},
+            #{driveScore},
+            #{saveDate}
+        )
+    </insert>
+
+    
+    <delete id="deleteWbdpScoreById" parameterType="Long">
+        DELETE FROM wbdp_score WHERE ID = #{id}
+    </delete>
+
+    <update id="updateWbdpScore" parameterType="com.wbdp.tsp.entity.WbdpScore">
+        UPDATE wbdp_score
+        <set>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(vehicleId)">
+                VehicleID = #{vehicleId} ,
+            </if>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(plateNumber)">
+                PlateNumber = #{plateNumber} ,
+            </if>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(scoreDate)">
+                ScoreDate = #{scoreDate} ,
+            </if>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(suddenBrake)">
+                SuddenBrake = #{suddenBrake} ,
+            </if>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(sbScore)">
+                SbScore = #{sbScore} ,
+            </if>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(rapidSpeed)">
+                RapidSpeed = #{rapidSpeed} ,
+            </if>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(rsScore)">
+                RsScore = #{rsScore} ,
+            </if>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(suddenTurn)">
+                SuddenTurn = #{suddenTurn} ,
+            </if>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(stScore)">
+                StScore = #{stScore} ,
+            </if>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(overSpeed)">
+                OverSpeed = #{overSpeed} ,
+            </if>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(osScore)">
+                OsScore = #{osScore} ,
+            </if>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(meanSpeed)">
+                MeanSpeed = #{meanSpeed} ,
+            </if>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(msScore)">
+                MsScore = #{msScore} ,
+            </if>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(driveTime)">
+                DriveTime = #{driveTime} ,
+            </if>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(dtScore)">
+                DtScore = #{dtScore} ,
+            </if>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(nightDrive)">
+                NightDrive = #{nightDrive} ,
+            </if>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(ndScore)">
+                NdScore = #{ndScore} ,
+            </if>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(fatigueDrive)">
+                FatigueDrive = #{fatigueDrive} ,
+            </if>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(fdScore)">
+                FdScore = #{fdScore} ,
+            </if>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(idleTime)">
+                IdleTime = #{idleTime} ,
+            </if>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(itScore)">
+                ItScore = #{itScore} ,
+            </if>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(driveScore)">
+                DriveScore = #{driveScore} ,
+            </if>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(saveDate)">
+                SaveDate = #{saveDate} ,
+            </if>
+        </set>
+        WHERE ID = #{id}
+    </update>
+
+    <select id="searchWbdpScoreByParams" parameterType="map" resultMap="wbdpScoreMap">
+        SELECT
+        <include refid="wbdpScoreBaseColumnSql"/>
+        FROM wbdp_score
+        <include refid="wbdpScoreBaseWhereSql"/>
+    </select>
+	<!--批量插入数据  -->
+	<insert id="insertListWbdpScore" parameterType="java.util.List">
+		INSERT INTO `wbdp_score`(
+		 <include refid="wbdpScoreBaseColumnSql"/>
+        )VALUES 
+        <foreach collection="list" item="score" index="index" separator="," >  
+        ( 	#{score.vehicleId},
+            #{score.plateNumber},
+            #{score.scoreDate},
+            #{score.suddenBrake},
+            #{score.sbScore},
+            #{score.rapidSpeed},
+            #{score.rsScore},
+            #{score.suddenTurn},
+            #{score.stScore},
+            #{score.overSpeed},
+            #{score.osScore},
+            #{score.meanSpeed},
+            #{score.msScore},
+            #{score.driveTime},
+            #{score.dtScore},
+            #{score.nightDrive},
+            #{score.ndScore},
+            #{score.fatigueDrive},
+            #{score.fdScore},
+            #{score.idleTime},
+            #{score.itScore},
+            #{score.driveScore},
+            #{score.saveDate})  
+    	</foreach>
+	</insert>
+	
+	<!--查询评分表中当前评分日期所有车牌 -->
+	<select id="searchWbdpVehice"  resultType="java.lang.String">
+        SELECT
+        PlateNumber
+        FROM `wbdp_score` WHERE TO_DAYS(NOW( ) ) - TO_DAYS(ScoreDate) =1;
+    </select>
+    <!--查询评分表中当前评分日期对应车牌的评分 -->
+	<select id="searchDriveScore"  resultType="java.lang.Integer">
+        SELECT
+        DriveScore
+        FROM `wbdp_score` WHERE TO_DAYS(NOW( ) ) - TO_DAYS(ScoreDate) =1 and PlateNumber=#{plateNumber};
+    </select>
+    <resultMap type="com.wbdp.tsp.entity.WbdpScore" id="wbdpScoreMap">
+        <id column="ID" property="id"/>
+        <result column="VehicleID" property="vehicleId"/>
+        <result column="PlateNumber" property="plateNumber"/>
+        <result column="ScoreDate" property="scoreDate"/>
+        <result column="SuddenBrake" property="suddenBrake"/>
+        <result column="SbScore" property="sbScore"/>
+        <result column="RapidSpeed" property="rapidSpeed"/>
+        <result column="RsScore" property="rsScore"/>
+        <result column="SuddenTurn" property="suddenTurn"/>
+        <result column="StScore" property="stScore"/>
+        <result column="OverSpeed" property="overSpeed"/>
+        <result column="OsScore" property="osScore"/>
+        <result column="MeanSpeed" property="meanSpeed"/>
+        <result column="MsScore" property="msScore"/>
+        <result column="DriveTime" property="driveTime"/>
+        <result column="DtScore" property="dtScore"/>
+        <result column="NightDrive" property="nightDrive"/>
+        <result column="NdScore" property="ndScore"/>
+        <result column="FatigueDrive" property="fatigueDrive"/>
+        <result column="FdScore" property="fdScore"/>
+        <result column="IdleTime" property="idleTime"/>
+        <result column="ItScore" property="itScore"/>
+        <result column="DriveScore" property="driveScore"/>
+        <result column="SaveDate" property="saveDate"/>
+    </resultMap>
+
+</mapper>

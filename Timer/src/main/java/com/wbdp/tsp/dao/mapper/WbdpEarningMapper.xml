@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.wbdp.tsp.dao.WbdpEarningMapper">
+
+    <sql id="wbdpEarningBaseColumnSql">
+        VehicleID,
+        PlateNumber,
+        EarningDate,
+        DriveScore,
+        ScoreEarning,
+        GreenDrive,
+        Binding,
+        Renewal,
+        SaveDate
+    </sql>
+
+    <sql id="wbdpEarningBaseWhereSql">
+        <if test="map!=null">
+            <where>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.id)">
+                    ID = #{map.id}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.vehicleId)">
+                    AND VehicleID = #{map.vehicleId}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.plateNumber)">
+                    AND PlateNumber = #{map.plateNumber}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.earningDate)">
+                    AND EarningDate = #{map.earningDate}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.driveScore)">
+                    AND DriveScore = #{map.driveScore}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.scoreEarning)">
+                    AND ScoreEarning = #{map.scoreEarning}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.greenDrive)">
+                    AND GreenDrive = #{map.greenDrive}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.binding)">
+                    AND Binding = #{map.binding}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.renewal)">
+                    AND Renewal = #{map.renewal}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.saveDate)">
+                    AND SaveDate = #{map.saveDate}
+                </if>
+            </where>
+        </if>
+    </sql>
+
+    
+
+    
+    <delete id="deleteWbdpEarningById" parameterType="Long">
+        DELETE FROM wbdp_earning WHERE ID = #{id}
+    </delete>
+
+    <update id="updateWbdpEarning" parameterType="com.wbdp.tsp.entity.WbdpEarning">
+        UPDATE wbdp_earning
+        <set>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(vehicleId)">
+                VehicleID = #{vehicleId} ,
+            </if>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(plateNumber)">
+                PlateNumber = #{plateNumber} ,
+            </if>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(earningDate)">
+                EarningDate = #{earningDate} ,
+            </if>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(driveScore)">
+                DriveScore = #{driveScore} ,
+            </if>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(scoreEarning)">
+                ScoreEarning = #{scoreEarning} ,
+            </if>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(greenDrive)">
+                GreenDrive = #{greenDrive} ,
+            </if>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(binding)">
+                Binding = #{binding} ,
+            </if>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(renewal)">
+                Renewal = #{renewal} ,
+            </if>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(saveDate)">
+                SaveDate = #{saveDate} ,
+            </if>
+        </set>
+        WHERE ID = #{id}
+    </update>
+
+    <select id="searchWbdpEarningByParams" parameterType="map" resultMap="wbdpEarningMap">
+        SELECT
+        <include refid="wbdpEarningBaseColumnSql"/>
+        FROM wbdp_earning
+        <include refid="wbdpEarningBaseWhereSql"/>
+    </select>
+    
+    <!--批量插入数据  -->
+    <insert id="insertWbdpEarning" parameterType="java.util.List">
+        INSERT INTO wbdp_earning(
+        <include refid="wbdpEarningBaseColumnSql"/>
+        )VALUES
+        <foreach collection="list" item="earning" index="index" separator="," >  
+        ( 	#{earning.vehicleId},
+            #{earning.plateNumber},
+            #{earning.earningDate},
+            #{earning.driveScore},
+            #{earning.scoreEarning},
+            #{earning.greenDrive},
+            #{earning.binding},
+            #{earning.renewal},
+            #{earning.saveDate})
+          
+    	</foreach>
+    </insert>
+    <resultMap type="com.wbdp.tsp.entity.WbdpEarning" id="wbdpEarningMap">
+        <id column="ID" property="id"/>
+        <result column="VehicleID" property="vehicleId"/>
+        <result column="PlateNumber" property="plateNumber"/>
+        <result column="EarningDate" property="earningDate"/>
+        <result column="DriveScore" property="driveScore"/>
+        <result column="ScoreEarning" property="scoreEarning"/>
+        <result column="GreenDrive" property="greenDrive"/>
+        <result column="Binding" property="binding"/>
+        <result column="Renewal" property="renewal"/>
+        <result column="SaveDate" property="saveDate"/>
+    </resultMap>
+
+</mapper>

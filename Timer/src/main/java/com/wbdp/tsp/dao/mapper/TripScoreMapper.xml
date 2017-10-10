@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.wbdp.tsp.dao.TripScoreMapper">
+
+	<!-- <sql id="wbdpTripBaseColumnSql"> tid, deviceNumber, tripid, starttime, 
+		endtime, drivertime, oilwear, mail, hspeed, rmp, temp, rapidSpeed, suddenBrake, 
+		overSpeedTime, overSpeedMail, overSpeedOilWear, hSpeedTime, hSpeedMail, hSpeedOilWear, 
+		mSpeedTime, mSpeedMail, mSpeedOilWear, lSpeedTime, lSpeedMail, lSpeedOilWear, 
+		idleTime, idleTimeOilWear, suddenTurn </sql> -->
+	<!-- <sql id="wbdpTripBaseWhereSql"> <if test="map!=null"> <where> <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.tid)"> 
+		tid = #{map.tid} </if> <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.deviceNumber)"> 
+		AND deviceNumber = #{map.deviceNumber} </if> <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.tripid)"> 
+		AND tripid = #{map.tripid} </if> <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.starttime)"> 
+		AND starttime = #{map.starttime} </if> <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.endtime)"> 
+		AND endtime = #{map.endtime} </if> <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.drivertime)"> 
+		AND drivertime = #{map.drivertime} </if> <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.oilwear)"> 
+		AND oilwear = #{map.oilwear} </if> <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.mail)"> 
+		AND mail = #{map.mail} </if> <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.hspeed)"> 
+		AND hspeed = #{map.hspeed} </if> <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.rmp)"> 
+		AND rmp = #{map.rmp} </if> <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.temp)"> 
+		AND temp = #{map.temp} </if> <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.rapidSpeed)"> 
+		AND rapidSpeed = #{map.rapidSpeed} </if> <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.suddenBrake)"> 
+		AND suddenBrake = #{map.suddenBrake} </if> <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.overSpeedTime)"> 
+		AND overSpeedTime = #{map.overSpeedTime} </if> <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.overSpeedMail)"> 
+		AND overSpeedMail = #{map.overSpeedMail} </if> <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.overSpeedOilWear)"> 
+		AND overSpeedOilWear = #{map.overSpeedOilWear} </if> <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.hspeedTime)"> 
+		AND hSpeedTime = #{map.hspeedTime} </if> <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.hspeedMail)"> 
+		AND hSpeedMail = #{map.hspeedMail} </if> <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.hspeedOilWear)"> 
+		AND hSpeedOilWear = #{map.hspeedOilWear} </if> <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.mspeedTime)"> 
+		AND mSpeedTime = #{map.mspeedTime} </if> <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.mspeedMail)"> 
+		AND mSpeedMail = #{map.mspeedMail} </if> <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.mspeedOilWear)"> 
+		AND mSpeedOilWear = #{map.mspeedOilWear} </if> <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.lspeedTime)"> 
+		AND lSpeedTime = #{map.lspeedTime} </if> <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.lspeedMail)"> 
+		AND lSpeedMail = #{map.lspeedMail} </if> <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.lspeedOilWear)"> 
+		AND lSpeedOilWear = #{map.lspeedOilWear} </if> <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.idleTime)"> 
+		AND idleTime = #{map.idleTime} </if> <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.idleTimeOilWear)"> 
+		AND idleTimeOilWear = #{map.idleTimeOilWear} </if> <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.suddenTurn)"> 
+		AND suddenTurn = #{map.suddenTurn} </if> </where> </if> </sql> -->
+	<!-- <insert id="insertWbdpTrip" parameterType="com.wbdp.tsp.entity.WbdpTrip"> 
+		INSERT INTO wbdp_trip( <include refid="wbdpTripBaseColumnSql"/> )VALUES( 
+		#{tid}, #{deviceNumber}, #{tripid}, #{starttime}, #{endtime}, #{drivertime}, 
+		#{oilwear}, #{mail}, #{hspeed}, #{rmp}, #{temp}, #{rapidSpeed}, #{suddenBrake}, 
+		#{overSpeedTime}, #{overSpeedMail}, #{overSpeedOilWear}, #{hspeedTime}, #{hspeedMail}, 
+		#{hspeedOilWear}, #{mspeedTime}, #{mspeedMail}, #{mspeedOilWear}, #{lspeedTime}, 
+		#{lspeedMail}, #{lspeedOilWear}, #{idleTime}, #{idleTimeOilWear}, #{suddenTurn} 
+		) </insert> -->
+
+
+	<!-- <delete id="deleteWbdpTripByTid" parameterType="Integer"> DELETE FROM 
+		wbdp_trip WHERE tid = #{tid} </delete> -->
+
+	<!-- <update id="updateWbdpTrip" parameterType="com.wbdp.tsp.entity.WbdpTrip"> 
+		UPDATE wbdp_trip <set> <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(deviceNumber)"> 
+		deviceNumber = #{deviceNumber} , </if> <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(tripid)"> 
+		tripid = #{tripid} , </if> <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(starttime)"> 
+		starttime = #{starttime} , </if> <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(endtime)"> 
+		endtime = #{endtime} , </if> <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(drivertime)"> 
+		drivertime = #{drivertime} , </if> <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(oilwear)"> 
+		oilwear = #{oilwear} , </if> <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(mail)"> 
+		mail = #{mail} , </if> <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(hspeed)"> 
+		hspeed = #{hspeed} , </if> <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(rmp)"> 
+		rmp = #{rmp} , </if> <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(temp)"> 
+		temp = #{temp} , </if> <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(rapidSpeed)"> 
+		rapidSpeed = #{rapidSpeed} , </if> <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(suddenBrake)"> 
+		suddenBrake = #{suddenBrake} , </if> <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(overSpeedTime)"> 
+		overSpeedTime = #{overSpeedTime} , </if> <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(overSpeedMail)"> 
+		overSpeedMail = #{overSpeedMail} , </if> <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(overSpeedOilWear)"> 
+		overSpeedOilWear = #{overSpeedOilWear} , </if> <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(hspeedTime)"> 
+		hSpeedTime = #{hspeedTime} , </if> <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(hspeedMail)"> 
+		hSpeedMail = #{hspeedMail} , </if> <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(hspeedOilWear)"> 
+		hSpeedOilWear = #{hspeedOilWear} , </if> <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(mspeedTime)"> 
+		mSpeedTime = #{mspeedTime} , </if> <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(mspeedMail)"> 
+		mSpeedMail = #{mspeedMail} , </if> <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(mspeedOilWear)"> 
+		mSpeedOilWear = #{mspeedOilWear} , </if> <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(lspeedTime)"> 
+		lSpeedTime = #{lspeedTime} , </if> <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(lspeedMail)"> 
+		lSpeedMail = #{lspeedMail} , </if> <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(lspeedOilWear)"> 
+		lSpeedOilWear = #{lspeedOilWear} , </if> <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(idleTime)"> 
+		idleTime = #{idleTime} , </if> <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(idleTimeOilWear)"> 
+		idleTimeOilWear = #{idleTimeOilWear} , </if> <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(suddenTurn)"> 
+		suddenTurn = #{suddenTurn} , </if> </set> WHERE tid = #{tid} </update> -->
+
+	<!-- <select id="searchWbdpTripByParams" parameterType="map" resultMap="wbdpTripMap"> 
+		SELECT <include refid="wbdpTripBaseColumnSql"/> FROM wbdp_trip <include refid="wbdpTripBaseWhereSql"/> 
+		</select> -->
+	<!--查询数据，不包括夜间行驶、疲劳驾驶、超速 -->
+	<select id="searchWbdpTrip" resultMap="wbdpTripMap">
+		SELECT trip.deviceNumber,SUM(trip.suddenBrake) AS suddenBrake,SUM(trip.rapidSpeed) AS rapidSpeed ,
+
+SUM(trip.suddenTurn) AS suddenTurn, SUM(trip.mail)AS mail,SUM(trip.drivertime) AS drivertime,
+
+SUM(trip.IdleTime) AS idleTime
+
+FROM (SELECT * FROM `wbdp_trip` WHERE TO_DAYS(NOW( ) ) - TO_DAYS(starttime) =1) AS trip GROUP BY deviceNumber 
+	</select>
+	<!--查询夜间行驶时间 -->
+	<select id="searchNightDrive" resultMap="wbdpTripMap">
+		SELECT trip.deviceNumber AS deviceNumber,SUM(trip.drivertime) AS
+		drivertime FROM
+		(SELECT * FROM `wbdp_trip` WHERE TO_DAYS(NOW( ) ) - TO_DAYS(starttime) =1) AS
+		trip
+		WHERE (DATE_FORMAT(starttime,'%T')>'19:00:00' AND DATE_FORMAT(endtime,'%T')<![CDATA[< ]]>
+		'23:59:59' ) OR
+		(DATE_FORMAT(starttime,'%T')>'00:00:00' AND DATE_FORMAT(endtime,'%T')<![CDATA[< ]]>'05:00:00'
+		) group by deviceNumber;
+	</select>
+
+	<!--查询疲劳驾驶时间 -->
+	<select id="searchFatigueDriveDrive" resultMap="wbdpTripMap">
+		SELECT trip.deviceNumber AS deviceNumber,trip.drivertime AS drivertime FROM
+		(SELECT * FROM `wbdp_trip` WHERE TO_DAYS(NOW( )) - TO_DAYS(starttime)=1) AS trip ;
+	</select>
+
+	<!--查询超速次数 -->
+	<select id="searchOverSpeed" resultMap="wbdpTripMap">
+		SELECT trip.deviceNumber AS deviceNumber,COUNT(0) AS overSpeedTime FROM
+		(SELECT * FROM `wbdp_trip` WHERE TO_DAYS(NOW( )) - TO_DAYS(starttime) =1) AS
+		trip WHERE overSpeedTime !=0
+		GROUP BY deviceNumber
+	</select>
+	<!--查询车牌号码 -->
+	<select id="searchPlateNumber" parameterType="java.lang.String" resultType="java.lang.String">
+		SELECT PlateNumber FROM `wbdp_devicebinding` WHERE  deviceNumber != '123ABC1492483078751' and DeviceUUID=#{deviceNumber} AND Binding = 1;
+		 <!-- <if test="deviceNumber != '531608010500'">
+                    AND SaveDate = #{map.saveDate}
+         </if> -->
+	</select>
+	
+	<!--查询车辆id -->
+	<select id="serchVehicleID" parameterType="java.lang.String" resultType="java.lang.Long">
+		SELECT ID FROM `wbdp_devicebinding` WHERE PlateNumber=#{plateNumber};
+	</select>
+	<resultMap type="com.wbdp.tsp.entity.WbdpTrip" id="wbdpTripMap">
+		<id column="tid" property="tid" />
+		<result column="deviceNumber" property="deviceNumber" />
+		<result column="tripid" property="tripid" />
+		<result column="starttime" property="starttime" />
+		<result column="endtime" property="endtime" />
+		<result column="drivertime" property="drivertime" />
+		<result column="oilwear" property="oilwear" />
+		<result column="mail" property="mail" />
+		<result column="hspeed" property="hspeed" />
+		<result column="rmp" property="rmp" />
+		<result column="temp" property="temp" />
+		<result column="rapidSpeed" property="rapidSpeed" />
+		<result column="suddenBrake" property="suddenBrake" />
+		<result column="overSpeedTime" property="overSpeedTime" />
+		<result column="overSpeedMail" property="overSpeedMail" />
+		<result column="overSpeedOilWear" property="overSpeedOilWear" />
+		<result column="hSpeedTime" property="hspeedTime" />
+		<result column="hSpeedMail" property="hspeedMail" />
+		<result column="hSpeedOilWear" property="hspeedOilWear" />
+		<result column="mSpeedTime" property="mspeedTime" />
+		<result column="mSpeedMail" property="mspeedMail" />
+		<result column="mSpeedOilWear" property="mspeedOilWear" />
+		<result column="lSpeedTime" property="lspeedTime" />
+		<result column="lSpeedMail" property="lspeedMail" />
+		<result column="lSpeedOilWear" property="lspeedOilWear" />
+		<result column="idleTime" property="idleTime" />
+		<result column="idleTimeOilWear" property="idleTimeOilWear" />
+		<result column="suddenTurn" property="suddenTurn" />
+	</resultMap>
+
+</mapper>

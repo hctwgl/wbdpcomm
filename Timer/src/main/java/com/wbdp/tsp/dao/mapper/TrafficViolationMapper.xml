@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wbdp.tsp.dao.TrafficViolationDAO" >
+
+<select id="getAllTrafficViolation" resultType="map">
+SELECT
+	ve.OwnerWX,REPLACE(cs.city,'市','') as City,ve.PlateNumber,ve.VIN,ve.EngineNumber
+FROM
+	wbdp_vehiceowner vr
+JOIN wbdp_vehice ve
+ON vr.OwnerWX=ve.OwnerWX AND vr.City!='' AND ve.vin!=''
+JOIN cities cs
+ON vr.City=cs.cityid;
+</select>
+
+</mapper>
