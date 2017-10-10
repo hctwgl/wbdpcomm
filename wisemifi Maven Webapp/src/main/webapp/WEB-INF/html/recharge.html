@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="initial-scale=1,maximum-scale=1, minimum-scale=1">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+        <title>维泽无线充值</title>
+		<link rel="stylesheet" href="../css/weui.css" />
+		<link rel="stylesheet" type="text/css" href="../css/cityPicker.css" />
+        <script src="../jquery/jquery-3.1.0.min.js"></script>
+        <script src="http://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script> 
+        <script src="http://pv.sohu.com/cityjson?ie=utf-8"></script>
+        <script src="../js/cityPicker.js"></script>
+        <script src="../js/payother.js"></script> 
+        <script src="../js/recharge.js"></script> 
+        	
+       
+        <style type="text/css">
+    	/*页面初始化*/
+    	body, h1, h2, h3, h4, h5, h6, hr, p, blockquote, dl, dt, dd, ul, ol, li, pre, form, fieldset, legend, button, input, textarea, th, td { margin:0; padding:0; }
+	    	body{
+	    		width: 7.5rem;
+	    		font: "微软雅黑";
+	    	}
+	    	#all{
+	    		width: 100%;
+			  	height: 12rem;
+	    		background: #EEEEEE;
+	    		display: -webkit-flex;
+	    		display: flex;
+	    		flex-direction: column;
+				align-items: center;
+				font: "微软雅黑";
+	    	}
+	    	.title{
+	    		width: 100%;
+	    		height: 0.8rem;
+	    		border-bottom: 0.01rem solid #CCCCCC;
+	    		color: #333333;
+	    		font-size: 0.3rem;
+	    		background: #FFFFFF;
+	    		display: -webkit-flex;
+	    		display: flex;
+	    		justify-content: center;
+				align-items: center;
+	    	}
+	    	.title span{
+	    		display: inline-block;
+	    		width: 50%;
+	    		height: 0.8rem;
+	    		text-align: center;
+	    		line-height: 0.8rem;
+	    	}
+	    	.selected{
+	    		border-bottom: 0.02rem solid #e85016;
+	    		color: #e85016;
+	    	}
+	    	.year,.flow{
+	    		width: 7.5rem;
+	    		display: -webkit-flex;
+	    		display: flex;
+	    		flex-direction: column;
+	    		justify-content: center;
+				align-items: center;
+				background: #FFFFFF;
+	    	}
+	    	.year-title{
+	    		width: 6.66rem;
+	    		height: 0.6rem;
+	    		text-align: left;
+	    		line-height:0.6rem ;
+	    		color: #666666;
+	    		font-size: 0.26rem;
+	    		
+	    	}
+	    	.year-option{
+	    		width: 6.66rem;
+	    		display: -webkit-flex;
+	    		display: flex;
+	    		justify-content: space-between;
+				align-items: center;
+	    	}
+	    	.year-detail{
+	    		width: 3rem;
+	    		height: 2rem;
+    			display: -webkit-flex;
+	    		display: flex;
+	    		flex-direction: column;
+	    		justify-content: center;
+				align-items: center;
+	    		border: 0.01rem solid #CCCCCC;
+	    		border-radius:0.2rem ;	    		
+	    	}
+	    	.cash{
+	    		color: #333333;
+	    		font-size: 0.34rem;
+	    	}
+	    	.period{
+	    		color: #999999;
+	    		font-size: 0.24rem;
+	    	}
+	    	.time{
+	    		color: #999999;
+	    		font-size: 0.2rem;
+	    	}
+	    	.gap{
+	    		height: 0.4rem;
+	    	}
+	    	
+	    	.flow-address{
+	    		width: 6.66rem;
+	    		height: 0.8rem;
+	    		display: -webkit-flex;
+	    		display: flex;
+	    		justify-content: space-between;
+				align-items: center;
+				background: #FFFFFF;
+				color: #666666;
+				font-size: 0.26rem;
+	    	}
+	    	.flow-address input{
+	    		margin-left: 2.2rem;
+	    		text-align: right;
+	    		width: 3rem;
+	    		height: 0.8rem;
+	    		border: none;
+	    	}
+	    	.flow-address span{
+	    		display: -webkit-flex;
+	    		display: flex;
+	    		justify-content: center;
+				align-items: center;
+	    		
+	    	}
+	    	.flow-address img{
+	    		width: 0.2rem;
+	    		height: 0.3rem;
+	    	}
+	    	.gap1{
+	    		width: 7.5rem;
+	    		height: 0.1rem;
+	    		background: #EEEEEE;
+	    	}
+	    	.flow-option{
+	    		width: 6.66rem;
+	    		display: -webkit-flex;
+	    		display: flex;
+	    		justify-content: space-between;
+				align-items: center;
+	    	}
+	    	.flow-detail{
+	    		width: 2rem;
+	    		height: 1.2rem;
+    			display: -webkit-flex;
+	    		display: flex;
+	    		flex-direction: column;
+	    		justify-content: center;
+				align-items: center;
+	    		border: 0.01rem solid #CCCCCC;
+	    		border-radius:0.2rem ;	    	
+	    	}
+	    	.selected1{
+	    		border:0.03rem solid #e85016 ;
+	    	}
+	    	
+	    	#bottom{
+	    		width: 100%;
+	    		height: 0.8rem;
+	    		display: -webkit-flex;
+	    		display: flex;
+	    		justify-content: center;
+	    		margin-top: 0.4rem;
+	    	}
+	    	#bottom span{
+	    		width: 4rem;
+	    		height: 0.64rem;
+	    		display: -webkit-flex;
+	    		display: flex;
+	    		justify-content:center;
+	    		align-items: center;
+	    		background: -webkit-linear-gradient(#02ceff, #3285ff); /* Safari 5.1 - 6.0 */
+				background: -o-linear-gradient(#02ceff, #3285ff); /* Opera 11.1 - 12.0 */
+				background: -moz-linear-gradient(#02ceff, #3285ff); /* Firefox 3.6 - 15 */
+				background: linear-gradient(#02ceff, #3285ff); /* 标准的语法 */
+	    		border-radius:0.1rem ;
+	    		color: #FFFFFF;
+	    		font-size: 0.32rem;
+	    	}
+	    	.weui_toast{
+				font-size: 0.28rem !important;
+    		}
+	    </style>
+       
+    </head>
+    
+    <body>
+    	<!--信息提交完成提示栏-->
+		<div id="toast" style="display:none;">
+		    <div class="weui_mask_transparent"></div>
+		    <div class="weui_toast">
+		        <i class="weui_icon_toast"></i>
+		        <p class="weui_toast_content">提交成功</p>
+		    </div>
+		</div>
+		<!--进程加载中提示栏-->
+    	<div id="loadingToast" class="weui_loading_toast" style="display:none;">
+		    <div class="weui_mask_transparent"></div>
+		    <div class="weui_toast">
+		        <div class="weui_loading">
+		            <!-- :) -->
+		            <div class="weui_loading_leaf weui_loading_leaf_0"></div>
+		            <div class="weui_loading_leaf weui_loading_leaf_1"></div>
+		            <div class="weui_loading_leaf weui_loading_leaf_2"></div>
+		            <div class="weui_loading_leaf weui_loading_leaf_3"></div>
+		            <div class="weui_loading_leaf weui_loading_leaf_4"></div>
+		            <div class="weui_loading_leaf weui_loading_leaf_5"></div>
+		            <div class="weui_loading_leaf weui_loading_leaf_6"></div>
+		            <div class="weui_loading_leaf weui_loading_leaf_7"></div>
+		            <div class="weui_loading_leaf weui_loading_leaf_8"></div>
+		            <div class="weui_loading_leaf weui_loading_leaf_9"></div>
+		            <div class="weui_loading_leaf weui_loading_leaf_10"></div>
+		            <div class="weui_loading_leaf weui_loading_leaf_11"></div>
+		        </div>
+		        <p class="weui_toast_content">正在提交中</p>
+		    </div>
+		</div>
+		<div id="all">
+			<!--<div class="title">
+				<span id="year">包年套餐充值</span>
+				<span id="flow">省外流量充值</span>
+			</div>-->
+			<!--包年套餐充值-->
+			<div class="year" >
+				<div class="year-title">选择充值套餐</div>
+				<div class="year-option">
+					<div class="year-detail">
+						<span class="cash">￥458</span>
+						<span class="period">一年期</span>
+						<!--<span class="time">2017.10.10-2018.10.10</span>-->
+					</div>
+					<div class="year-detail">
+						<span class="cash">￥916</span>
+						<span class="period">两年期</span>
+						<!--<span class="time">2017.10.10-2018.10.10</span>-->
+					</div>
+				</div>
+				<div class="gap"></div>
+				<div class="year-option">
+					<div class="year-detail">
+						<span class="cash">￥1374</span>
+						<span class="period">三年期</span>
+						<!--<span class="time">2017.10.10-2018.10.10</span>-->
+					</div>
+					<div class="year-detail">
+						<span class="cash">￥1832</span>
+						<span class="period">四年期</span>
+						<!--<span class="time">2017.10.10-2018.10.10</span>-->
+					</div>
+				</div>
+				<div class="gap"></div>
+			</div>
+			<!--省外流量套餐-->
+			<!--<div class="flow" style="display: none;">
+				<div class="flow-address">
+					<span>选择省份</span>
+					<span><input class="city" type="text" placeholder="" value="深圳" /></span>
+					<span><img src="../img/mine_icon_arrow.png"/></span>
+				</div>
+				<div class="gap1"></div>
+				<div class="year-title">选择充值流量</div>
+				<div class="flow-option">
+					<div class="flow-detail">
+						<span class="cash">￥100</span>
+						<span class="period">10G</span>
+					</div>
+					<div class="flow-detail">
+						<span class="cash">￥200</span>
+						<span class="period">20G</span>
+					</div>
+					<div class="flow-detail">
+						<span class="cash">￥499</span>
+						<span class="period">20G</span>
+					</div>
+				</div>
+				<div class="gap"></div>
+				<div class="flow-option">
+					<div class="flow-detail">
+						<span class="cash">￥499</span>
+						<span class="period">20G</span>
+					</div>
+					<div class="flow-detail">
+						<span class="cash">￥499</span>
+						<span class="period">20G</span>
+					</div>
+					<div class="flow-detail">
+						<span class="cash">￥499</span>
+						<span class="period">20G</span>
+					</div>
+				</div>
+				
+				
+				<div class="gap"></div>
+			</div>-->
+			<div id="bottom">
+				<span id="sub">立即充值</span>
+			</div>
+			
+		</div>
+    </body>
+</html>

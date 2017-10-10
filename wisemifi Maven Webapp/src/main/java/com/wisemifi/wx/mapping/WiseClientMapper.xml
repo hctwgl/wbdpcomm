@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.wisemifi.wx.dao.WiseClientMapper">
+
+    <sql id="wiseClientBaseColumnSql">
+        ID,
+        OwnerWX,
+        Name,
+        Sex,
+        Phone,
+        Card,
+        CreatTime,
+        UpdateTime
+    </sql>
+
+<!--     <sql id="wiseClientBaseWhereSql">
+        <if test="map!=null">
+            <where>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.id)">
+                    ID = #{map.id}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.ownerWx)">
+                    AND OwnerWX = #{map.ownerWx}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.name)">
+                    AND Name = #{map.name}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.sex)">
+                    AND Sex = #{map.sex}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.phone)">
+                    AND Phone = #{map.phone}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.card)">
+                    AND Card = #{map.card}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.creatTime)">
+                    AND CreatTime = #{map.creatTime}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.updateTime)">
+                    AND UpdateTime = #{map.updateTime}
+                </if>
+            </where>
+        </if>
+    </sql>
+
+    <insert id="insertWiseClient" parameterType="com.wisemifi.wx.entity.WiseClient">
+        INSERT INTO wise_client(
+        <include refid="wiseClientBaseColumnSql"/>
+        )VALUES(
+            #{id},
+            #{ownerWx},
+            #{name},
+            #{sex},
+            #{phone},
+            #{card},
+            #{creatTime},
+            #{updateTime}
+        )
+    </insert>
+
+    
+    <delete id="deleteWiseClientById" parameterType="Long">
+        DELETE FROM wise_client WHERE ID = #{id}
+    </delete>
+
+    <update id="updateWiseClient" parameterType="com.wisemifi.wx.entity.WiseClient">
+        UPDATE wise_client
+        <set>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(ownerWx)">
+                OwnerWX = #{ownerWx} ,
+            </if>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(name)">
+                Name = #{name} ,
+            </if>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(sex)">
+                Sex = #{sex} ,
+            </if>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(phone)">
+                Phone = #{phone} ,
+            </if>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(card)">
+                Card = #{card} ,
+            </if>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(creatTime)">
+                CreatTime = #{creatTime} ,
+            </if>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(updateTime)">
+                UpdateTime = #{updateTime} ,
+            </if>
+        </set>
+        WHERE ID = #{id}
+    </update>
+
+    <select id="searchWiseClientByParams" parameterType="map" resultMap="wiseClientMap">
+        SELECT
+        <include refid="wiseClientBaseColumnSql"/>
+        FROM wise_client
+        <include refid="wiseClientBaseWhereSql"/>
+    </select> -->
+	<!--测试框架整合  -->
+	<select id="selectWiseClient" resultMap="wiseClientMap">
+		select * from wise_client;
+	</select>
+    <resultMap type="com.wisemifi.wx.entity.WiseClient" id="wiseClientMap">
+        <id column="ID" property="id"/>
+        <result column="OwnerWX" property="ownerWx"/>
+        <result column="Name" property="name"/>
+        <result column="Sex" property="sex"/>
+        <result column="Phone" property="phone"/>
+        <result column="Card" property="card"/>
+        <result column="CreatTime" property="creatTime"/>
+        <result column="UpdateTime" property="updateTime"/>
+    </resultMap>
+
+</mapper>

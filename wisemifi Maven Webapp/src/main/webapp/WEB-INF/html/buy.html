@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="initial-scale=1,maximum-scale=1, minimum-scale=1">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+        <title>申购维泽无线</title>
+		<link rel="stylesheet" href="../css/weui.css" />
+        <script src="../jquery/jquery-3.1.0.min.js"></script>
+        <script src="../js/buy.js"></script>
+        <style type="text/css">
+    	/*页面初始化*/
+    	body, h1, h2, h3, h4, h5, h6, hr, p, blockquote, dl, dt, dd, ul, ol, li, pre, form, fieldset, legend, button, input, textarea, th, td { margin:0; padding:0; }
+	    	body{
+	    		width: 7.5rem;
+	    		font: "微软雅黑";
+	    	}
+	    	#all{
+	    		width: 100%;
+			  	height: 11.5rem;
+	    		background: #FFFFFF;
+	    		display: -webkit-flex;
+	    		display: flex;
+	    		flex-direction: column;
+				align-items: center;
+				font: "微软雅黑";
+				position: relative;
+	    	}
+	    	#top{
+	    		width: 7.5rem;
+	    		height: 10.6rem;
+	    		overflow-y: scroll;
+	    	}
+	    	#top img{
+	    		width: 7.5rem;
+	    	}
+	    	
+	    	#bottom{
+	    		width: 100%;
+	    		height: 0.8rem;
+	    		border-top: 0.01rem solid #CCCCCC;
+	    		border-bottom: 0.01rem solid #CCCCCC;
+	    		display: -webkit-flex;
+	    		display: flex;
+	    		justify-content: center;
+	    		position: absolute;
+	    		bottom: 0;
+	    	}
+	    	#price{
+	    		margin-left: 0.5rem;
+	    		width: 4.5rem;
+	    		height: 0.8rem;
+	    		display: -webkit-flex;
+	    		display: flex;
+	    		align-items: center;
+	    		background:#FFFFFF; /* Safari 5.1 - 6.0 */
+	    	}
+	    	#price span:nth-child(1){
+	    		color: #333333;
+	    		font-size: 0.24rem;
+	    	}
+	    	#price span:nth-child(2),#price span:nth-child(4){
+	    		color: #e85016;
+	    		font-size: 0.24rem;
+	    	}
+	    	#price span:nth-child(3){
+	    		color: #e85016;
+	    		font-size: 0.3rem;
+	    	}
+	    	#sub{
+	    		width: 3rem;
+	    		height: 0.8rem;
+	    		display: -webkit-flex;
+	    		display: flex;
+	    		justify-content:center;
+	    		align-items: center;
+	    		background: -webkit-linear-gradient(#02ceff, #3285ff); /* Safari 5.1 - 6.0 */
+				background: -o-linear-gradient(#02ceff, #3285ff); /* Opera 11.1 - 12.0 */
+				background: -moz-linear-gradient(#02ceff, #3285ff); /* Firefox 3.6 - 15 */
+				background: linear-gradient(#02ceff, #3285ff); /* 标准的语法 */
+	    		color: #FFFFFF;
+	    		font-size: 0.32rem;
+	    	}
+	    	.weui_toast{
+				font-size: 0.28rem !important;
+    		}
+	    </style>
+       
+    </head>
+    
+    <body>
+    	<!--信息提交完成提示栏-->
+		<div id="toast" style="display:none;">
+		    <div class="weui_mask_transparent"></div>
+		    <div class="weui_toast">
+		        <i class="weui_icon_toast"></i>
+		        <p class="weui_toast_content">提交成功</p>
+		    </div>
+		</div>
+		<!--进程加载中提示栏-->
+    	<div id="loadingToast" class="weui_loading_toast" style="display:none;">
+		    <div class="weui_mask_transparent"></div>
+		    <div class="weui_toast">
+		        <div class="weui_loading">
+		            <!-- :) -->
+		            <div class="weui_loading_leaf weui_loading_leaf_0"></div>
+		            <div class="weui_loading_leaf weui_loading_leaf_1"></div>
+		            <div class="weui_loading_leaf weui_loading_leaf_2"></div>
+		            <div class="weui_loading_leaf weui_loading_leaf_3"></div>
+		            <div class="weui_loading_leaf weui_loading_leaf_4"></div>
+		            <div class="weui_loading_leaf weui_loading_leaf_5"></div>
+		            <div class="weui_loading_leaf weui_loading_leaf_6"></div>
+		            <div class="weui_loading_leaf weui_loading_leaf_7"></div>
+		            <div class="weui_loading_leaf weui_loading_leaf_8"></div>
+		            <div class="weui_loading_leaf weui_loading_leaf_9"></div>
+		            <div class="weui_loading_leaf weui_loading_leaf_10"></div>
+		            <div class="weui_loading_leaf weui_loading_leaf_11"></div>
+		        </div>
+		        <p class="weui_toast_content">正在提交中</p>
+		    </div>
+		</div>
+		<div id="all">
+			<div id="top">
+				<img src="../img/wise_mifi_buy_pic1.png" />
+				<img src="../img/wise_mifi_buy_pic2.png" />
+				<img src="../img/wise_mifi_buy_pic3.png" />
+				<img src="../img/wise_mifi_buy_pic4.png" />
+				<img src="../img/wise_mifi_buy_pic5.png" />
+				<img src="../img/wise_mifi_buy_pic6.png" />
+				<img src="../img/wise_mifi_buy_pic7.png" />
+			</div>
+			<div id="bottom">
+				<div id="price">
+					<span>价格：</span>
+					<span>￥</span>
+					<span>698</span>
+					<span>.00</span>
+				</div>
+				<div id="sub">立即购买</div>
+			</div>
+			
+		</div>
+    </body>
+</html>

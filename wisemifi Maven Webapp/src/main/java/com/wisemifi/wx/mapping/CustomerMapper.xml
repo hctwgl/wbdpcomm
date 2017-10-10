@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.wisemifi.wx.dao.CustomerMapper">
+
+    <sql id="wiseCustomerBaseColumnSql">
+        customerId,
+        customerOpenid,
+        customerName,
+        customerCard,
+        customerCardPic,
+        customerConfirmation,
+        customerCreateTime
+    </sql>
+
+<!--     <sql id="wiseCustomerBaseWhereSql">
+        <if test="map!=null">
+            <where>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.customerId)">
+                    customerId = #{map.customerId}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.customerOpenid)">
+                    AND customerOpenid = #{map.customerOpenid}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.customerName)">
+                    AND customerName = #{map.customerName}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.customerCard)">
+                    AND customerCard = #{map.customerCard}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.customerCardPic)">
+                    AND customerCardPic = #{map.customerCardPic}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.customerConfirmation)">
+                    AND customerConfirmation = #{map.customerConfirmation}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.customerCreateTime)">
+                    AND customerCreateTime = #{map.customerCreateTime}
+                </if>
+            </where>
+        </if>
+    </sql>
+
+    <insert id="insertWiseCustomer" parameterType="com.wisemifi.wx.entity.Customer">
+        INSERT INTO wise_customer(
+        <include refid="wiseCustomerBaseColumnSql"/>
+        )VALUES(
+            #{customerId},
+            #{customerOpenid},
+            #{customerName},
+            #{customerCard},
+            #{customerCardPic},
+            #{customerConfirmation},
+            #{customerCreateTime}
+        )
+    </insert>
+
+    
+    <delete id="deleteWiseCustomerByCustomerId" parameterType="Long">
+        DELETE FROM wise_customer WHERE customerId = #{customerId}
+    </delete>
+
+    <update id="updateWiseCustomer" parameterType="com.wisemifi.wx.entity.Customer">
+        UPDATE wise_customer
+        <set>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(customerOpenid)">
+                customerOpenid = #{customerOpenid} ,
+            </if>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(customerName)">
+                customerName = #{customerName} ,
+            </if>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(customerCard)">
+                customerCard = #{customerCard} ,
+            </if>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(customerCardPic)">
+                customerCardPic = #{customerCardPic} ,
+            </if>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(customerConfirmation)">
+                customerConfirmation = #{customerConfirmation} ,
+            </if>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(customerCreateTime)">
+                customerCreateTime = #{customerCreateTime} ,
+            </if>
+        </set>
+        WHERE customerId = #{customerId}
+    </update>
+
+    <select id="searchWiseCustomerByParams" parameterType="map" resultMap="wiseCustomerMap">
+        SELECT
+        <include refid="wiseCustomerBaseColumnSql"/>
+        FROM wise_customer
+        <include refid="wiseCustomerBaseWhereSql"/>
+    </select> -->
+	<!--保存客户实名认证身份证图片信息  -->
+	<insert id="insertCard" parameterType="com.wisemifi.wx.entity.Customer">
+		INSERT INTO wise_customer(
+        customerOpenid,customerCardPic,customerConfirmation,customerCreateTime
+        )VALUES(
+            #{customerOpenid},
+            #{customerCardPic},
+            #{customerConfirmation},
+            #{customerCreateTime}
+        )
+	</insert>
+    <resultMap type="com.wisemifi.wx.entity.Customer" id="wiseCustomerMap">
+        <id column="customerId" property="customerId"/>
+        <result column="customerOpenid" property="customerOpenid"/>
+        <result column="customerName" property="customerName"/>
+        <result column="customerCard" property="customerCard"/>
+        <result column="customerCardPic" property="customerCardPic"/>
+        <result column="customerConfirmation" property="customerConfirmation"/>
+        <result column="customerCreateTime" property="customerCreateTime"/>
+    </resultMap>
+
+</mapper>

@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.wisemifi.wx.dao.CustomerAddressMapper">
+
+    <!-- <sql id="wiseCustomerAddressBaseColumnSql">
+        addressId,
+        customerOpenid,
+        receiveName,
+        receiveAddress,
+        receivePhone
+    </sql>
+
+    <sql id="wiseCustomerAddressBaseWhereSql">
+        <if test="map!=null">
+            <where>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.addressId)">
+                    addressId = #{map.addressId}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.customerOpenid)">
+                    AND customerOpenid = #{map.customerOpenid}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.receiveName)">
+                    AND receiveName = #{map.receiveName}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.receiveAddress)">
+                    AND receiveAddress = #{map.receiveAddress}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.receivePhone)">
+                    AND receivePhone = #{map.receivePhone}
+                </if>
+            </where>
+        </if>
+    </sql>
+
+    <insert id="insertWiseCustomerAddress" parameterType="com.wisedp.modle.entity.WiseCustomerAddress">
+        INSERT INTO wise_customer_address(
+        <include refid="wiseCustomerAddressBaseColumnSql"/>
+        )VALUES(
+            #{addressId},
+            #{customerOpenid},
+            #{receiveName},
+            #{receiveAddress},
+            #{receivePhone}
+        )
+    </insert>
+
+    
+    <delete id="deleteWiseCustomerAddressByAddressId" parameterType="Long">
+        DELETE FROM wise_customer_address WHERE addressId = #{addressId}
+    </delete>
+
+    <update id="updateWiseCustomerAddress" parameterType="com.wisedp.modle.entity.WiseCustomerAddress">
+        UPDATE wise_customer_address
+        <set>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(customerOpenid)">
+                customerOpenid = #{customerOpenid} ,
+            </if>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(receiveName)">
+                receiveName = #{receiveName} ,
+            </if>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(receiveAddress)">
+                receiveAddress = #{receiveAddress} ,
+            </if>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(receivePhone)">
+                receivePhone = #{receivePhone} ,
+            </if>
+        </set>
+        WHERE addressId = #{addressId}
+    </update>
+
+    <select id="searchWiseCustomerAddressByParams" parameterType="map" resultMap="wiseCustomerAddressMap">
+        SELECT
+        <include refid="wiseCustomerAddressBaseColumnSql"/>
+        FROM wise_customer_address
+        <include refid="wiseCustomerAddressBaseWhereSql"/>
+    </select> -->
+	<!--新增维泽无线收货地址  -->
+	<insert id="addAddress" parameterType="com.wisemifi.wx.entity.CustomerAddress">
+		insert into wise_customer_address(customerOpenid,receiveName,receiveAddress,receivePhone)
+		values(
+            #{customerOpenid},
+            #{receiveName},
+            #{receiveAddress},
+            #{receivePhone});
+	</insert>
+	<!--获取收货地址  -->
+	<select id="getAddress" parameterType="java.lang.String" resultType="com.wisemifi.wx.entity.CustomerAddress">
+		select * from wise_customer_address where customerOpenid=#{openid};
+	</select>
+    <resultMap type="com.wisemifi.wx.entity.CustomerAddress" id="wiseCustomerAddressMap">
+        <id column="addressId" property="addressId"/>
+        <result column="customerOpenid" property="customerOpenid"/>
+        <result column="receiveName" property="receiveName"/>
+        <result column="receiveAddress" property="receiveAddress"/>
+        <result column="receivePhone" property="receivePhone"/>
+    </resultMap>
+
+</mapper>

@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.wisemifi.wx.dao.CustomerOrderMapper">
+
+   <!--  <sql id="wiseCustomerOrderBaseColumnSql">
+        orderId,
+        customerOpenId,
+        OrderNumber,
+        goodsId,
+        goodsAttributesId,
+        Price,
+        goodsProvincial,
+        customerAddressId,
+        orderStatus,
+        orderCreateTime,
+        customerName,
+        Phone,
+        Address,
+        GoodInfo
+    </sql>
+
+    <sql id="wiseCustomerOrderBaseWhereSql">
+        <if test="map!=null">
+            <where>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.orderId)">
+                    orderId = #{map.orderId}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.customerOpenId)">
+                    AND customerOpenId = #{map.customerOpenId}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.orderNumber)">
+                    AND OrderNumber = #{map.orderNumber}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.goodsId)">
+                    AND goodsId = #{map.goodsId}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.goodsAttributesId)">
+                    AND goodsAttributesId = #{map.goodsAttributesId}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.price)">
+                    AND Price = #{map.price}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.goodsProvincial)">
+                    AND goodsProvincial = #{map.goodsProvincial}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.customerAddressId)">
+                    AND customerAddressId = #{map.customerAddressId}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.orderStatus)">
+                    AND orderStatus = #{map.orderStatus}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.orderCreateTime)">
+                    AND orderCreateTime = #{map.orderCreateTime}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.customerName)">
+                    AND customerName = #{map.customerName}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.phone)">
+                    AND Phone = #{map.phone}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.address)">
+                    AND Address = #{map.address}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.goodInfo)">
+                    AND GoodInfo = #{map.goodInfo}
+                </if>
+            </where>
+        </if>
+    </sql>
+
+    <insert id="insertWiseCustomerOrder" parameterType="com.wisedp.modle.entity.WiseCustomerOrder">
+        INSERT INTO wise_customer_order(
+        <include refid="wiseCustomerOrderBaseColumnSql"/>
+        )VALUES(
+            #{orderId},
+            #{customerOpenId},
+            #{orderNumber},
+            #{goodsId},
+            #{goodsAttributesId},
+            #{price},
+            #{goodsProvincial},
+            #{customerAddressId},
+            #{orderStatus},
+            #{orderCreateTime},
+            #{customerName},
+            #{phone},
+            #{address},
+            #{goodInfo}
+        )
+    </insert>
+
+    
+    <delete id="deleteWiseCustomerOrderByOrderId" parameterType="Long">
+        DELETE FROM wise_customer_order WHERE orderId = #{orderId}
+    </delete>
+
+    <update id="updateWiseCustomerOrder" parameterType="com.wisedp.modle.entity.WiseCustomerOrder">
+        UPDATE wise_customer_order
+        <set>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(customerOpenId)">
+                customerOpenId = #{customerOpenId} ,
+            </if>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(orderNumber)">
+                OrderNumber = #{orderNumber} ,
+            </if>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(goodsId)">
+                goodsId = #{goodsId} ,
+            </if>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(goodsAttributesId)">
+                goodsAttributesId = #{goodsAttributesId} ,
+            </if>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(price)">
+                Price = #{price} ,
+            </if>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(goodsProvincial)">
+                goodsProvincial = #{goodsProvincial} ,
+            </if>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(customerAddressId)">
+                customerAddressId = #{customerAddressId} ,
+            </if>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(orderStatus)">
+                orderStatus = #{orderStatus} ,
+            </if>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(orderCreateTime)">
+                orderCreateTime = #{orderCreateTime} ,
+            </if>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(customerName)">
+                customerName = #{customerName} ,
+            </if>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(phone)">
+                Phone = #{phone} ,
+            </if>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(address)">
+                Address = #{address} ,
+            </if>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(goodInfo)">
+                GoodInfo = #{goodInfo} ,
+            </if>
+        </set>
+        WHERE orderId = #{orderId}
+    </update>
+
+    <select id="searchWiseCustomerOrderByParams" parameterType="map" resultMap="wiseCustomerOrderMap">
+        SELECT
+        <include refid="wiseCustomerOrderBaseColumnSql"/>
+        FROM wise_customer_order
+        <include refid="wiseCustomerOrderBaseWhereSql"/>
+    </select> -->
+	<!--客户购买成功后保存订单  -->
+	<insert id="insertOrder" parameterType="com.wisemifi.wx.entity.CustomerOrder">
+		  INSERT INTO wise_customer_order(
+        customerOpenId,OrderNumber,Price,orderCreateTime,customerName,Phone,Address,goodInfo,IntroOpenid,OrderStatus,OrderType
+        )VALUES(
+            #{customerOpenId},
+            #{orderNumber},
+            #{price},
+            #{orderCreateTime},
+            #{customerName},
+            #{phone},
+            #{address},
+            #{goodInfo},
+            #{introOpenid},
+            #{orderStatus},
+            #{orderType}
+        )
+	</insert>
+	<!-- 根据openID判断用户是否购买了无线路由 -->
+	<select id="selectCustomerOrder" parameterType="java.lang.String" resultType="com.wisemifi.wx.entity.CustomerOrder">
+		select count(0) from wise_customer_order where customerOpenId = #{openid} AND OrderType=1;
+	</select>
+	<!--获取用户订单列表  -->
+	<select id="getCustomerOrder" parameterType="java.lang.String" resultType="com.wisemifi.wx.entity.CustomerOrder"> 
+		select orderId,customerOpenId,orderNumber,price,goodInfo,DATE_FORMAT(orderCreateTime,'%Y-%c-%d %H:%i:%s') as orderCreateTime,Phone,Address,customerName,IntroOpenid 
+		,OrderType,OrderStatus from wise_customer_order where customerOpenId = #{openid};
+	</select>
+	<!-- 查询客户购买无线路由最新的一条数据 -->
+	<select id="selectOrderNew" parameterType="java.lang.String" resultType="com.wisemifi.wx.entity.CustomerOrder">
+		SELECT * FROM wise_customer_order WHERE 
+		customerOpenId = #{openid} AND goodInfo='维泽mifi无线路由' ORDER BY orderCreateTime DESC LIMIT 1;
+	</select>
+	<!-- 根据订单号查询该订单是否存在 -->
+	<select id="selectOrderByOrderNumber" parameterType="java.lang.String" resultType="com.wisemifi.wx.entity.CustomerOrder">
+		select * from wise_customer_order where orderNumber=#{orderNumber};
+	</select>
+    <resultMap type="com.wisemifi.wx.entity.CustomerOrder" id="wiseCustomerOrderMap">
+        <id column="orderId" property="orderId"/>
+        <result column="customerOpenId" property="customerOpenId"/>
+        <result column="OrderNumber" property="orderNumber"/>
+        <result column="goodsId" property="goodsId"/>
+        <result column="goodsAttributesId" property="goodsAttributesId"/>
+        <result column="Price" property="price"/>
+        <result column="goodsProvincial" property="goodsProvincial"/>
+        <result column="customerAddressId" property="customerAddressId"/>
+        <result column="orderStatus" property="orderStatus"/>
+        <result column="orderCreateTime" property="orderCreateTime"/>
+        <result column="customerName" property="customerName"/>
+        <result column="Phone" property="phone"/>
+        <result column="Address" property="address"/>
+        <result column="GoodInfo" property="goodInfo"/>
+    </resultMap>
+
+</mapper>

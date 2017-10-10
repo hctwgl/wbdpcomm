@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="initial-scale=1,maximum-scale=1, minimum-scale=1">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+        <title>我的</title>
+		<link rel="stylesheet" href="../css/weui.css" />
+        <script src="../jquery/jquery-3.1.0.min.js"></script>
+        <script src="http://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script> 
+        <script src="http://pv.sohu.com/cityjson?ie=utf-8"></script>
+        <script src="../js/myself.js"></script> 
+        <style type="text/css">
+    	/*页面初始化*/
+    	body, h1, h2, h3, h4, h5, h6, hr, p, blockquote, dl, dt, dd, ul, ol, li, pre, form, fieldset, legend, button, input, textarea, th, td { margin:0; padding:0; }
+	    	body{
+	    		width: 7.5rem;
+	    		font: "微软雅黑";
+	    	}
+	    	#all{
+	    		width: 100%;
+	    		background: #FFFFFF;
+	    		display: -webkit-flex;
+	    		display: flex;
+	    		flex-direction: column;
+				align-items: center;
+				font: "微软雅黑";
+				position: relative;
+	    	}
+	    	/*二维码弹出层*/
+	    	#codedetail{
+	    		width: 100%;
+	    		height: 11.5rem;
+	    		background: rgba(0,0,0,0.5);
+	    		display: -webkit-flex;
+	    		display: flex;
+	    		justify-content: center;
+				align-items: center;
+				position: absolute;
+				z-index: 999;
+	    	}
+	    	#detailimg{
+	    		width:4rem;
+	    		height: 4rem;
+	    	}
+	    	#nogoods{
+	    		width: 100%;
+	    		display: -webkit-flex;
+	    		display: flex;
+	    		flex-direction: column;
+				align-items: center;
+	    	}
+	    	#nogoods div:nth-child(1){
+	    		width: 3rem;
+	    		height: 3rem;
+	    		margin-top: 2.2rem;
+	    		border: 0.01rem solid #CCCCCC;
+	    		border-radius:50% ;
+	    	}
+	    	#nogoods img{
+	    		width: 3rem;
+	    		height: 3rem;
+	    	}
+	    	#nogoods div:nth-child(2),#nogoods div:nth-child(3){
+	    		color: #999999;
+	    		font-size: 0.22rem;
+	    		margin-top: 0.5rem;
+	    	}
+	    	#nogoods div:nth-child(4){
+	    		width: 5.8rem;
+	    		height: 0.6rem;
+	    		display: -webkit-flex;
+	    		display: flex;
+	    		justify-content: space-between;
+				align-items: center;
+	    	}
+	    	#nogoods span{
+	    		display: inline-block;
+	    		width: 2.4rem;
+	    		height: 0.6rem;
+	    		margin-top: 0.6rem;
+	    		text-align: center;
+	    		line-height: 0.6rem;
+	    		border: 0.02rem solid #3285ff;
+	    		border-radius: 0.6rem;
+	    		color: #333333;
+	    		font-size: 0.28rem;
+	    	}
+	    	#myinfo{
+	    		width: 7.5rem;
+	    		height: 4rem;
+	    		display: -webkit-flex;
+	    		display: flex;
+	    		justify-content: center;
+				align-items: center;
+	    	}
+	    	.code{
+	    		display: -webkit-flex;
+	    		display: flex;
+	    		flex-direction: column;
+	    		justify-content: center;
+				align-items: center;
+	    	}
+	    	.code-img{
+	    		width: 2.6rem;
+	    		height: 2.6rem;
+	    		border: 0.01rem solid #CCCCCC;
+	    	}
+	    	.code-img img{
+	    		width: 2.6rem;
+	    		height: 2.6rem;
+	    	}
+	    	.code-title{
+	    		margin-top: 0.3rem;
+	    		font-size: 0.22rem;
+	    		color: #999999;
+	    	}
+	    	.nocode{
+	    		display: -webkit-flex;
+	    		display: flex;
+	    		flex-direction: column;
+	    		justify-content: center;
+				align-items: center;
+	    	}
+	    	.nocode-title{
+	    		font-size: 0.26rem;
+	    		color: #333333;
+	    	}
+	    	.nocode-detail{
+	    		margin-top: 0.1rem;
+	    		font-size: 0.22rem;
+	    		color: #999999;
+	    	}
+	    	.nocode-form{
+	    		display: -webkit-flex;
+	    		display: flex;
+	    		flex-direction: column;
+	    		justify-content: center;
+				align-items: center;
+	    	}
+	    	.form-group{
+	    		margin-top: 0.1rem;
+	    		display: -webkit-flex;
+	    		display: flex;
+	    		justify-content: center;
+				align-items: center;
+	    		width: 6rem;
+	    		height: 0.6rem;
+	    		border-bottom: 0.01rem solid #EEEEEE;
+	    	}
+	    	input{
+	    		border: none;
+	    		width: 6rem;
+	    		height: 0.6rem;
+	    		text-align: center;
+	    	}
+	    	.form-btn{
+	    		width: 2.4rem;
+	    		height: 0.6rem;
+	    		margin-top: 0.3rem;
+	    		text-align: center;
+	    		line-height: 0.6rem;
+	    		border: 0.02rem solid #3285ff;
+	    		border-radius: 0.6rem;
+	    		color: #333333;
+	    		font-size: 0.28rem;
+	    	}
+	    	.gap{
+	    		width: 100%;
+	    		height: 0.1rem;
+	    		background: #EEEEEE;
+	    	}
+	    	.change-title{
+	    		width: 7.5rem;
+	    		height: 0.64rem;
+	    		text-align: center;
+	    		line-height: 0.64rem;
+	    		color: #333333;
+	    		font-size: 0.22rem;
+	    		border-bottom: 0.01rem solid #CCCCCC;
+	    	}
+	    	.change-detail{
+	    		width: 7.5rem;
+	    		height: 8.5rem;
+	    		background: #EEEEEE;
+	    		overflow-y: scroll;
+	    		display: flex;
+	    		flex-direction: column;
+				align-items: center;
+				
+	    	}
+	    	.change-record{
+	    		width: 7.5rem;
+	    		height: 1.6rem;
+	    		min-height: 1.6rem;
+	    		display: flex;
+	    		flex-direction: column;
+				justify-content: center;
+				align-items: center;
+				border-bottom: 0.01rem solid #CCCCCC;
+				background: #FFFFFF;
+	    	}
+	    	.record{
+	    		width: 7rem;
+	    		display: flex;
+	    		justify-content: space-between;
+				align-items: center;
+				
+	    	}
+	    	.order{
+	    		color: #333333;
+	    		font-size: 0.28rem;
+	    	}
+	    	.cash{
+	    		color: #e85016;
+	    		font-size: 0.3rem;
+	    	}
+	    	.record-status{
+	    		color: #999999;
+	    		font-size: 0.22rem;
+	    		margin-top: 0.2rem;
+	    	}
+	    	.weui_toast{
+				font-size: 0.28rem !important;
+    		}
+	    </style>
+       
+    </head>
+    
+    <body>
+    	
+		<div id="all">
+			<!--二维码详情-->
+	    	<div id="codedetail" style="display: none;">
+	    		<img id="detailimg" src="../img/wise_mifi_mine_mifi.png"/>
+	    	</div>
+			<!--未购买商品显示-->
+			<div id="nogoods" >
+				<div><img src="../img/wise_mifi_mine_default.png"/></div>
+				<div>您还未购买维泽无线产品</div>
+				<div>可以直接购买或者扫描他人二维码购买</div>
+				<div>
+					<span id="buy">立即申购</span>
+					<span id="scan">扫二维码购买</span>
+				</div>
+			</div>
+			<!--购买商品显示-->
+			<div id="mygoods" style="display: none;">
+				<div id="myinfo">
+					<div class="code" style="display: none;">
+						<div class="code-img"><img id="codeimg" src="../img/wise_mifi_mine_mifi.png"/></div>
+						<div class="code-title">朋友扫描您的二维码购买产品之后，您可以获得一定数额的返现。</div>
+					</div>
+					<div class="nocode" style="display: none;">
+						<div class="nocode-title">填写资料生成专属二维码。</div>
+						<div class="nocode-detail">朋友扫描您的二维码购买产品后，您可以获得一定数额的现金奖励哦。</div>
+						<div class="nocode-form">
+							<div class="form-group"><input id="name" type="text" placeholder="请输入姓名"/></div>
+							<div class="form-group"><input id="tel" type="text" placeholder="请输入手机号码"/></div>
+							<div class="form-btn" id="createcode">生成二维码</div>
+						</div>
+					</div>
+				</div>
+				<div class="gap"></div>
+				<div id="change">
+					<div class="change-title">交易记录</div>
+					<div class="change-detail">
+						
+					</div>
+				</div>
+			</div>
+		</div>
+    </body>
+</html>
