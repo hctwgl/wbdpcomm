@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.wbdp.bee.dao.Wbl_PackageSkuDAO">
+
+    <sql id="wblPackageSkuBaseColumnSql">
+        ID,
+        SkuID,
+        PacID,
+        Payable,
+        CreateDate,
+        UpdateTime
+    </sql>
+
+    <!-- <sql id="wblPackageSkuBaseWhereSql">
+        <if test="map!=null">
+            <where>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.id)">
+                    ID = #{map.id}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.skuId)">
+                    AND SkuID = #{map.skuId}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.pacId)">
+                    AND PacID = #{map.pacId}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.payable)">
+                    AND Payable = #{map.payable}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.createDate)">
+                    AND CreateDate = #{map.createDate}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.updateTime)">
+                    AND UpdateTime = #{map.updateTime}
+                </if>
+            </where>
+        </if>
+    </sql>
+
+    <insert id="insertWblPackageSku" parameterType="com.wbdp.bee.entity.Wbl_PackageSkuEntity">
+        INSERT INTO wbl_package_sku(
+        <include refid="wblPackageSkuBaseColumnSql"/>
+        )VALUES(
+            #{id},
+            #{skuId},
+            #{pacId},
+            #{payable},
+            #{createDate},
+            #{updateTime}
+        )
+    </insert>
+
+    
+    <delete id="deleteWblPackageSkuById" parameterType="Long">
+        DELETE FROM wbl_package_sku WHERE ID = #{id}
+    </delete>
+
+    <update id="updateWblPackageSku" parameterType="com.wbdp.bee.entity.Wbl_PackageSkuEntity">
+        UPDATE wbl_package_sku
+        <set>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(skuId)">
+                SkuID = #{skuId} ,
+            </if>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(pacId)">
+                PacID = #{pacId} ,
+            </if>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(payable)">
+                Payable = #{payable} ,
+            </if>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(createDate)">
+                CreateDate = #{createDate} ,
+            </if>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(updateTime)">
+                UpdateTime = #{updateTime} ,
+            </if>
+        </set>
+        WHERE ID = #{id}
+    </update>
+
+    <select id="searchWblPackageSkuByParams" parameterType="map" resultMap="wblPackageSkuMap">
+        SELECT
+        <include refid="wblPackageSkuBaseColumnSql"/>
+        FROM wbl_package_sku
+        <include refid="wblPackageSkuBaseWhereSql"/>
+    </select>  -->
+	
+	<!--新增sku与套餐关联数据  -->
+ 	<insert id="insertPackageSku" parameterType="com.wbdp.bee.entity.Wbl_PackageSkuEntity">
+ 		insert into wbl_package_sku(SkuID,PacID,Payable,CreateDate) values(#{skuId},#{pacId},#{payable},#{createDate});
+ 	</insert>
+ 	<!--删除sku与套餐关联数据  -->
+ 	<delete id="deletePackageSku" parameterType="java.lang.Long">
+ 		delete from wbl_package_sku where ID=#{id};
+ 	</delete>
+ 	<!--修改sku与套餐关联数据  -->
+ 	<update id="updatePackageSku" parameterType="com.wbdp.bee.entity.Wbl_PackageSkuEntity">
+ 		update wbl_package_sku set SkuID=#{skuId},PacID=#{pacId},Payable=#{payable},UpdateTime=#{updateTime} where ID=#{id};
+ 	</update>
+ 	<!--获取sku与套餐关联数据（分页）  -->
+ 	<select id="listPackageSku" parameterType="java.lang.Long" resultMap="wblPackageSkuMap">
+ 		select ID,SkuID,PacID,Payable,DATE_FORMAT(CreateDate,"%Y-%m-%e %H:%i:%S") as CreateDate from wbl_package_sku where SkuID=#{skuId};
+ 	</select>
+    <resultMap type="com.wbdp.bee.entity.Wbl_PackageSkuEntity" id="wblPackageSkuMap">
+        <id column="ID" property="id"/>
+        <result column="SkuID" property="skuId"/>
+        <result column="PacID" property="pacId"/>
+        <result column="Payable" property="payable"/>
+        <result column="CreateDate" property="createDate"/>
+        <result column="UpdateTime" property="updateTime"/>
+        <association property="pac" column="PacID" select="getPackage"></association>
+    </resultMap>
+	<!--获取关联数据中的套餐数据  -->
+	<select id="getPackage" parameterType="java.lang.Long" resultType="com.wbdp.bee.entity.Wbl_PackageEntity">
+		select ID,CallPackage,SupID,Details,PacPrice FROM wbl_package WHERE ID=#{PacID};
+	</select>
+</mapper>

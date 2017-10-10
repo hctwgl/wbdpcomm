@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"    
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.wbdp.bee.dao.Wbl_CompblacklistDAO">
+
+      <!-- 运营商黑名单列表 -->
+	<select id="CompblackAllList" resultType="com.wbdp.bee.entity.Wbl_CompblacklistEntity" parameterType="java.lang.Integer">
+		select ID,ComPany,CreatBy,DATE_FORMAT(CreatDate,"%Y-%m-%e %H:%i:%S") as CreatDate from wbl_compblacklist order by CreatDate desc limit #{pageNum},10;
+	</select>
+	
+	
+      <!-- 获取公司黑名单数据量（用于分页） -->
+	<select id="getCount" resultType="java.lang.Integer">
+		select count(0) from wbl_compblacklist;
+	</select>
+	 <!-- 查询是否有重复数据 -->
+	<select id="getCompany" parameterType="java.lang.String" resultType="java.lang.String">
+		select ComPany from wbl_compblacklist where ComPany=#{company};
+	</select>
+	<!--将公司从黑名单清除  -->
+	<delete id="deleteCompblack" parameterType="java.lang.Long">
+		delete from wbl_compblacklist where ID=#{id};
+	</delete>
+
+	<!--新增公司黑名单数据  -->
+	<insert id="insertCompblack" parameterType="com.wbdp.bee.entity.Wbl_CompblacklistEntity">
+		insert into wbl_compblacklist(ComPany,CreatBy,CreatDate) values(#{company},#{creatby},#{creatdate});
+	</insert>
+
+
+
+<!-- 数据库字段 -->
+<sql id="Base_Column_List" >
+ID, ComPany, CreatBy, CreatDate, UpDateBy, UpDateTime
+</sql>
+</mapper>

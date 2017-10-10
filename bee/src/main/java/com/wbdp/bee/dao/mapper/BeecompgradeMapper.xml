@@ -1,0 +1,319 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.wbdp.bee.dao.BeecompgradeMapper">
+
+    <!-- <sql id="wblBeecompgradeBaseColumnSql">
+        ID,
+        BeeID,
+        Grade,
+        Company,
+        CreatDate,
+        UpdateTime,
+        CompanyCode,
+        Address,
+        LinkMan,
+        Phone,
+        Email,
+        LicenseImg,
+        Contract
+    </sql>
+
+    <sql id="wblBeecompgradeBaseWhereSql">
+        <if test="map!=null">
+            <where>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.id)">
+                    ID = #{map.id}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.beeId)">
+                    AND BeeID = #{map.beeId}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.grade)">
+                    AND Grade = #{map.grade}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.company)">
+                    AND Company = #{map.company}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.creatDate)">
+                    AND CreatDate = #{map.creatDate}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.updateTime)">
+                    AND UpdateTime = #{map.updateTime}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.companyCode)">
+                    AND CompanyCode = #{map.companyCode}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.address)">
+                    AND Address = #{map.address}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.linkMan)">
+                    AND LinkMan = #{map.linkMan}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.phone)">
+                    AND Phone = #{map.phone}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.email)">
+                    AND Email = #{map.email}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.licenseImg)">
+                    AND LicenseImg = #{map.licenseImg}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.contract)">
+                    AND Contract = #{map.contract}
+                </if>
+            </where>
+        </if>
+    </sql>
+
+    <insert id="insertWblBeecompgrade" parameterType="com.wisedp.modle.entity.WblBeecompgrade">
+        INSERT INTO wbl_beecompgrade(
+        <include refid="wblBeecompgradeBaseColumnSql"/>
+        )VALUES(
+            #{id},
+            #{beeId},
+            #{grade},
+            #{company},
+            #{creatDate},
+            #{updateTime},
+            #{companyCode},
+            #{address},
+            #{linkMan},
+            #{phone},
+            #{email},
+            #{licenseImg},
+            #{contract}
+        )
+    </insert>
+
+    
+    <delete id="deleteWblBeecompgradeById" parameterType="Long">
+        DELETE FROM wbl_beecompgrade WHERE ID = #{id}
+    </delete>
+
+    <update id="updateWblBeecompgrade" parameterType="com.wisedp.modle.entity.WblBeecompgrade">
+        UPDATE wbl_beecompgrade
+        <set>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(beeId)">
+                BeeID = #{beeId} ,
+            </if>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(grade)">
+                Grade = #{grade} ,
+            </if>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(company)">
+                Company = #{company} ,
+            </if>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(creatDate)">
+                CreatDate = #{creatDate} ,
+            </if>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(updateTime)">
+                UpdateTime = #{updateTime} ,
+            </if>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(companyCode)">
+                CompanyCode = #{companyCode} ,
+            </if>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(address)">
+                Address = #{address} ,
+            </if>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(linkMan)">
+                LinkMan = #{linkMan} ,
+            </if>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(phone)">
+                Phone = #{phone} ,
+            </if>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(email)">
+                Email = #{email} ,
+            </if>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(licenseImg)">
+                LicenseImg = #{licenseImg} ,
+            </if>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(contract)">
+                Contract = #{contract} ,
+            </if>
+        </set>
+        WHERE ID = #{id}
+    </update>
+
+    <select id="searchWblBeecompgradeByParams" parameterType="map" resultMap="wblBeecompgradeMap">
+        SELECT
+        <include refid="wblBeecompgradeBaseColumnSql"/>
+        FROM wbl_beecompgrade
+        <include refid="wblBeecompgradeBaseWhereSql"/>
+    </select> -->
+     <sql id="wblBeecompgradeBaseColumnSql">
+        Company,
+        CreatDate,
+        CompanyCode,
+        Address,
+        LinkMan,
+        Phone,
+        Email,
+        LicenseImg,
+        Contract,
+        CreatBy,
+        MaxAmount,
+        AliScore
+    </sql>
+	<!--查看公司信息 (非拉黑) -->
+	<select id="selectBeeCompany" parameterType="java.lang.Integer" resultType="com.wbdp.bee.entity.BeecompgradeNewEntity">
+		select * from wbl_beecompgrade where CompStatus=0 ORDER BY CreatDate DESC limit #{pageNum},10 ;
+	</select>
+	<!--查看公司信息 (已拉黑) -->
+	<select id="selectBeeCompanyBlack" parameterType="java.lang.Integer" resultType="com.wbdp.bee.entity.BeecompgradeNewEntity">
+		select * from wbl_beecompgrade where CompStatus=1 ORDER BY CreatDate DESC limit #{pageNum},10;
+	</select>
+	<!--根据id查看公司信息  -->
+	<select id="selectBeeCompanyByID" parameterType="java.lang.Long" resultType="com.wbdp.bee.entity.BeecompgradeNewEntity">
+		select * from wbl_beecompgrade where ID=#{id};
+	</select>
+	<!--新增公司信息  -->
+	<insert id="insertBeeCompany" parameterType="com.wbdp.bee.entity.BeecompgradeNewEntity">
+		insert into wbl_beecompgrade
+		( <include refid="wblBeecompgradeBaseColumnSql"/>)
+		values(
+            #{company},
+            #{creatDate},
+            #{companyCode},
+            #{address},
+            #{linkMan},
+            #{phone},
+            #{email},
+            #{licenseImg},
+            #{contract},
+            #{creatBy},
+            #{maxAmount},
+            #{aliScore}
+		)
+	</insert>
+	<!--修改公司评级  -->
+	<update id="updateCompanyGrade" parameterType="com.wbdp.bee.entity.BeecompgradeNewEntity">
+		update wbl_beecompgrade
+		<set>
+			 <if test="grade!=null and grade!=''">
+                Grade = #{grade},
+            </if>
+		</set>
+		where ID=#{id};
+	</update>
+	<!--查询公司数量，用于分页（非拉黑）  -->
+	<select id="getCount" resultType="java.lang.Integer">
+		select count(0) from wbl_beecompgrade where CompStatus=0;
+	</select>
+	<!--查询公司数量，用于分页（已拉黑）  -->
+	<select id="getCountBlack" resultType="java.lang.Integer">
+		select count(0) from wbl_beecompgrade where CompStatus=1;
+	</select>
+	<!--拉黑公司  -->
+	<update id="blackCompany" parameterType="com.wbdp.bee.entity.BeecompgradeNewEntity">
+		update wbl_beecompgrade
+		<set>
+			 <if test="compStatus!=null and compStatus!=''">
+                CompStatus = #{compStatus},
+            </if>
+            <if test="blackBy!=null and blackBy!=''">
+                BlackBy = #{blackBy},
+            </if>
+             <if test="blackReason!=null and blackReason!=''">
+                BlackReason = #{blackReason},
+            </if>
+            <if test="updateTime!=null and updateTime!=''">
+                UpdateTime = #{updateTime},
+            </if>
+		</set>
+		where ID=#{id};
+	</update>
+	<!--将公司从黑名单清除  -->
+	<update id="outBlackCompany" parameterType="java.lang.Long">
+		update wbl_beecompgrade set CompStatus = 0 where ID=#{id};
+	</update>
+	
+	<!--获取公司列表  -->
+	<select id="listCompany" parameterType="java.lang.String" resultType="com.wbdp.bee.entity.BeecompgradeNewEntity">
+		select * from wbl_beecompgrade where CreatBy = #{phone} and CheckStatus = 3  ORDER BY CreatDate DESC;
+	</select>
+	
+	<!--客户经理获取公司列表  -->
+	<select id="listCompanyBySale" parameterType="java.lang.String" resultType="com.wbdp.bee.entity.BeecompgradeNewEntity">
+		select * from wbl_beecompgrade where CreatBy = #{phone}   ORDER BY CreatDate DESC;
+	</select>
+	<!--获取数量  -->
+	<select id="listCompanyCount" parameterType="java.lang.String" resultType="java.lang.Integer">
+		select count(0) from wbl_beecompgrade where CreatBy = #{phone} ;
+	</select>
+	<!--客户经理管理员获取公司列表  -->
+	<select id="listCompanyByMan" parameterType="java.lang.String" resultType="com.wbdp.bee.entity.BeecompgradeNewEntity">
+		select * from wbl_beecompgrade where CreatBy = #{phone} OR CreatBy IN (SELECT Name FROM wbl_saleman WHERE CreatBy = #{phone}) ORDER BY CreatDate DESC;
+	</select>
+	<!--客户经理管理员获取数量  -->
+	<select id="listCompanyByManCount" parameterType="java.lang.String" resultType="java.lang.Integer">
+		select count(0) from wbl_beecompgrade where CreatBy = #{phone} OR CreatBy IN (SELECT Name FROM wbl_saleman WHERE CreatBy = #{phone});
+	</select>
+	<!--客服审核公司完毕  -->
+	<update id="companyYseOrNo">
+		update wbl_beecompgrade
+		<set>
+			<if test="checkStatus != null">
+				CheckStatus = #{checkStatus},
+			</if>
+			<if test="grade != null and grade != 0">
+				Grade = #{grade},
+			</if>
+			<if test="checkReason != null">
+				CheckReason = #{checkReason},
+			</if>
+		</set>
+		where ID=#{id};
+	</update>
+	<!--修改公司信息  -->
+	<update id="updateBeeCompany">
+		update wbl_beecompgrade
+		<set>
+			<if test="company != null">
+				Company = #{company},
+			</if>
+			<if test="companyCode != null">
+				CompanyCode = #{companyCode},
+			</if>
+			<if test="address != null">
+				Address = #{address},
+			</if>
+			<if test="linkMan != null">
+				LinkMan = #{linkMan},
+			</if>
+			<if test="phone != null">
+				Phone = #{phone},
+			</if>
+			<if test="email != null">
+				Email = #{email},
+			</if>
+			<if test="licenseImg != null">
+				LicenseImg = #{licenseImg},
+			</if>
+			<if test="contract != null">
+				Contract = #{contract},
+			</if>
+			<if test="updateTime != null">
+				UpdateTime = #{updateTime},
+			</if>
+			<if test="checkStatus != null">
+				CheckStatus = #{checkStatus},
+			</if>
+		</set>
+		where ID=#{id};
+	</update>
+    <resultMap type="com.wbdp.bee.entity.BeecompgradeNewEntity" id="wblBeecompgradeMap">
+        <id column="ID" property="id"/>
+        <result column="BeeID" property="beeId"/>
+        <result column="Grade" property="grade"/>
+        <result column="Company" property="company"/>
+        <result column="CreatDate" property="creatDate"/>
+        <result column="UpdateTime" property="updateTime"/>
+        <result column="CompanyCode" property="companyCode"/>
+        <result column="Address" property="address"/>
+        <result column="LinkMan" property="linkMan"/>
+        <result column="Phone" property="phone"/>
+        <result column="Email" property="email"/>
+        <result column="LicenseImg" property="licenseImg"/>
+        <result column="Contract" property="contract"/>
+    </resultMap>
+
+</mapper>

@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.wbdp.bee.dao.CompreMapper">
+
+    <!-- <sql id="wblCompreBaseColumnSql">
+        ID,
+        Price,
+        PhoneNumber,
+        Periods,
+        Manager,
+        CreateBy,
+        CreateDate
+    </sql>
+
+    <sql id="wblCompreBaseWhereSql">
+        <if test="map!=null">
+            <where>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.id)">
+                    ID = #{map.id}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.price)">
+                    AND Price = #{map.price}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.phoneNumber)">
+                    AND PhoneNumber = #{map.phoneNumber}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.periods)">
+                    AND Periods = #{map.periods}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.manager)">
+                    AND Manager = #{map.manager}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.createBy)">
+                    AND CreateBy = #{map.createBy}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.createDate)">
+                    AND CreateDate = #{map.createDate}
+                </if>
+            </where>
+        </if>
+    </sql>
+
+    <insert id="insertWblCompre" parameterType="com.wisemifi.wx.entity.WblCompre">
+        INSERT INTO wbl_compre(
+        <include refid="wblCompreBaseColumnSql"/>
+        )VALUES(
+            #{id},
+            #{price},
+            #{phoneNumber},
+            #{periods},
+            #{manager},
+            #{createBy},
+            #{createDate}
+        )
+    </insert>
+
+    
+    <delete id="deleteWblCompreById" parameterType="Long">
+        DELETE FROM wbl_compre WHERE ID = #{id}
+    </delete>
+
+    <update id="updateWblCompre" parameterType="com.wisemifi.wx.entity.WblCompre">
+        UPDATE wbl_compre
+        <set>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(price)">
+                Price = #{price} ,
+            </if>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(phoneNumber)">
+                PhoneNumber = #{phoneNumber} ,
+            </if>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(periods)">
+                Periods = #{periods} ,
+            </if>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(manager)">
+                Manager = #{manager} ,
+            </if>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(createBy)">
+                CreateBy = #{createBy} ,
+            </if>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(createDate)">
+                CreateDate = #{createDate} ,
+            </if>
+        </set>
+        WHERE ID = #{id}
+    </update>
+
+    <select id="searchWblCompreByParams" parameterType="map" resultMap="wblCompreMap">
+        SELECT
+        <include refid="wblCompreBaseColumnSql"/>
+        FROM wbl_compre
+        <include refid="wblCompreBaseWhereSql"/>
+    </select> -->
+	<!--批量上传公司综合数据  -->
+	<insert id="batchInsertCompre" parameterType="java.util.List">
+		INSERT INTO wbl_compre(Price,PhoneNumber,Periods,Manager,Company,CreateBy,CreateDate)
+		VALUES
+		<foreach collection="list" item="item" index="index" separator="," >  
+	        (#{item.price},#{item.phoneNumber},#{item.periods},#{item.manager},#{item.company},#{item.createBy},#{item.createDate})  
+	    </foreach>
+	</insert>
+	<!--添加公司综合数据  -->
+	<insert id="insertCompre" parameterType="com.wbdp.bee.entity.Compre">
+		INSERT INTO wbl_compre(Price,PhoneNumber,Periods,Manager,Company,CreateBy,CreateDate)
+		VALUES
+	       (#{price},#{phoneNumber},#{periods},#{manager},#{company},#{createBy},#{createDate})  
+	</insert>
+	<!-- 客户经理查询公司综合数据列表 -->
+	<select id="selectCompre" resultType="java.util.Map">
+		select Price,PhoneNumber,Periods,Manager,DATE_FORMAT(CreateDate,'%Y-%c-%d %H:%i:%s') as CreateDate,Company from wbl_compre 
+		where Manager=#{username} order by CreateDate desc limit #{pageNum},10;
+	</select>
+	<!-- 客户经理获取数量-->
+	<select id="getCountByManeger" resultType="java.lang.Integer">
+		select count(0) from wbl_compre where Manager=#{username} ;
+	</select>
+	<!-- 客户经管理员查询公司综合数据列表 -->
+	<select id="selectCompreByman" resultType="java.util.Map">
+		select Price,PhoneNumber,Periods,Manager,DATE_FORMAT(CreateDate,'%Y-%c-%d %H:%i:%s') as CreateDate,Company from wbl_compre 
+		where Manager in (select Name from wbl_saleman where CreatBy = #{username} ) order by CreateDate desc limit #{pageNum},10;
+	</select>
+	<!-- 客户管理员获取数量-->
+	<select id="getCount" resultType="java.lang.Integer">
+		select count(0) from wbl_compre where Manager in (select Name from wbl_saleman where CreatBy = #{username} );
+	</select>
+	<!-- 客服查询全部公司综合数据 -->
+	<select id="selectCompreAll" parameterType="java.lang.Integer" resultType="java.util.Map">
+		select Price,PhoneNumber,Periods,Manager,DATE_FORMAT(CreateDate,'%Y-%c-%d %H:%i:%s') as CreateDate,Company from wbl_compre order by CreateDate desc limit #{pageNum},10;
+	</select>
+	<!-- 客服获取数量-->
+	<select id="countCompreAll" resultType="java.lang.Integer">
+		select count(0) from wbl_compre;
+	</select>
+    <resultMap type="com.wbdp.bee.entity.Compre" id="wblCompreMap">
+        <id column="ID" property="id"/>
+        <result column="Price" property="price"/>
+        <result column="PhoneNumber" property="phoneNumber"/>
+        <result column="Periods" property="periods"/>
+        <result column="Manager" property="manager"/>
+        <result column="CreateBy" property="createBy"/>
+        <result column="CreateDate" property="createDate"/>
+    </resultMap>
+
+</mapper>

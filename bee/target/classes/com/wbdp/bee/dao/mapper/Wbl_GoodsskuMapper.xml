@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wbdp.bee.dao.Wbl_GoodsskuDAO" >
+  <resultMap id="BaseResultMap" type="com.wbdp.bee.entity.Wbl_GoodsskuEntity" >
+    <id column="ID" property="id" jdbcType="BIGINT" />
+    <result column="GoodsID" property="goodsid" jdbcType="BIGINT" />
+    <result column="SupID" property="supid" jdbcType="BIGINT" />
+    <result column="ValueIDStr" property="valueidstr" jdbcType="VARCHAR" />
+    <result column="Price" property="price" jdbcType="INTEGER" />
+    <result column="SkuStatus" property="skustatus" jdbcType="INTEGER" />
+    <result column="CreateDate" property="createdate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, GoodsID, ValueIDStr, Price, CreateDate
+  </sql>
+ 	 <!-- 增加sku商品   -->
+  <insert id="insertWbl_GoodsskuEntity" parameterType="com.wbdp.bee.entity.Wbl_GoodsskuEntity">
+  		insert into wbl_goodssku(GoodsID,SupID,ValueIDStr,Price,SkuStatus,CreateDate) values(#{goodsid},#{supid},#{valueidstr},#{price},#{skustatus},#{createdate});
+  </insert>
+  
+  <!--获取商品sku列表信息 -->
+  <select id="listWbl_Goodssku" parameterType="java.lang.Integer" resultType="com.wbdp.bee.entity.Wbl_GoodsskuEntity">
+  	select ID,GoodsID,SupID,SkuStatus,ValueIDStr,Price,CreateDate from wbl_goodssku limit #{pageNum},10;
+  </select>
+  
+  <!--获取商品sku列表总条数  -->
+  <select id="getCount" resultType="java.lang.Integer" >
+  	select count(0) from wbl_goodssku;
+  </select>
+  
+  <!--获取商品sku属性值串信息 -->
+  <select id="listWbl_GoodsskuAll"  resultType="java.lang.String">
+  	select ValueIDStr from wbl_goodssku;
+  </select>
+  
+  <!--修改商品sku上下架状态-->
+  <update id="updateStatus" parameterType="map">
+  	update wbl_goodssku
+  	<set>
+  		<if test="map!=null">
+  			<if test="map.status==1">
+  				SkuStatus = 0
+  			</if>
+  			<if test="map.status==0">
+  				SkuStatus = 1
+  			</if>
+  		</if>
+  	</set>
+  	where ID = #{map.id};
+  </update>
+</mapper>

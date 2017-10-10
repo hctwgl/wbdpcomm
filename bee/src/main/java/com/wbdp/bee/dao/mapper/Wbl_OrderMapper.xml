@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.wbdp.bee.dao.Wbl_OrderDAO">
+
+    <sql id="wblOrderBaseColumnSql">
+        ID,
+        BeeID,
+        Periods,
+        Money,
+        ActualMoney,
+        OrderDate,
+        OrderState,
+        salesManCode,
+        Number,
+        skuID,
+        Address,
+        CreatBy,
+        CreatDate,
+        UpDateBy,
+        UpDateTime,
+        GoodsID
+    </sql>
+
+   <!--  <sql id="wblOrderBaseWhereSql">
+        <if test="map!=null">
+            <where>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.id)">
+                    ID = #{map.id}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.beeId)">
+                    AND BeeID = #{map.beeId}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.periods)">
+                    AND Periods = #{map.periods}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.money)">
+                    AND Money = #{map.money}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.actualMoney)">
+                    AND ActualMoney = #{map.actualMoney}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.orderDate)">
+                    AND OrderDate = #{map.orderDate}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.orderState)">
+                    AND OrderState = #{map.orderState}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.salesManCode)">
+                    AND salesManCode = #{map.salesManCode}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.number)">
+                    AND Number = #{map.number}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.skuId)">
+                    AND skuID = #{map.skuId}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.address)">
+                    AND Address = #{map.address}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.creatBy)">
+                    AND CreatBy = #{map.creatBy}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.creatDate)">
+                    AND CreatDate = #{map.creatDate}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.upDateBy)">
+                    AND UpDateBy = #{map.upDateBy}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.upDateTime)">
+                    AND UpDateTime = #{map.upDateTime}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.goodsId)">
+                    AND GoodsID = #{map.goodsId}
+                </if>
+            </where>
+        </if>
+    </sql>
+
+    <insert id="insertWblOrder" parameterType="com.wbdp.bee.entity.Wbl_OrderEntity">
+        INSERT INTO wbl_order(
+        <include refid="wblOrderBaseColumnSql"/>
+        )VALUES(
+            #{id},
+            #{beeId},
+            #{periods},
+            #{money},
+            #{actualMoney},
+            #{orderDate},
+            #{orderState},
+            #{salesManCode},
+            #{number},
+            #{skuId},
+            #{address},
+            #{creatBy},
+            #{creatDate},
+            #{upDateBy},
+            #{upDateTime},
+            #{goodsId}
+        )
+    </insert>
+
+    
+    <delete id="deleteWblOrderById" parameterType="Long">
+        DELETE FROM wbl_order WHERE ID = #{id}
+    </delete>
+
+    <update id="updateWblOrder" parameterType="com.wbdp.bee.entity.Wbl_OrderEntity">
+        UPDATE wbl_order
+        <set>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(beeId)">
+                BeeID = #{beeId} ,
+            </if>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(periods)">
+                Periods = #{periods} ,
+            </if>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(money)">
+                Money = #{money} ,
+            </if>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(actualMoney)">
+                ActualMoney = #{actualMoney} ,
+            </if>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(orderDate)">
+                OrderDate = #{orderDate} ,
+            </if>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(orderState)">
+                OrderState = #{orderState} ,
+            </if>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(salesManCode)">
+                salesManCode = #{salesManCode} ,
+            </if>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(number)">
+                Number = #{number} ,
+            </if>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(skuId)">
+                skuID = #{skuId} ,
+            </if>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(address)">
+                Address = #{address} ,
+            </if>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(creatBy)">
+                CreatBy = #{creatBy} ,
+            </if>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(creatDate)">
+                CreatDate = #{creatDate} ,
+            </if>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(upDateBy)">
+                UpDateBy = #{upDateBy} ,
+            </if>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(upDateTime)">
+                UpDateTime = #{upDateTime} ,
+            </if>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(goodsId)">
+                GoodsID = #{goodsId} ,
+            </if>
+        </set>
+        WHERE ID = #{id}
+    </update> -->
+
+	<!--获取订单及关联列表  -->
+	<select id="listOrder" parameterType="java.lang.Integer" resultMap="wblOrderMap">
+		select ID,Periods,Money,DATE_FORMAT(OrderDate,"%Y-%m-%e %H:%i:%S") as OrderDate,GoodsID,BeeID,OrderState,salesManCode from wbl_order order by OrderDate desc limit #{pageNum},10 ;
+	</select>
+	
+	<!--获取数据总数  -->
+	<select id="getCount" resultType="java.lang.Integer">
+		select count(0) from wbl_order ;
+	</select>
+	
+	<!--ajax定时刷新获取未审核订单数量  -->
+	<select id="getOrderCount" resultType="java.lang.Integer">
+		SELECT COUNT(OrderState) FROM wbl_order WHERE OrderState = 0;
+	</select>
+	
+	<!--审核订单并修改订单状态  -->
+	<update id="updateOrder" parameterType="com.wbdp.bee.entity.Wbl_OrderEntity">
+		update wbl_order set OrderState = #{orderState} where ID = #{id};
+	</update>
+	
+	<!--根据订单id获取订单及关联数据  -->
+	<select id="getOrder" parameterType="java.lang.Long" resultMap="wblOrderreviewMap">
+		select ID,Periods,Money,DATE_FORMAT(OrderDate,"%Y-%m-%e %H:%i:%S") as OrderDate,GoodsID,BeeID,OrderState,skuID,salesManCode,OnlineSign from wbl_order where ID=#{id} ;
+	</select>
+	<!--获取订单审核推送所需数据  -->
+	<select id="listOrderReview" parameterType="java.lang.Long" resultMap="modelOrderMap">
+		SELECT o.`ID`,bee.`BeeName`,bee.`BeeWX`,good.`GoodsName`,p.`CallPackage`,sup.`Supplier`,sku.`ValueIDStr` FROM wbl_bee AS bee,wbl_order AS o,wbl_package_sku AS sp,
+		wbl_package AS p,wbl_goods AS good,wbl_supplier AS sup,wbl_goodssku AS sku WHERE
+		o.`ID` = #{id} AND o.`BeeID`=bee.`ID` AND o.`GoodsID`=good.`ID` AND o.`skuID`=sku.`ID` AND sku.`SupID`=sup.`ID` AND sku.`ID`=sp.`SkuID` AND sp.`PacID`=p.`ID` and o.`Package_SkuID`=sp.`ID`
+	</select>
+	<!--订单审核推送数据模型类  -->
+	<resultMap type="com.wbdp.bee.entity.Wbl_OrderReviewModel" id="modelOrderMap">
+        <result column="ID" property="id"/>
+        <result column="BeeName" property="beeName"/>
+        <result column="BeeWX" property="beeWX"/>
+        <result column="GoodsName" property="goodsName"/>
+        <result column="CallPackage" property="callPackage"/>
+        <result column="Supplier" property="supplier"/>
+        <result column="ValueIDStr" property="valueStr"/>
+    </resultMap> 
+    <!--订单列表  -->
+     <resultMap type="com.wbdp.bee.entity.Wbl_OrderEntity" id="wblOrderMap">
+        <id column="ID" property="id"/>
+        <result column="BeeID" property="beeId"/>
+        <result column="Periods" property="periods"/>
+        <result column="Money" property="money"/>
+        <result column="ActualMoney" property="actualMoney"/>
+        <result column="OrderDate" property="orderDate"/>
+        <result column="OrderState" property="orderState"/>
+        <result column="salesManCode" property="salesManCode"/>
+        <result column="Number" property="number"/>
+        <result column="skuID" property="skuId"/>
+        <result column="Address" property="address"/>
+        <result column="CreatBy" property="creatBy"/>
+        <result column="CreatDate" property="creatDate"/>
+        <result column="UpDateBy" property="upDateBy"/>
+        <result column="UpDateTime" property="upDateTime"/>
+        <result column="GoodsID" property="goodsId"/>
+        <result column="OnlineSign" property="onlineSign"/>
+        <association property="bee" column="BeeID" select="getBee"/>
+        <association property="goods" column="GoodsID" select="getGoods"/>
+    </resultMap> 
+    
+    <!--订单审核  -->
+    <resultMap type="com.wbdp.bee.entity.Wbl_OrderEntity" id="wblOrderreviewMap">
+        <id column="ID" property="id"/>
+        <result column="BeeID" property="beeId"/>
+        <result column="Periods" property="periods"/>
+        <result column="Money" property="money"/>
+        <result column="ActualMoney" property="actualMoney"/>
+        <result column="OrderDate" property="orderDate"/>
+        <result column="OrderState" property="orderState"/>
+        <result column="salesManCode" property="salesManCode"/>
+        <result column="Number" property="number"/>
+        <result column="skuID" property="skuId"/>
+        <result column="Address" property="address"/>
+        <result column="CreatBy" property="creatBy"/>
+        <result column="CreatDate" property="creatDate"/>
+        <result column="UpDateBy" property="upDateBy"/>
+        <result column="UpDateTime" property="upDateTime"/>
+        <result column="GoodsID" property="goodsId"/>
+        <result column="OnlineSign" property="onlineSign"/>
+        <association property="bee" column="BeeID" select="getBee"/>
+        <association property="goods" column="GoodsID" select="getGoods"/>
+        <association property="social" column="BeeID" select="getSocial"/>
+        <association property="bankcard" column="BeeID" select="getBankcard"/>
+    </resultMap> 
+	<!--获取订单对应商品  -->
+	<select id="getGoods" parameterType="java.lang.Long" resultType="com.wbdp.bee.entity.Wbl_GoodsEntity">
+		select ID,GoodsName from wbl_goods where ID = #{goodsId};
+	</select>
+	<!--获取订单对应客户  -->
+	<select id="getBee" parameterType="java.lang.Long" resultType="com.wbdp.bee.entity.Wbl_BeeEntity">
+		select ID,BeeName,BeeWX,Phone,BeeCard,CardImage,Company from wbl_bee where ID = #{BeeID};
+	</select>
+	<!--获取订单对应客户社保资料  -->
+	<select id="getSocial" parameterType="java.lang.Long" resultType="com.wbdp.bee.entity.Wbl_SocialdataEntity">
+		select ID,Company from wbl_socialdata where BeeID = #{BeeID};
+	</select>
+	<!-- 获取订单对应客户银行卡子资料 -->
+	<select id="getBankcard" parameterType="java.lang.Long" resultType="com.wbdp.bee.entity.Wbl_BankcardEntity">
+	   select ID,BankCard from wbl_bankcard where BeeID = #{BeeID}; 
+	</select>
+</mapper>

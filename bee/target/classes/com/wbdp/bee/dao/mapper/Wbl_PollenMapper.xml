@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"    
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.wbdp.bee.dao.Wbl_PollenDAO">
+
+<!-- 检查该客户是否存在表中(即是否第一次申请信用) -->
+<select id="checkBeeid" resultType="Integer">
+SELECT count(1) FROM wbl_pollen WHERE BeeID=#{beeid};
+</select>
+
+<!-- 判断重新获取额度是否大于一个月 -->
+<select id="checkBeeidOfDate" resultType="boolean">
+SELECT COUNT(1) FROM wbl_pollen where DATE_SUB(CURDATE(), INTERVAL 30 DAY) > date(UpdateTime) AND BeeID=#{beeid};
+</select>
+
+<!--根据客户ID获取额度  -->
+<select id="getWbl_PollenEntity" parameterType="java.lang.Long" resultType="com.wbdp.bee.entity.Wbl_PollenEntity">
+	SELECT CreditLimit-UsedCredit AS CreditLimit FROM wbl_pollen where  BeeID=#{beeid};
+</select>
+
+<!-- 根据客户id获取计算花粉额度的条件(社保账号密码,车险号码,信用卡号)-->
+<select id="getPollenInfoOfBee" resultType="Map">
+SELECT
+be.ID,be.BeeName,be.BeeCard,be.Company,be.BeeType,be.IsNoOlder,sa.SocialAccount,sa.SocialPassWord,be.InsuranceNum,cd.BankName,cd.CreditCard
+FROM wbl_creditcard AS cd
+RIGHT JOIN wbl_bee AS be ON be.ID = cd.BeeID
+LEFT JOIN wbl_socialdata AS sa ON be.ID = sa.BeeID
+WHERE
+be.ID=#{beeid}
+</select>
+
+<!-- 增加 --> 
+<select id="insertPollen">
+INSERT INTO wbl_pollen
+(BeeID,CreditLimit,UsedCredit,CreditDate,CreatDate,UpdateTime)
+values
+(#{beeid,jdbcType=BIGINT},#{huafentotal,jdbcType=INTEGER},0,#{nowtime,jdbcType=TIMESTAMP},#{nowtime,jdbcType=TIMESTAMP},#{nowtime,jdbcType=TIMESTAMP})
+</select>
+ 
+<!-- 修改 --> 
+<update id="updatePollen">
+UPDATE wbl_pollen SET
+CreditLimit = #{huafentotal,jdbcType=INTEGER},
+UpdateTime = #{nowtime,jdbcType=TIMESTAMP}
+WHERE
+BeeID = #{beeid,jdbcType=BIGINT}
+</update> 
+
+ <!--审核通过后修改已用额度  -->
+ <update id="updatePollenReview">
+ 	update wbl_pollen
+ 	<set>
+ 		<if test="usedCredit != null">
+ 			UsedCredit = #{usedCredit},
+ 		</if>
+ 	</set>
+ 	WHERE BeeID = #{beeid};
+ </update>
+ <!--根据客户ID获取已用额度  -->
+<select id="getUsedCredit" parameterType="java.lang.Long" resultType="java.lang.Integer">
+	SELECT UsedCredit  FROM wbl_pollen where  BeeID=#{beeid};
+</select>
+ <!-- 查询公司最大额度 -->
+ <select id="getCompanyMaxAmount" parameterType="java.lang.String" resultType="java.lang.Integer">
+ 	select MaxAmount from wbl_beecompgrade where Company=#{company};
+ </select>
+ 
+<!-- 数据库字段 -->
+<sql id="Base_Column_List" >
+ ID, BeeID, CreditLimit, UsedCredit, CreditDate, CreatDate, UpdateTime
+</sql> 
+</mapper>

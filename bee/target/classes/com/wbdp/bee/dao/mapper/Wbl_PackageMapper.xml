@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.wbdp.bee.dao.Wbl_PackageDAO">
+
+    <sql id="wblPackageBaseColumnSql">
+        ID,
+        CallPackage,
+        SupID,
+        Details,
+        CreateDate,
+        UpdateTime
+    </sql>
+
+    <!-- <sql id="wblPackageBaseWhereSql">
+        <if test="map!=null">
+            <where>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.id)">
+                    ID = #{map.id}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.callPackage)">
+                    AND CallPackage = #{map.callPackage}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.supId)">
+                    AND SupID = #{map.supId}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.details)">
+                    AND Details = #{map.details}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.createDate)">
+                    AND CreateDate = #{map.createDate}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.updateTime)">
+                    AND UpdateTime = #{map.updateTime}
+                </if>
+            </where>
+        </if>
+    </sql>
+
+    <insert id="insertWblPackage" parameterType="com.wbdp.bee.entity.Wbl_PackageEntity">
+        INSERT INTO wbl_package(
+        <include refid="wblPackageBaseColumnSql"/>
+        )VALUES(
+            #{id},
+            #{callPackage},
+            #{supId},
+            #{details},
+            #{createDate},
+            #{updateTime}
+        )
+    </insert>
+
+    
+    <delete id="deleteWblPackageById" parameterType="Long">
+        DELETE FROM wbl_package WHERE ID = #{id}
+    </delete>
+
+    <update id="updateWblPackage" parameterType="com.wbdp.bee.entity.Wbl_PackageEntity">
+        UPDATE wbl_package
+        <set>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(callPackage)">
+                CallPackage = #{callPackage} ,
+            </if>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(supId)">
+                SupID = #{supId} ,
+            </if>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(details)">
+                Details = #{details} ,
+            </if>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(createDate)">
+                CreateDate = #{createDate} ,
+            </if>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(updateTime)">
+                UpdateTime = #{updateTime} ,
+            </if>
+        </set>
+        WHERE ID = #{id}
+    </update>
+
+    <select id="searchWblPackageByParams" parameterType="map" resultMap="wblPackageMap">
+        SELECT
+        <include refid="wblPackageBaseColumnSql"/>
+        FROM wbl_package
+        <include refid="wblPackageBaseWhereSql"/>
+    </select> -->
+	<!--新增话费套餐数据  -->
+	<insert id="insertPackage" parameterType="com.wbdp.bee.entity.Wbl_PackageEntity">
+		insert into wbl_package(CallPackage,SupID,Details,PacPrice,CreateDate) values(#{callPackage},#{supId},#{details},#{pacPrice},#{createDate});
+	</insert>
+	
+	<!--删除话费套餐数据  -->
+	<delete id="deletePackage" parameterType="java.lang.Long">
+		DELETE FROM wbl_package WHERE ID = #{id};
+	</delete>
+	
+	<!--修改话费套餐数据  -->
+	<update id="updatePackage" parameterType="com.wbdp.bee.entity.Wbl_PackageEntity">
+		UPDATE wbl_package set CallPackage=#{callPackage},SupID=#{supId},Details=#{details},UpdateTime=#{updateTime} where ID = #{id};
+	</update>
+	
+	<!--关联查询话费套餐与供应商数据（分页） -->
+	<select id="listPackage" parameterType="java.lang.Integer" resultMap="wblPackageMap">
+		select ID,CallPackage,SupID,Details,DATE_FORMAT(CreateDate,"%Y-%m-%e %H:%i:%S") as CreateDate from wbl_package order by CreateDate desc  limit #{pageNum},5;
+	</select>
+	
+	<!--查询关联供应商数据  -->
+	<select id="getSupplier" parameterType="java.lang.Long" resultType="com.wbdp.bee.entity.Wbl_SupplierEntity">
+		select ID,Supplier from wbl_supplier where ID=#{SupID};
+	</select>
+	
+	<!--查询数据总数（用于分页） -->
+	<select id="getCount" resultType="java.lang.Integer">
+		select count(0) from wbl_package;
+	</select>
+	<!--根据供应商id查询套餐数据  -->
+	<select id="getPackage" parameterType="java.lang.Long" resultType="com.wbdp.bee.entity.Wbl_PackageEntity">
+		SELECT ID,CallPackage FROM wbl_package WHERE SupID=(SELECT SupID FROM wbl_goodssku WHERE ID=#{skuID});
+	</select>
+    <resultMap type="com.wbdp.bee.entity.Wbl_PackageEntity" id="wblPackageMap">
+        <id column="ID" property="id"/>
+        <result column="CallPackage" property="callPackage"/>
+        <result column="SupID" property="supId"/>
+        <result column="Details" property="details"/>
+         <result column="PacPrice" property="pacPrice"/>
+        <result column="CreateDate" property="createDate"/>
+        <result column="UpdateTime" property="updateTime"/>
+        <association property="supplier" column="SupID" select="getSupplier"/>
+    </resultMap>
+
+</mapper>

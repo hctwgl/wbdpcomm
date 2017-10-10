@@ -1,0 +1,204 @@
+--------------------------------------------------2017/7/10-----------------------------------------------
+接口名称:客户列表
+地址:beeList
+入参:{pageNum:页码}
+例:
+{
+    "data": [
+        {
+            "BeeCard": "464643494648494348",
+            "BeeName": "陈梓平",
+            "BeeStatus": 1,
+            "BeeWX": "odXEdwalok7od7Rs6lkZI0YWju70",
+            "CardImage": "{\"secondPath\":\"http://wisedp.com/BeeCost/downimg/odXEdwalok7od7Rs6lkZI0YWju70-1499940352-02.png\",\"firstPath\":\"http://wisedp.com/BeeCost/downimg/odXEdwalok7od7Rs6lkZI0YWju70-1499940352-01.png\"}",
+            "Company": "维泽数据",
+            "CreditLimit": 16800,
+            "Education": "1",
+            "ID": 10,
+            "Marriage": 1,
+            "Phone": "18475525887",
+            "Sex": 1,
+            "UpDateBy": "微信管理员",
+            "UpDateTime": 1500101870000
+        },
+        {
+            "BeeCard": "4307****2517",
+            "BeeName": "丁杰",
+            "BeeWX": "odXEdwXSjZpA0PD5sHsaml-CRDtM",
+            "CardImage": "{\"secondPath\":\"http://wisedp.com/BeeCost/downimg/odXEdwXSjZpA0PD5sHsaml-CRDtM-1500105657-02.png\",\"firstPath\":\"http://wisedp.com/BeeCost/downimg/odXEdwXSjZpA0PD5sHsaml-CRDtM-1500105657-01.png\"}",
+            "Company": "维泽1",
+            "CreditLimit": 9300,
+            "Education": "1",
+            "ID": 13,
+            "Marriage": 1,
+            "Phone": "15323717674",
+            "Sex": 1,
+            "UpDateBy": "微信管理员",
+            "UpDateTime": 1500103686000
+        },
+        {
+            "BeeCard": "4304****3615",
+            "BeeName": "李坤保",
+            "BeeWX": "odXEdwVBkxuAsZhh7LjFiqVmfpi4",
+            "CardImage": "{\"secondPath\":\"http://wisedp.com/BeeCost/downimg/odXEdwVBkxuAsZhh7LjFiqVmfpi4-1500099182-02.png\",\"firstPath\":\"http://wisedp.com/BeeCost/downimg/odXEdwVBkxuAsZhh7LjFiqVmfpi4-1500099182-01.png\"}",
+            "Company": "维泽数据有限公司",
+            "CreditLimit": 9300,
+            "Education": "3",
+            "ID": 14,
+            "Marriage": 0,
+            "Phone": "18688953728",
+            "Sex": 1,
+            "UpDateBy": "微信管理员",
+            "UpDateTime": 1500104113000
+        },
+        {
+            "BeeCard": "44142319820415311X",
+            "BeeName": "张志宇",
+            "BeeWX": "odXEdwSc_q-p6Jjo6ZlXXO-Yfp28",
+            "CardImage": "{\"secondPath\":\"http://wisedp.com/BeeCost/downimg/odXEdwSc_q-p6Jjo6ZlXXO-Yfp28-1500109589-02.png\",\"firstPath\":\"http://wisedp.com/BeeCost/downimg/odXEdwSc_q-p6Jjo6ZlXXO-Yfp28-1500109589-01.png\"}",
+            "Company": "便易通科技",
+            "CreditLimit": 9300,
+            "Education": "1",
+            "ID": 16,
+            "Marriage": 0,
+            "Phone": "18680662628",
+            "Sex": 1,
+            "UpDateBy": "微信管理员",
+            "UpDateTime": 1500109592000
+        },
+        {
+            "BeeWX": "odXEdwTfo0tMOJYbN4oRn6n3YfPM",
+            "CreditLimit": 9300,
+            "ID": 15,
+            "Phone": "18926269099"
+        },
+        {
+            "BeeWX": "odXEdwVBwTbt58eqD83hj-f9misQ",
+            "CreditLimit": 9300,
+            "ID": 17,
+            "Phone": "18565701615"
+        }
+    ],
+    "msg": "",
+    "pages": 1,
+    "stutus": "SUCCESS"
+}
+---------------------------------------------------------------------------------------------------------
+
+
+--------------------------------------------------2017/7/17-----------------------------------------------
+接口名称:客户列表详细(根据id查询客户详细资料)
+地址:beeListOfID
+入参:{pageNum:页码}
+出参:
+{
+    "data": [
+        {
+            "bankcardList": [
+                {
+                    "bank": "农业",
+                    "bankcard": "6214784123698741259",
+                    "beeid": 10,
+                    "city": "4984",
+                    "creatby": "",
+                    "creatdate": "",
+                    "id": 10,
+                    "openbank": "农业",
+                    "updateby": "微信管理员",
+                    "updatetime": "2017-07-15 14:57:50"
+                },
+                {
+                    "bank": "农业",
+                    "bankcard": "6214784123698741259",
+                    "beeid": 10,
+                    "city": "深圳市",
+                    "creatby": "",
+                    "creatdate": "",
+                    "id": 10,
+                    "openbank": "农业",
+                    "updateby": "微信管理员",
+                    "updatetime": "2017-07-15 14:57:50"
+                }
+            ],
+            "beeaddressList": [
+                {
+                    "area": "489",
+                    "beeid": 10,
+                    "city": "4984",
+                    "creatdate": "",
+                    "detaddress": "489",
+                    "id": 10,
+                    "province": "49849",
+                    "type": 0
+                },
+                {
+                    "area": "龙岗区",
+                    "beeid": 10,
+                    "city": "深圳市",
+                    "creatdate": "",
+                    "detaddress": "打我的武器",
+                    "id": 10,
+                    "province": "广东省-深圳市-龙岗区-深圳市-龙岗区",
+                    "type": 1
+                }
+            ],
+            "beecard": "464643494648494348",
+            "beename": "陈梓平",
+            "beestatus": 1,
+            "beewx": "odXEdwalok7od7Rs6lkZI0YWju70",
+            "cardimage": "{\"secondPath\":\"http://wisedp.com/BeeCost/downimg/odXEdwalok7od7Rs6lkZI0YWju70-1499940352-02.png\",\"firstPath\":\"http://wisedp.com/BeeCost/downimg/odXEdwalok7od7Rs6lkZI0YWju70-1499940352-01.png\"}",
+            "company": "维泽数据",
+            "creatby": "",
+            "creatdate": "",
+            "education": "1",
+            "id": 10,
+            "linkmanList": [
+                {
+                    "beeid": 10,
+                    "creatby": "",
+                    "creatdate": "",
+                    "id": 10,
+                    "linkmanname": "鬼知道",
+                    "phone": "18475525887",
+                    "relation": "666",
+                    "updateby": "微信管理员",
+                    "updatetime": "2017-07-15 14:57:50"
+                }
+            ],
+            "marriage": 1,
+            "phone": "18475525887",
+            "pollenList": [
+                {
+                    "beeid": 10,
+                    "creatdate": "",
+                    "creditdate": "2017-07-13 18:57:24",
+                    "creditlimit": 16800,
+                    "id": 10,
+                    "updatetime": "2017-07-15 14:57:50"
+                }
+            ],
+            "sex": 1,
+            "socialdataList": [
+                {
+                    "balance": 18239,
+                    "base": 2130,
+                    "beeid": 10,
+                    "company": "维泽数据",
+                    "creatby": "",
+                    "creatdate": "",
+                    "id": 10,
+                    "paytime": 5,
+                    "socialaccount": "96465983898",
+                    "socialpassword": "e5d1ae5f2a55a362",
+                    "socialstate": 0,
+                    "updateby": "微信管理员",
+                    "updatetime": "2017-07-15 14:57:50"
+                }
+            ],
+            "updateby": "微信管理员",
+            "updatetime": "2017-07-15 14:57:50"
+        }
+    ],
+    "msg": "",
+    "stutus": "SUCCESS"
+}

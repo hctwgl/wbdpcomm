@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wbdp.bee.dao.Wbl_GoodsDAO" >
+  <resultMap id="BaseResultMap" type="com.wbdp.bee.entity.Wbl_GoodsEntity" >
+    <id column="ID" property="id" jdbcType="BIGINT" />
+    <result column="GoodsName" property="goodsname" jdbcType="VARCHAR" />
+    <result column="GoodsState" property="goodsstate" jdbcType="INTEGER" />
+    <result column="CreatBy" property="creatby" jdbcType="VARCHAR" />
+    <result column="CreatDate" property="creatdate" jdbcType="TIMESTAMP" />
+    <result column="UpDateBy" property="updateby" jdbcType="VARCHAR" />
+    <result column="UpDateTime" property="updatetime" jdbcType="TIMESTAMP" />
+    <result column="GoodsTypeID" property="goodstypeid" jdbcType="BIGINT" />
+     <result column="SupID" property="supid" jdbcType="BIGINT" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, GoodsName, GoodsState, CreatBy, CreatDate, UpDateBy, UpDateTime, GoodsTypeID
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from wbl_goods
+    where ID = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from wbl_goods
+    where ID = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.wbdp.bee.entity.Wbl_GoodsEntity" >
+    insert into wbl_goods (ID, GoodsName, GoodsState, 
+      CreatBy, CreatDate, UpDateBy, 
+      UpDateTime, GoodsTypeID)
+    values (#{id,jdbcType=BIGINT}, #{goodsname,jdbcType=VARCHAR}, #{goodsstate,jdbcType=INTEGER}, 
+      #{creatby,jdbcType=VARCHAR}, #{creatdate,jdbcType=TIMESTAMP}, #{updateby,jdbcType=VARCHAR}, 
+      #{updatetime,jdbcType=TIMESTAMP}, #{goodstypeid,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wbdp.bee.entity.Wbl_GoodsEntity" >
+    insert into wbl_goods
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="goodsname != null" >
+        GoodsName,
+      </if>
+      <if test="goodsstate != null" >
+        GoodsState,
+      </if>
+      <if test="creatby != null" >
+        CreatBy,
+      </if>
+      <if test="creatdate != null" >
+        CreatDate,
+      </if>
+      <if test="updateby != null" >
+        UpDateBy,
+      </if>
+      <if test="updatetime != null" >
+        UpDateTime,
+      </if>
+      <if test="goodstypeid != null" >
+        GoodsTypeID,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="goodsname != null" >
+        #{goodsname,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsstate != null" >
+        #{goodsstate,jdbcType=INTEGER},
+      </if>
+      <if test="creatby != null" >
+        #{creatby,jdbcType=VARCHAR},
+      </if>
+      <if test="creatdate != null" >
+        #{creatdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateby != null" >
+        #{updateby,jdbcType=VARCHAR},
+      </if>
+      <if test="updatetime != null" >
+        #{updatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="goodstypeid != null" >
+        #{goodstypeid,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wbdp.bee.entity.Wbl_GoodsEntity" >
+    update wbl_goods
+    <set >
+      <if test="goodsname != null" >
+        GoodsName = #{goodsname,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsstate != null" >
+        GoodsState = #{goodsstate,jdbcType=INTEGER},
+      </if>
+      <if test="creatby != null" >
+        CreatBy = #{creatby,jdbcType=VARCHAR},
+      </if>
+      <if test="creatdate != null" >
+        CreatDate = #{creatdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateby != null" >
+        UpDateBy = #{updateby,jdbcType=VARCHAR},
+      </if>
+      <if test="updatetime != null" >
+        UpDateTime = #{updatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="goodstypeid != null" >
+        GoodsTypeID = #{goodstypeid,jdbcType=BIGINT},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wbdp.bee.entity.Wbl_GoodsEntity" >
+    update wbl_goods
+    set GoodsName = #{goodsname,jdbcType=VARCHAR},
+      GoodsState = #{goodsstate,jdbcType=INTEGER},
+      CreatBy = #{creatby,jdbcType=VARCHAR},
+      CreatDate = #{creatdate,jdbcType=TIMESTAMP},
+      UpDateBy = #{updateby,jdbcType=VARCHAR},
+      UpDateTime = #{updatetime,jdbcType=TIMESTAMP},
+      GoodsTypeID = #{goodstypeid,jdbcType=BIGINT}
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  
+  <!--根据商品名称查询商品信息  -->
+  <select id="getWbl_GoodsEntity"  resultType="com.wbdp.bee.entity.Wbl_GoodsEntity">
+  	select ID ,GoodsName,GoodsState from wbl_goods where GoodsName=#{goodsName} and SupID = #{supid};
+  </select>
+  
+  <!--新增商品信息并返回当前插入数据的id  -->
+  <insert id="insertWbl_GoodsEntity" parameterType="com.wbdp.bee.entity.Wbl_GoodsEntity">
+  		insert into wbl_goods(GoodsName,GoodsState,CreatBy,CreatDate,GoodsTypeID,SupID) 
+  		values(#{goodsname},#{goodsstate},#{creatby},#{creatdate},#{goodstypeid},#{supid})
+  		<selectKey resultType="java.lang.Long" order="AFTER" keyProperty="id">
+            SELECT LAST_INSERT_ID() AS ID
+        </selectKey>
+  </insert>
+</mapper>

@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"    
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.wbdp.bee.dao.Wbl_SalemanDAO">
+
+<!-- 业务员增加 -->
+<insert id="SalemanInsert" parameterType="com.wbdp.bee.entity.Wbl_SalemanEntity" useGeneratedKeys="true" keyProperty ="id">
+    insert into wbl_saleman
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="salemanwx != null" >
+        SaleManWX,
+      </if>
+      <if test="phone != null" >
+        Phone,
+      </if>
+      <if test="sex != null" >
+        Sex,
+      </if>
+      <if test="salemancard != null" >
+        SaleManCard,
+      </if>
+      <if test="recommend != null" >
+        Recommend,
+      </if>
+      <if test="supplierid != null" >
+        SupplierID,
+      </if>
+      <if test="creatby != null" >
+        CreatBy,
+      </if>
+      <if test="creatdate != null" >
+        CreatDate,
+      </if>
+      <if test="updateby != null" >
+        UpDateBy,
+      </if>
+      <if test="updatetime != null" >
+        UpDateTime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="salemanwx != null" >
+        #{salemanwx,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null" >
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null" >
+        #{sex,jdbcType=INTEGER},
+      </if>
+      <if test="salemancard != null" >
+        #{salemancard,jdbcType=VARCHAR},
+      </if>
+      <if test="recommend != null" >
+        #{recommend,jdbcType=VARCHAR},
+      </if>
+      <if test="supplierid != null" >
+        #{supplierid,jdbcType=BIGINT},
+      </if>
+      <if test="creatby != null" >
+        #{creatby,jdbcType=VARCHAR},
+      </if>
+      <if test="creatdate != null" >
+        #{creatdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateby != null" >
+        #{updateby,jdbcType=VARCHAR},
+      </if>
+      <if test="updatetime != null" >
+        #{updatetime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+
+<!-- 业务员删除 -->
+<delete id="SalemanDelete" >
+ delete from wbl_saleman
+ where ID = #{id,jdbcType=BIGINT}
+</delete>
+
+<!-- 业务员修改 -->
+<update id="SalemanUpdate" parameterType="com.wbdp.bee.entity.Wbl_SalemanEntity" >
+  update wbl_saleman
+    <set >
+      <if test="salemanwx != null" >
+        SaleManWX = #{salemanwx,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null" >
+        Phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null" >
+        Sex = #{sex,jdbcType=INTEGER},
+      </if>
+      <if test="salemancard != null" >
+        SaleManCard = #{salemancard,jdbcType=VARCHAR},
+      </if>
+      <if test="supplierid != null" >
+        SupplierID = #{supplierid,jdbcType=BIGINT},
+      </if>
+      <if test="creatby != null" >
+        CreatBy = #{creatby,jdbcType=VARCHAR},
+      </if>
+      <if test="creatdate != null" >
+        CreatDate = #{creatdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateby != null" >
+        UpDateBy = #{updateby,jdbcType=VARCHAR},
+      </if>
+      <if test="updatetime != null" >
+        UpDateTime = #{updatetime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=BIGINT}
+</update>
+<!-- 业务员推荐码修改 -->
+<update id="SalemanUpdateRecommend">
+UPDATE wbl_saleman SET Recommend=#{recommend} WHERE id=#{id};
+</update>
+
+<!-- 业务员列表 -->
+<select id="SalemanAllList" resultType="com.wbdp.bee.entity.Wbl_SalemanEntity" >
+select <include refid="Base_Column_List"/>,sr.Supplier AS SupplierName from wbl_saleman sn LEFT JOIN wbl_supplier sr ON sn.SupplierID=sr.ID
+LIMIT #{pageNum},10;
+</select>
+<!-- 业务员列表大小 -->
+<select id="SalemanAllListSize" resultType="Integer" >
+select count(1) from wbl_saleman
+</select>
+
+
+
+
+<!-- 表字段 -->
+  <sql id="Base_Column_List" >
+    sn.ID,sn.SaleManWX,sn.Phone,sn.Sex,sn.SaleManCard,sn.Recommend,sn.SupplierID,sn.CreatBy,sn.CreatDate, 
+    sn.UpDateBy,sn.UpDateTime
+  </sql>
+</mapper>

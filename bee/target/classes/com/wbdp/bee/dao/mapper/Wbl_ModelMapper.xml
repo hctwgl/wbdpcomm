@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.wbdp.bee.dao.Wbl_ModelDAO">
+
+    <sql id="wblModelBaseColumnSql">
+        ID,
+        ModelName,
+        ModelUrl,
+        IconFont
+    </sql>
+
+    <sql id="wblModelBaseWhereSql">
+        <if test="map!=null">
+            <where>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.id)">
+                    ID = #{map.id}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.modelName)">
+                    AND ModelName = #{map.modelName}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.modelUrl)">
+                    AND ModelUrl = #{map.modelUrl}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.iconFont)">
+                    AND IconFont = #{map.iconFont}
+                </if>
+            </where>
+        </if>
+    </sql>
+
+  <!--   <insert id="insertWblModel" parameterType="com.wbdp.bee.entity.Wbl_ModelEntity">
+        INSERT INTO wbl_model(
+        <include refid="wblModelBaseColumnSql"/>
+        )VALUES(
+            #{id},
+            #{modelName},
+            #{modelUrl},
+            #{iconFont}
+        )
+    </insert>
+
+    
+    <delete id="deleteWblModelById" parameterType="Long">
+        DELETE FROM wbl_model WHERE ID = #{id}
+    </delete>
+
+    <update id="updateWblModel" parameterType="com.wbdp.bee.entity.Wbl_ModelEntity">
+        UPDATE wbl_model
+        <set>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(modelName)">
+                ModelName = #{modelName} ,
+            </if>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(modelUrl)">
+                ModelUrl = #{modelUrl} ,
+            </if>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(iconFont)">
+                IconFont = #{iconFont} ,
+            </if>
+        </set>
+        WHERE ID = #{id}
+    </update>
+
+    <select id="searchWblModelByParams" parameterType="map" resultMap="wblModelMap">
+        SELECT
+        <include refid="wblModelBaseColumnSql"/>
+        FROM wbl_model
+        <include refid="wblModelBaseWhereSql"/>
+    </select> -->
+	<!-- 根据用户名查询用户ID，再根据用户id查询模块与用户关联表 ，再根据关联查询对应模块数据-->
+	<select id="listWbl_Model" resultType="com.wbdp.bee.entity.Wbl_ModelEntity" parameterType="java.lang.String">
+		SELECT ModelName,ModelUrl,IconFont FROM wbl_model WHERE ID IN(SELECT ModelID FROM wbl_model_user WHERE UserID=(SELECT ID FROM wbl_user WHERE UserName=#{username}) 
+			AND ModelStatus = 1
+		)
+	</select>
+	<!--查询全部权限模块信息,并按照模块状态给出不同的显示  -->
+	<select id="selectWbl_Model" parameterType="java.lang.Long" resultType="com.wbdp.bee.entity.Wbl_ModelEntity">
+		select model.ID,model.ModelName,model.ModelUrl,model.IconFont,usermodel.ModelStatus as modelStatus from 
+		wbl_model as model,wbl_model_user as usermodel where usermodel.UserID=#{userID} and  model.ID = usermodel.ModelID;
+	</select>
+	<!--查询所有模块信息，用于用户新增时调用 -->
+	<select id="selsectAllWbl_Model" resultType="com.wbdp.bee.entity.Wbl_ModelEntity">
+		select * from wbl_model where Status=0;
+	</select>
+	
+	<!--系统管理员查询模块  -->
+	<select id="selectModelBySys" resultType="com.wbdp.bee.entity.Wbl_ModelEntity">
+		select * from wbl_model where ID IN(11);
+	</select>
+	
+	<!--客服查询模块  -->
+	<select id="selectModelByCus" resultType="com.wbdp.bee.entity.Wbl_ModelEntity">
+		select * from wbl_model where ID IN(2,3,5,6,8,9);
+	</select>
+	
+	<!--客户经理查询模块  -->
+	<select id="selectModelBySal" resultType="com.wbdp.bee.entity.Wbl_ModelEntity">
+		select * from wbl_model where ID IN(2,3,5,8);
+	</select>
+	<!--客户经理查管理员询模块  -->
+	<select id="selectModelBySalMan" resultType="com.wbdp.bee.entity.Wbl_ModelEntity">
+		select * from wbl_model where ID IN(2,3,5,6,8);
+	</select>
+    <resultMap type="com.wbdp.bee.entity.Wbl_ModelEntity" id="wblModelMap">
+        <id column="ID" property="id"/>
+        <result column="ModelName" property="modelName"/>
+        <result column="ModelUrl" property="modelUrl"/>
+        <result column="IconFont" property="iconFont"/>
+    </resultMap>
+
+</mapper>

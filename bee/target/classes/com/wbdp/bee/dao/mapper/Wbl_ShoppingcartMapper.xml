@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.wbdp.bee.dao.Wbl_ShoppingcartDAO">
+
+    <sql id="wblShoppingcartBaseColumnSql">
+        ID,
+        BeeID,
+        GoodsID,
+        Periods,
+        Number,
+        CartState,
+        CreatBy,
+        CreatDate,
+        UpDateBy,
+        UpDateTime,
+        GoodsskuID
+    </sql>
+
+<!--     <sql id="wblShoppingcartBaseWhereSql">
+        <if test="map!=null">
+            <where>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.id)">
+                    ID = #{map.id}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.beeId)">
+                    AND BeeID = #{map.beeId}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.goodsId)">
+                    AND GoodsID = #{map.goodsId}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.periods)">
+                    AND Periods = #{map.periods}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.number)">
+                    AND Number = #{map.number}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.cartState)">
+                    AND CartState = #{map.cartState}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.creatBy)">
+                    AND CreatBy = #{map.creatBy}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.creatDate)">
+                    AND CreatDate = #{map.creatDate}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.upDateBy)">
+                    AND UpDateBy = #{map.upDateBy}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.upDateTime)">
+                    AND UpDateTime = #{map.upDateTime}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.goodsskuId)">
+                    AND GoodsskuID = #{map.goodsskuId}
+                </if>
+            </where>
+        </if>
+    </sql>
+
+    <insert id="insertWblShoppingcart" parameterType="com.wbdp.bee.entity.Wbl_ShoppingcartEntity">
+        INSERT INTO wbl_shoppingcart(
+        <include refid="wblShoppingcartBaseColumnSql"/>
+        )VALUES(
+            #{id},
+            #{beeId},
+            #{goodsId},
+            #{periods},
+            #{number},
+            #{cartState},
+            #{creatBy},
+            #{creatDate},
+            #{upDateBy},
+            #{upDateTime},
+            #{goodsskuId}
+        )
+    </insert>
+
+    
+    <delete id="deleteWblShoppingcartById" parameterType="Long">
+        DELETE FROM wbl_shoppingcart WHERE ID = #{id}
+    </delete>
+
+    <update id="updateWblShoppingcart" parameterType="com.wbdp.bee.entity.Wbl_ShoppingcartEntity">
+        UPDATE wbl_shoppingcart
+        <set>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(beeId)">
+                BeeID = #{beeId} ,
+            </if>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(goodsId)">
+                GoodsID = #{goodsId} ,
+            </if>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(periods)">
+                Periods = #{periods} ,
+            </if>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(number)">
+                Number = #{number} ,
+            </if>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(cartState)">
+                CartState = #{cartState} ,
+            </if>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(creatBy)">
+                CreatBy = #{creatBy} ,
+            </if>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(creatDate)">
+                CreatDate = #{creatDate} ,
+            </if>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(upDateBy)">
+                UpDateBy = #{upDateBy} ,
+            </if>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(upDateTime)">
+                UpDateTime = #{upDateTime} ,
+            </if>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(goodsskuId)">
+                GoodsskuID = #{goodsskuId} ,
+            </if>
+        </set>
+        WHERE ID = #{id}
+    </update>
+
+    <select id="searchWblShoppingcartByParams" parameterType="map" resultMap="wblShoppingcartMap">
+        SELECT
+        <include refid="wblShoppingcartBaseColumnSql"/>
+        FROM wbl_shoppingcart
+        <include refid="wblShoppingcartBaseWhereSql"/>
+    </select> -->
+	<!--获取购物车以及关联查询数据列表  -->
+	<select id="listShoppingcart" parameterType="java.lang.Integer" resultMap="wblShoppingcartMap">
+		select ID,BeeID,GoodsID,Periods,CartState,DATE_FORMAT(CreatDate,"%Y-%m-%e %H:%i:%S") as CreatDate,GoodsskuID from wbl_shoppingcart 
+		where CartState = 1 order by CreatDate desc
+		 limit #{pageNum},10;
+	</select>
+	
+	<!--获取总数据条数  -->
+	<select id="getCount" resultType="java.lang.Integer">
+		select count(0) from wbl_shoppingcart where CartState = 1;
+	</select>
+    <resultMap type="com.wbdp.bee.entity.Wbl_ShoppingcartEntity" id="wblShoppingcartMap">
+        <id column="ID" property="id"/>
+        <result column="BeeID" property="beeId"/>
+        <result column="GoodsID" property="goodsId"/>
+        <result column="Periods" property="periods"/>
+        <result column="Number" property="number"/>
+        <result column="CartState" property="cartState"/>
+        <result column="CreatBy" property="creatBy"/>
+        <result column="CreatDate" property="creatDate"/>
+        <result column="UpDateBy" property="upDateBy"/>
+        <result column="UpDateTime" property="upDateTime"/>
+        <result column="GoodsskuID" property="goodsskuId"/>
+        <association property="bee" column="BeeID" select="getBee"></association>
+        <association property="goods" column="GoodsID" select="getGoods"></association>
+         <association property="sku" column="GoodsskuID" select="getSku"></association>
+    </resultMap>
+	<!--获取订单对应商品  -->
+	<select id="getGoods" parameterType="java.lang.Long" resultType="com.wbdp.bee.entity.Wbl_GoodsEntity">
+		select ID,GoodsName from wbl_goods where ID = #{goodsId};
+	</select>
+	<!--获取订单对应客户  -->
+	<select id="getBee" parameterType="java.lang.Long" resultType="com.wbdp.bee.entity.Wbl_BeeEntity">
+		select ID,BeeName,Phone from wbl_bee where ID = #{BeeID};
+	</select>
+	<!--获取购物车对应sku  -->
+	<select id="getSku" parameterType="java.lang.Long" resultType="com.wbdp.bee.entity.Wbl_GoodsskuEntity">
+		select ID,Price from wbl_goodssku where ID = #{GoodsskuID};
+	</select>
+</mapper>

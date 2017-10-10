@@ -1,0 +1,288 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.wbdp.bee.dao.SalemanMapper">
+
+   <!--  <sql id="wblSalemanBaseColumnSql">
+        ID,
+        Name,
+        Phone,
+        SaleManCard,
+        Recommend,
+        Operator,
+        City,
+        CreatBy,
+        CreatDate,
+        UpDateBy,
+        UpDateTime,
+        SupplierID,
+        SaleManWX,
+        Sex
+    </sql>
+
+    <sql id="wblSalemanBaseWhereSql">
+        <if test="map!=null">
+            <where>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.id)">
+                    ID = #{map.id}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.name)">
+                    AND Name = #{map.name}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.phone)">
+                    AND Phone = #{map.phone}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.saleManCard)">
+                    AND SaleManCard = #{map.saleManCard}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.recommend)">
+                    AND Recommend = #{map.recommend}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.operator)">
+                    AND Operator = #{map.operator}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.city)">
+                    AND City = #{map.city}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.creatBy)">
+                    AND CreatBy = #{map.creatBy}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.creatDate)">
+                    AND CreatDate = #{map.creatDate}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.upDateBy)">
+                    AND UpDateBy = #{map.upDateBy}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.upDateTime)">
+                    AND UpDateTime = #{map.upDateTime}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.supplierId)">
+                    AND SupplierID = #{map.supplierId}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.saleManWx)">
+                    AND SaleManWX = #{map.saleManWx}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.sex)">
+                    AND Sex = #{map.sex}
+                </if>
+            </where>
+        </if>
+    </sql>
+
+    <insert id="insertWblSaleman" parameterType="com.wisedp.modle.entity.WblSaleman">
+        INSERT INTO wbl_saleman(
+        <include refid="wblSalemanBaseColumnSql"/>
+        )VALUES(
+            #{id},
+            #{name},
+            #{phone},
+            #{saleManCard},
+            #{recommend},
+            #{operator},
+            #{city},
+            #{creatBy},
+            #{creatDate},
+            #{upDateBy},
+            #{upDateTime},
+            #{supplierId},
+            #{saleManWx},
+            #{sex}
+        )
+    </insert>
+
+    
+    <delete id="deleteWblSalemanById" parameterType="Long">
+        DELETE FROM wbl_saleman WHERE ID = #{id}
+    </delete>
+
+    <update id="updateWblSaleman" parameterType="com.wisedp.modle.entity.WblSaleman">
+        UPDATE wbl_saleman
+        <set>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(name)">
+                Name = #{name} ,
+            </if>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(phone)">
+                Phone = #{phone} ,
+            </if>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(saleManCard)">
+                SaleManCard = #{saleManCard} ,
+            </if>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(recommend)">
+                Recommend = #{recommend} ,
+            </if>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(operator)">
+                Operator = #{operator} ,
+            </if>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(city)">
+                City = #{city} ,
+            </if>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(creatBy)">
+                CreatBy = #{creatBy} ,
+            </if>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(creatDate)">
+                CreatDate = #{creatDate} ,
+            </if>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(upDateBy)">
+                UpDateBy = #{upDateBy} ,
+            </if>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(upDateTime)">
+                UpDateTime = #{upDateTime} ,
+            </if>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(supplierId)">
+                SupplierID = #{supplierId} ,
+            </if>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(saleManWx)">
+                SaleManWX = #{saleManWx} ,
+            </if>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(sex)">
+                Sex = #{sex} ,
+            </if>
+        </set>
+        WHERE ID = #{id}
+    </update>
+
+    <select id="searchWblSalemanByParams" parameterType="map" resultMap="wblSalemanMap">
+        SELECT
+        <include refid="wblSalemanBaseColumnSql"/>
+        FROM wbl_saleman
+        <include refid="wblSalemanBaseWhereSql"/>
+    </select> -->
+    <sql id="wblSalemanBaseColumnSql">
+        Name,
+        Phone,
+        SaleManCard,
+        Recommend,
+        Operator,
+        City,
+        CreatBy,
+        CreatDate,
+        SaleManType,
+        PassWord
+    </sql>
+	<!--新增客户经理信息  -->
+	<insert id="insertSaleman" parameterType="com.wbdp.bee.entity.Saleman">
+		insert into wbl_saleman(
+			<include refid="wblSalemanBaseColumnSql"/>
+		)VALUES(
+            #{name},
+            #{phone},
+            #{saleManCard},
+            #{recommend},
+            #{operator},
+            #{city},
+            #{creatBy},
+            #{creatDate},
+            #{saleManType},
+            #{passWord}
+        )
+	</insert>
+	<!--查询全部客户经理数据  -->
+	<select id="selectAllSaleman" parameterType="java.lang.Integer" resultType="com.wbdp.bee.entity.Saleman">
+		select ID,Name,Phone, CONCAT(LEFT(SaleManCard,6),"********",RIGHT(SaleManCard,4)) as SaleManCard,Recommend,Operator,City,SaleManType 
+		from wbl_saleman ORDER BY CreatDate DESC limit #{pageNum},10 ;
+	</select>
+	
+	<!--查询全部客户经理数量  -->
+	<select id="getCount" resultType="java.lang.Integer">
+		select count(0) from wbl_saleman;
+	</select>
+	
+	<!--修改客户经理资料  -->
+	<update id="updateSaleman" parameterType="com.wbdp.bee.entity.Saleman">
+		UPDATE wbl_saleman
+        <set>
+            <if test="name != null and name != ''">
+                Name = #{name} ,
+            </if>
+            <if test="phone != null and phone != ''">
+                Phone = #{phone} ,
+            </if>
+            <if test="saleManCard != null and saleManCard !=''">
+                SaleManCard = #{saleManCard} ,
+            </if>
+            <if test="recommend != null and recommend != ''">
+                Recommend = #{recommend} ,
+            </if>
+            <if test="operator != null and operator != ''">
+                Operator = #{operator} ,
+            </if>
+      		<if test="passWord != null and passWord != ''">
+                PassWord = #{passWord} ,
+            </if>
+            <if test="city !=null and city != ''">
+                City = #{city} ,
+            </if>
+            <if test="upDateBy != null and upDateBy !=''">
+                UpDateBy = #{upDateBy} ,
+            </if>
+            <if test="upDateTime != null and upDateTime != ''">
+                UpDateTime = #{upDateTime} ,
+            </if>
+        </set>
+        WHERE ID = #{id}
+	</update> 
+	<!--新增客户经理查询是否存在相同手机号码  -->
+	<select id="checkPhone" parameterType="java.lang.String" resultType="java.lang.Integer">
+		select count(0) from wbl_saleman where Phone = #{phone};
+	</select>
+	<!--客户经理管理员查看其名下所有客户经理信息，按录入时间倒序  -->
+	<select id="selectSalemanByManager" resultType="com.wbdp.bee.entity.Saleman">
+		select ID,Name,Phone, CONCAT(LEFT(SaleManCard,6),"********",RIGHT(SaleManCard,4)) as SaleManCard,Recommend,Operator,City,SaleManType
+		from wbl_saleman where CreatBy = #{creatBy} ORDER BY CreatDate DESC
+		limit #{pageNum},10;
+	</select>
+	<!--客户经理管理员查看其名下所有客户经理数量，用于分页  -->
+	<select id="getCountByManager" parameterType="java.lang.String" resultType="java.lang.Integer">
+		select count(0) from wbl_saleman where CreatBy = #{creatBy};
+	</select>
+	
+	<!--生成推荐码时判断是否存在相同推荐码  -->
+	<select id="checkCode" parameterType="java.lang.String" resultType="java.lang.Integer">
+		select count(0) from wbl_saleman where Recommend = #{code};
+	</select>
+	<!--客户经理登录  -->
+	<select id="salLogin" resultType="com.wbdp.bee.entity.Saleman">
+		select ID,Name,Phone,Recommend,SaleManType from wbl_saleman where (Phone = #{username} or `Name`=#{username}) and `PassWord`=#{passWord};
+	</select>
+	<!-- 根据客户经理ID查询信息 -->
+	<select id="selectSalemanByID" parameterType="java.lang.Long" resultType="com.wbdp.bee.entity.Saleman">
+		select ID,Name,Phone,CONCAT(LEFT(SaleManCard,6),"********",RIGHT(SaleManCard,4)) as SaleManCard,Operator,City FROM wbl_saleman WHERE ID = #{id};
+	</select>
+	
+	<!-- 客服新增客户经理获取上级管理员数据 -->
+	<select id="listSaleman" resultType="com.wbdp.bee.entity.Saleman">
+		select * from wbl_saleman where SaleManType = 4;
+	</select>
+	<!-- 验证推荐码是否已存在 -->
+	<select id="checkRecommend" parameterType="java.lang.String" resultType="java.lang.Integer">
+		select count(0) from wbl_saleman where Recommend=#{recommend};
+	</select>
+	
+	<!-- 客户经理重置密码 -->
+	<update id="resetPass" parameterType="com.wbdp.bee.entity.Saleman">
+		 UPDATE wbl_saleman
+		 <set>
+		 	<if test="passWord !=null and passWord!=''">
+		 		PassWord = #{passWord},
+		 	</if>
+		 </set>
+		 WHERE ID = #{id};
+	</update>
+    <resultMap type="com.wbdp.bee.entity.Saleman" id="wblSalemanMap">
+        <id column="ID" property="id"/>
+        <result column="Name" property="name"/>
+        <result column="Phone" property="phone"/>
+        <result column="SaleManCard" property="saleManCard"/>
+        <result column="Recommend" property="recommend"/>
+        <result column="Operator" property="operator"/>
+        <result column="City" property="city"/>
+        <result column="CreatBy" property="creatBy"/>
+        <result column="CreatDate" property="creatDate"/>
+        <result column="UpDateBy" property="upDateBy"/>
+        <result column="UpDateTime" property="upDateTime"/>
+        <result column="SupplierID" property="supplierId"/>
+        <result column="SaleManWX" property="saleManWx"/>
+        <result column="Sex" property="sex"/>
+    </resultMap>
+
+</mapper>

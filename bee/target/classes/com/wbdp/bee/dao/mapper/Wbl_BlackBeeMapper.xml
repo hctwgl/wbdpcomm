@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"    
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.wbdp.bee.dao.Wbl_BlackbeeDAO">
+
+                                             <!-- 客户黑名单列表 -->
+<select id="blackbeeAllList" resultType="com.wbdp.bee.entity.Wbl_BlackbeeEntity">
+ SELECT <include refid="Base_Column_List" /> FROM wbl_blackbee 
+ <where>
+ <if test="id!=null">
+  id=#{id}
+ </if>
+ </where>
+LIMIT #{pageNum},10
+</select>
+                                           <!-- 客户黑名单列表 大小 -->
+<select id="blackbeeAllListSize" resultType="Integer">
+SELECT count(1) FROM wbl_blackbee 
+<where>
+<if test="id!=null">
+id=#{id}
+</if>
+</where>
+</select>
+
+
+<!-- 添加黑名单 -->
+<insert id="insertBlackbee" parameterType="com.wbdp.bee.entity.Wbl_BlackbeeEntity" >
+    insert into wbl_blackbee
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="beeid != null" >
+        BeeID,
+      </if>
+      <if test="beename != null" >
+        BeeName,
+      </if>
+      <if test="beecard != null" >
+        BeeCard,
+      </if>
+      <if test="phone != null" >
+        Phone,
+      </if>
+      <if test="creatby != null" >
+        CreatBy,
+      </if>
+      <if test="creatdate != null" >
+        CreatDate,
+      </if>
+      <if test="updateby != null" >
+        UpDateBy,
+      </if>
+      <if test="updatetime != null" >
+        UpDateTime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="beeid != null" >
+        #{beeid,jdbcType=BIGINT},
+      </if>
+      <if test="beename != null" >
+        #{beename,jdbcType=VARCHAR},
+      </if>
+      <if test="beecard != null" >
+        #{beecard,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null" >
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="creatby != null" >
+        #{creatby,jdbcType=VARCHAR},
+      </if>
+      <if test="creatdate != null" >
+        #{creatdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateby != null" >
+        #{updateby,jdbcType=VARCHAR},
+      </if>
+      <if test="updatetime != null" >
+        #{updatetime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+<!-- 修改客户状态为拉黑状态 -->
+<update id="updateBeeStatus" >
+UPDATE wbl_bee SET BeeStatus=1 WHERE ID=#{beeid}
+</update>
+
+
+<!-- 数据库字段 -->
+<sql id="Base_Column_List" >
+ID, BeeID, BeeName, BeeCard, Phone, CreatBy, CreatDate, UpDateBy, UpDateTime
+</sql>
+</mapper>

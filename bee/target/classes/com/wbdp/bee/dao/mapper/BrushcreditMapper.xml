@@ -1,0 +1,307 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.wbdp.bee.dao.BrushcreditMapper">
+
+    <!-- <sql id="wbdpBrushcreditBaseColumnSql">
+        ID,
+        ClientWX,
+        RecomCode,
+        PacMonthlyPrice,
+        PacPeriods,
+        PacPrice,
+        PhoneModel,
+        OnlineSign,
+        FaceStatus,
+        BrushTime,
+        BrushStatus,
+        StartTime,
+        EndTime,
+        FaceImg
+    </sql>
+
+    <sql id="wbdpBrushcreditBaseWhereSql">
+        <if test="map!=null">
+            <where>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.id)">
+                    ID = #{map.id}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.clientWx)">
+                    AND ClientWX = #{map.clientWx}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.recomCode)">
+                    AND RecomCode = #{map.recomCode}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.pacMonthlyPrice)">
+                    AND PacMonthlyPrice = #{map.pacMonthlyPrice}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.pacPeriods)">
+                    AND PacPeriods = #{map.pacPeriods}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.pacPrice)">
+                    AND PacPrice = #{map.pacPrice}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.phoneModel)">
+                    AND PhoneModel = #{map.phoneModel}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.onlineSign)">
+                    AND OnlineSign = #{map.onlineSign}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.faceStatus)">
+                    AND FaceStatus = #{map.faceStatus}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.brushTime)">
+                    AND BrushTime = #{map.brushTime}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.brushStatus)">
+                    AND BrushStatus = #{map.brushStatus}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.startTime)">
+                    AND StartTime = #{map.startTime}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.endTime)">
+                    AND EndTime = #{map.endTime}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.faceImg)">
+                    AND FaceImg = #{map.faceImg}
+                </if>
+            </where>
+        </if>
+    </sql>
+
+    <insert id="insertWbdpBrushcredit" parameterType="com.wisedp.modle.entity.WbdpBrushcredit">
+        INSERT INTO wbdp_brushcredit(
+        <include refid="wbdpBrushcreditBaseColumnSql"/>
+        )VALUES(
+            #{id},
+            #{clientWx},
+            #{recomCode},
+            #{pacMonthlyPrice},
+            #{pacPeriods},
+            #{pacPrice},
+            #{phoneModel},
+            #{onlineSign},
+            #{faceStatus},
+            #{brushTime},
+            #{brushStatus},
+            #{startTime},
+            #{endTime},
+            #{faceImg}
+        )
+    </insert>
+
+    
+    <delete id="deleteWbdpBrushcreditById" parameterType="Long">
+        DELETE FROM wbdp_brushcredit WHERE ID = #{id}
+    </delete>
+
+    <update id="updateWbdpBrushcredit" parameterType="com.wisedp.modle.entity.WbdpBrushcredit">
+        UPDATE wbdp_brushcredit
+        <set>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(clientWx)">
+                ClientWX = #{clientWx} ,
+            </if>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(recomCode)">
+                RecomCode = #{recomCode} ,
+            </if>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(pacMonthlyPrice)">
+                PacMonthlyPrice = #{pacMonthlyPrice} ,
+            </if>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(pacPeriods)">
+                PacPeriods = #{pacPeriods} ,
+            </if>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(pacPrice)">
+                PacPrice = #{pacPrice} ,
+            </if>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(phoneModel)">
+                PhoneModel = #{phoneModel} ,
+            </if>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(onlineSign)">
+                OnlineSign = #{onlineSign} ,
+            </if>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(faceStatus)">
+                FaceStatus = #{faceStatus} ,
+            </if>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(brushTime)">
+                BrushTime = #{brushTime} ,
+            </if>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(brushStatus)">
+                BrushStatus = #{brushStatus} ,
+            </if>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(startTime)">
+                StartTime = #{startTime} ,
+            </if>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(endTime)">
+                EndTime = #{endTime} ,
+            </if>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(faceImg)">
+                FaceImg = #{faceImg} ,
+            </if>
+        </set>
+        WHERE ID = #{id}
+    </update>
+
+    <select id="searchWbdpBrushcreditByParams" parameterType="map" resultMap="wbdpBrushcreditMap">
+        SELECT
+        <include refid="wbdpBrushcreditBaseColumnSql"/>
+        FROM wbdp_brushcredit
+        <include refid="wbdpBrushcreditBaseWhereSql"/>
+    </select> -->
+    <sql id="wbdpBrushcreditBaseColumnSql">
+        beeID,
+        BeeWX,
+        BeeName,
+        PacPeriods,
+        PacMonthlyPrice,
+        RecomCode,
+        PhoneModel,
+        DATE_FORMAT(BrushTime,'%Y-%c-%d %H:%i:%s') as BrushTime,
+        FaceStatus,
+        brushID
+    </sql>
+	<!--查询全部任性刷记录  -->
+	<select id="selectAllBrushcredit" parameterType="java.lang.Integer" resultType="java.util.Map">
+		select  <include refid="wbdpBrushcreditBaseColumnSql"/> from brush_view ORDER BY BrushTime DESC LIMIT #{pageNum},10;
+	</select>
+	<!--查询全部任性刷数量  -->
+	<select id="getCount" resultType="java.lang.Integer">
+		select count(0) from brush_view;
+	</select>
+	<!--客户经理查询其对应的客户任性刷数据  -->
+	<select id="selectAllBrushcreditBySaleman" resultType="java.util.Map">
+		select  <include refid="wbdpBrushcreditBaseColumnSql"/> from brush_view where RecomCode=#{recomCode} ORDER BY BrushTime DESC LIMIT #{pageNum},10;
+	</select>
+	<!--客户经理查询对应任性刷数量  -->
+	<select id="getCountBySaleman" parameterType="java.lang.String" resultType="java.lang.Integer">
+		select count(0) from brush_view where RecomCode=#{recomCode};
+	</select>
+	<!-- 客户经理管理员查询任性刷数据 -->
+	<select id="selectAllBrushcreditBySalemanMan" resultType="java.util.Map">
+		select  <include refid="wbdpBrushcreditBaseColumnSql"/> from brush_view where RecomCode IN (SELECT Recommend FROM wbl_saleman WHERE CreatBy = #{username})
+		ORDER BY BrushTime DESC LIMIT #{pageNum},10;
+	</select>
+	<!-- 客户经理管理员查询任性刷数量 -->
+	<select id="getCountBySalemanMan" resultType="java.lang.Integer">
+		select  count(0) from brush_view where  RecomCode IN (SELECT Recommend FROM wbl_saleman WHERE CreatBy = #{username});
+	</select>
+	<!--审核刷脸交给后台的任性刷记录  -->
+	<update id="reviewFaceStatus">
+		update wbdp_brushcredit
+		<set>
+		<if test="faceStatus !=null">
+			FaceStatus=#{faceStatus},
+		</if>
+		
+		</set>
+		 WHERE ID = #{id}
+	</update>
+	<!--查询全部任性刷等待审核数据  -->
+	<select id="selectAllBrushcreditWait" parameterType="java.lang.Integer" resultType="java.util.Map">
+		select  <include refid="wbdpBrushcreditBaseColumnSql"/> from brush_view WHERE FaceStatus = 2 ORDER BY BrushTime DESC LIMIT #{pageNum},10;
+	</select>
+	<!-- 查询全部任性刷等待审核数据量  -->
+	<select id="getCountWait" resultType="java.lang.Integer">
+		select count(0) from brush_view WHERE FaceStatus = 2;
+	</select>
+	
+	<!--查询任性刷审核数据  -->
+	<select id="brushReview" parameterType="java.lang.Long" resultType="java.util.Map">
+		select beeID, brushID,BeeWX,BeeName,BeeCard,CardImage,DATE_FORMAT(BrushTime,'%Y-%c-%d %h:%i:%s') as BrushTime,PacPeriods,PacMonthlyPrice,FaceImg from brush_view 
+		where brushID = #{brushid};
+	</select>
+	
+	<!--批量保存任性刷数据-->
+	<insert id="batchSaveBrush" parameterType="java.util.List">
+		INSERT INTO wbdp_brushcredit(BeeID,ClientWX,RecomCode,PacMonthlyPrice,PacPeriods,PacPrice,PhoneModel,FaceStatus,BrushTime,StartTime,EndTime)
+		VALUES
+		<foreach collection="list" item="item" index="index" separator="," >  
+	        (#{item.beeID},#{item.clientWx},#{item.recomCode},#{item.pacMonthlyPrice},#{item.pacPeriods},#{item.pacPrice},#{item.phoneModel},#{item.faceStatus},#{item.brushTime},#{item.startTime},#{item.endTime})  
+	    </foreach>
+	</insert>
+	
+	<!-- 客户经理单独为客户新增套餐 -->
+	<insert id="insertBrush" parameterType="com.wbdp.bee.entity.BrushcreditEntity">
+		 INSERT INTO wbdp_brushcredit(
+        BeeID,ClientWX,RecomCode,PacMonthlyPrice,PacPeriods,PacPrice,PhoneModel,FaceStatus,BrushTime,StartTime,EndTime
+        )VALUES(
+            #{beeID},
+            #{clientWx},
+            #{recomCode},
+            #{pacMonthlyPrice},
+            #{pacPeriods},
+            #{pacPrice},
+            #{phoneModel},
+            #{faceStatus},
+            #{brushTime},
+            #{startTime},
+            #{endTime}
+        )
+	</insert>
+	<!-- 客服查询本月记录 -->
+	<select id="selectBrushThisMouth" parameterType="java.lang.Integer" resultType="java.util.Map">
+		select  <include refid="wbdpBrushcreditBaseColumnSql"/> from brush_view where date_format(BrushTime,'%Y-%m')=date_format(now(),'%Y-%m')  ORDER BY BrushTime DESC LIMIT #{pageNum},10;
+	</select>
+	<!-- 客服查询本月记录数量-->
+	<select id="countBrushThisMouth" resultType="java.lang.Integer">
+		select  count(0) from brush_view where date_format(BrushTime,'%Y-%m')=date_format(now(),'%Y-%m');
+	</select>
+	<!-- 客服查询上月记录 -->
+	<select id="selectBrushLastMouth" parameterType="java.lang.Integer" resultType="java.util.Map">
+		select  <include refid="wbdpBrushcreditBaseColumnSql"/> from brush_view where date_format(BrushTime,'%Y-%m')=DATE_FORMAT(DATE_SUB(CURDATE(), INTERVAL 1 MONTH),'%Y-%m')   ORDER BY BrushTime DESC LIMIT #{pageNum},10;
+	</select>
+	<!-- 客服查询上月记录数量-->
+	<select id="countBrushLastMouth" resultType="java.lang.Integer">
+		select  count(0) from brush_view where date_format(BrushTime,'%Y-%m')=DATE_FORMAT(DATE_SUB(CURDATE(), INTERVAL 1 MONTH),'%Y-%m');
+	</select>
+	<!-- 客户经理查询本月记录 -->
+	<select id="selectBrushThisMouthBySale"  resultType="java.util.Map">
+		select <include refid="wbdpBrushcreditBaseColumnSql"/> from brush_view where RecomCode=#{recomCode} and date_format(BrushTime,'%Y-%m')=date_format(now(),'%Y-%m')  ORDER BY BrushTime DESC LIMIT #{pageNum},10;
+	</select>
+	<!-- 客户经理查询本月记录数量-->
+	<select id="countBrushThisMouthBySale" parameterType="java.lang.String" resultType="java.lang.Integer">
+		select  count(0) from brush_view where RecomCode=#{recomCode} and date_format(BrushTime,'%Y-%m')=date_format(now(),'%Y-%m');
+	</select>
+	<!-- 客户经理查询上月记录 -->
+	<select id="selectBrushLastMouthBySale"  resultType="java.util.Map">
+		select <include refid="wbdpBrushcreditBaseColumnSql"/> from brush_view where RecomCode=#{recomCode} and date_format(BrushTime,'%Y-%m')=DATE_FORMAT(DATE_SUB(CURDATE(), INTERVAL 1 MONTH),'%Y-%m') ORDER BY BrushTime DESC LIMIT #{pageNum},10;
+	</select>
+	<!-- 客户经理查询上月记录数量-->
+	<select id="countBrushLastMouthBySale"  parameterType="java.lang.String" resultType="java.lang.Integer">
+		select  count(0) from brush_view where RecomCode=#{recomCode} and date_format(BrushTime,'%Y-%m')=DATE_FORMAT(DATE_SUB(CURDATE(), INTERVAL 1 MONTH),'%Y-%m');
+	</select>
+	<!-- 客户管理员查询本月记录 -->
+	<select id="selectBrushThisMouthBySaleMan"  resultType="java.util.Map">
+		select <include refid="wbdpBrushcreditBaseColumnSql"/> from brush_view where RecomCode in (select Recommend from wbl_saleman where CreatBy =#{username}) and date_format(BrushTime,'%Y-%m')=date_format(now(),'%Y-%m') 
+		 ORDER BY BrushTime DESC LIMIT #{pageNum},10;
+	</select>
+	<!-- 客户管理员查询本月记录数量-->
+	<select id="countBrushThisMouthBySaleMan" resultType="java.lang.Integer">
+		select count(0) from brush_view where RecomCode in (select Recommend from wbl_saleman where CreatBy =#{username}) and date_format(BrushTime,'%Y-%m')=date_format(now(),'%Y-%m')
+	</select>
+	<!-- 客户管理员查询上月记录 -->
+	<select id="selectBrushLastMouthBySaleMan"  resultType="java.util.Map">
+		select <include refid="wbdpBrushcreditBaseColumnSql"/> from brush_view where RecomCode in (select Recommend from wbl_saleman where CreatBy =#{username}) and date_format(BrushTime,'%Y-%m')=DATE_FORMAT(DATE_SUB(CURDATE(), INTERVAL 1 MONTH),'%Y-%m')
+		 ORDER BY BrushTime DESC LIMIT #{pageNum},10;
+	</select>
+	<!-- 客户管理员查询上月记录数量-->
+	<select id="countBrushLastMouthBySaleMan" resultType="java.lang.Integer">
+		select count(0) from brush_view where RecomCode in (select Recommend from wbl_saleman where CreatBy =#{username}) and date_format(BrushTime,'%Y-%m')=DATE_FORMAT(DATE_SUB(CURDATE(), INTERVAL 1 MONTH),'%Y-%m')
+	</select>
+    <resultMap type="com.wbdp.bee.entity.BrushcreditEntity" id="wbdpBrushcreditMap">
+        <id column="ID" property="id"/>
+        <result column="ClientWX" property="clientWx"/>
+        <result column="RecomCode" property="recomCode"/>
+        <result column="PacMonthlyPrice" property="pacMonthlyPrice"/>
+        <result column="PacPeriods" property="pacPeriods"/>
+        <result column="PacPrice" property="pacPrice"/>
+        <result column="PhoneModel" property="phoneModel"/>
+        <result column="OnlineSign" property="onlineSign"/>
+        <result column="FaceStatus" property="faceStatus"/>
+        <result column="BrushTime" property="brushTime"/>
+        <result column="BrushStatus" property="brushStatus"/>
+        <result column="StartTime" property="startTime"/>
+        <result column="EndTime" property="endTime"/>
+        <result column="FaceImg" property="faceImg"/>
+    </resultMap>
+
+</mapper>

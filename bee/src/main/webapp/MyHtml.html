@@ -1,0 +1,173 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>无标题文档</title>
+
+<style type="text/css">
+/*左边小图的样式*/
+.small_pic { 
+ top: 50px;
+ left:100px;
+ width: 420px; 
+ height: 400px; 
+ background: #eee; 
+ position: absolute;
+  }
+/*鼠标跟随浮动方块的样式*/
+.float_layer { 
+ width: 50px; 
+ height: 50px; 
+ border: 1px solid #000; 
+ background: #fff; 
+ filter: alpha(opacity: 30); 
+ opacity: 0.3; 
+ position: absolute; 
+ margin-top: 50; 
+ margin-left: 50; 
+ display:none; 
+ }
+/*标记要放大的区域的位置*/
+.mark {
+    width:100%;
+    height:100%;
+    position:absolute;
+    z-index:2;
+    left:1px;
+    top:1px;
+    background:red;
+    filter:alpha(opacity:0); 
+    opacity:0;
+ }
+/*右边被放大的图片的区域，其中overflow为重点*/
+.big_pic { 
+ position: absolute; 
+ margin-top: 50px; 
+ margin-left: 600px; 
+ width:450px; 
+ height:400px; 
+ overflow:hidden; 
+ border:2px solid #CCC;  
+ }
+ /*被放大的内容*/
+.big_pic img { 
+ position:absolute; 
+ top: -30px; 
+ left: -80px; 
+ }
+.pforimg{
+  width:100%;
+  height:100%;
+}
+</style>
+
+
+<script type="text/javascript">
+
+ /*获得父元素下相应名称的子元素*/
+function getByClass(oParent, sClass)
+{
+ var aEle=oParent.getElementsByTagName('*');
+ var aTmp=[];
+ var i=0;
+ for(i=0;i<aEle.length;i++)
+ {
+      if(aEle[i].className==sClass)
+      {
+           aTmp.push(aEle[i]);
+      }
+ }
+ return aTmp;
+}
+
+window.onload=function ()
+{   
+     /*按类型获取每个要控制的对象*/
+     var oDiv=document.getElementById('div1');  
+     var oMark=getByClass(oDiv, 'mark')[0]; 
+     var oFloat=getByClass(oDiv, 'float_layer')[0]; 
+     var oBig=getByClass(oDiv, 'big_pic')[0];   
+     var oSmall=getByClass(oDiv, 'small_pic')[0];   
+     var oImg=oBig.getElementsByTagName('img')[0];
+
+/*当鼠标移动到小图上面时，浮动块显示，大图显示*/   
+ oMark.onmouseover=function ()
+ {
+      oFloat.style.display='block';
+      oBig.style.display='block';
+ };
+
+/*当鼠标移出小图，浮动块消失，大图消失*/
+ oMark.onmouseout=function ()
+ {
+      oFloat.style.display='none';
+      oBig.style.display='none';  /*删除这句大图可一直显示*/
+ }; 
+
+/*鼠标在小图上移动的函数，都是计算块的边界的运算*/
+ oMark.onmousemove=function (ev)
+ {
+      /*鼠标的位置（event.clientX、event.clientY）*/
+      var oEvent=ev||event;
+      /*offsetHeight获取元素的高度,其余offset**开头的同理*/
+      var l=oEvent.clientX-oDiv.offsetLeft-oSmall.offsetLeft-oFloat.offsetWidth/2;
+      var t=oEvent.clientY-oDiv.offsetTop-oSmall.offsetTop-oFloat.offsetHeight/2;
+      if(l<0)
+      {
+            l=0;
+      }
+      else if(l>oMark.offsetWidth-oFloat.offsetWidth)
+      {
+            l=oMark.offsetWidth-oFloat.offsetWidth;
+      }
+
+      if(t<0)
+      {
+            t=0;
+      }
+      else if(t>oMark.offsetHeight-oFloat.offsetHeight)
+      {
+            t=oMark.offsetHeight-oFloat.offsetHeight;
+      }
+     /*获得的l和t用于更新浮动块当前位置*/
+     oFloat.style.left=l+'px';
+     oFloat.style.top=t+'px';
+    var percentX=l/(oMark.offsetWidth-oFloat.offsetWidth);
+    var percentY=t/(oMark.offsetHeight-oFloat.offsetHeight);
+     oImg.style.left=-percentX*(oImg.offsetWidth-oBig.offsetWidth)+'px';
+     oImg.style.top=-percentY*(oImg.offsetHeight-oBig.offsetHeight)+'px';
+ };
+};
+</script>
+</head>
+
+
+<body>
+	  <div id="div1" style="background-color: red;" >  
+	    <div class="small_pic">
+	        <span class="mark"></span>
+	        <span class="float_layer"></span>
+	        <!--在img的src里改为你自己的图片的路径-->
+	        <img class="pforimg" src="img/yifenqis.png"/>            
+	    </div>
+	
+	    <div class="big_pic">
+	        <!--在这里的width，height可以调整放大倍数-->
+	        <img src="img/yifenqis.png"  width="800" height="800"/>            
+	    </div>
+	</div>
+	<!-- <div id="div2" style="background-color: red;" >  
+	    <div class="small_pic1">
+	        <span class="mark1"></span>
+	        <span class="float_layer1"></span>
+	        在img的src里改为你自己的图片的路径
+	        <img class="pforimg1" src="img/yifenqis.png"/>            
+	    </div>
+	
+	    <div class="big_pic1">
+	        在这里的width，height可以调整放大倍数
+	        <img src="img/yifenqis.png"  width="800" height="800"/>            
+	    </div>
+	</div> -->
+ </body>
+</html>

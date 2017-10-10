@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wbdp.bee.dao.Wbl_Goods_AttributeDAO" >
+  <resultMap id="BaseResultMap" type="com.wbdp.bee.entity.Wbl_Goods_attributeEntity" >
+    <id column="ID" property="id" jdbcType="BIGINT" />
+    <result column="GoodsID" property="goodsid" jdbcType="BIGINT" />
+    <result column="ValueID" property="valueid" jdbcType="BIGINT" />
+    <result column="AttributeID" property="attributeid" jdbcType="BIGINT" />
+    <result column="CreatDate" property="creatdate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, GoodsID, ValueID, AttributeID, CreatDate
+  </sql>
+ <!--新增商品属性关联数据  -->
+ <insert id="insertGoods_Attribute" parameterType="com.wbdp.bee.entity.Wbl_Goods_attributeEntity">
+ 	insert into wbl_goods_attribute(GoodsID,ValueID,AttributeID,CreatDate) values(#{goodsid},#{valueid},#{attributeid},#{creatdate});
+ </insert>
+ 
+ <!--获取关联信息中商品ID与属性值id的组合字符串，用于过滤重复数据 -->
+ <select id="getGoods_AttributeStr" resultType="java.lang.String">
+ 	SELECT CONCAT(GoodsID,',',ValueID)  FROM `wbl_goods_attribute` ;
+ </select>
+</mapper>

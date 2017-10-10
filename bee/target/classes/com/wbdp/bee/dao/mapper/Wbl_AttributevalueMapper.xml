@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wbdp.bee.dao.Wbl_AttributevalueDAO" >
+  <resultMap id="BaseResultMap" type="com.wbdp.bee.entity.Wbl_AttributevalueEntity" >
+    <id column="ID" property="id" jdbcType="BIGINT" />
+    <result column="AttributeID" property="attributeid" jdbcType="BIGINT" />
+    <result column="AttributeValue" property="attributevalue" jdbcType="VARCHAR" />
+    <result column="CreatDate" property="creatdate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, AttributeID, AttributeValue, CreatDate
+  </sql>
+  <!--获取属性值列表  -->
+  <select id="getWbl_Attributevalue" resultType="com.wbdp.bee.entity.Wbl_AttributevalueEntity">
+  	select * from wbl_attributevalue;
+  </select>
+   <!--根据属性名id获取属性值列表 -->
+  <select id="listWbl_Attributevalue" parameterType="java.lang.Long" resultType="com.wbdp.bee.entity.Wbl_AttributevalueEntity">
+  	select * from wbl_attributevalue where AttributeID=#{attributeid};
+  </select>
+  
+  <!--根据属性名获取属性值对象-->
+  <select id="selectWbl_AttributevalueEntity" parameterType="java.lang.String" resultType="com.wbdp.bee.entity.Wbl_AttributevalueEntity">
+  	select * from wbl_attributevalue where AttributeValue=#{attributevalue};
+  </select>
+  
+  <!--新增属性值数据并返回id  -->
+  <insert id="insertWbl_Attributevalue" parameterType="com.wbdp.bee.entity.Wbl_AttributevalueEntity">
+  	insert into wbl_attributevalue(AttributeID,AttributeValue,CreatDate) 
+  	values(#{attributeid},#{attributevalue},#{creatdate})
+  		<selectKey resultType="java.lang.Long" order="AFTER" keyProperty="id">
+            SELECT LAST_INSERT_ID();
+        </selectKey>
+  </insert>
+  
+  <!--根据ID查询属性值  -->
+  <select id="selectWbl_AttributevalueforID" parameterType="java.lang.Long" resultType="java.lang.String">
+  		select AttributeValue from wbl_attributevalue where ID=#{id};
+  </select>
+  
+  <!--批量查询sku属性值 -->
+  <select id="batchValue" parameterType="map" resultType="java.lang.String">
+  		select AttributeValue from wbl_attributevalue where ID IN
+  			<foreach collection="map.valueIDs" item="id" open="(" close=")" separator=",">
+		    	#{id}
+		    </foreach>
+  </select>
+</mapper>

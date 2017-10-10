@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"    
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.wbdp.bee.dao.BeeMapperNew">
+	<!--分页查询全部客户  -->
+	<select id="selectAllBee" parameterType="java.lang.Integer" resultType="java.util.Map">
+		SELECT a.ID,a.BeeWX,a.Phone,a.BeeName,CONCAT(LEFT(a.BeeCard,6),"********",RIGHT(a.BeeCard,4)) AS BeeCard,a.Company,DATE_FORMAT(a.CreatDate,'%Y-%c-%d %h:%i:%s') AS CreatDate,a.BeeType,b.`CreditLimit`-b.`UsedCredit` AS  CreditLimit
+		FROM wbl_pollen AS b RIGHT JOIN wbl_bee AS a  ON a.`ID` = b.`BeeID` where a.BeeStatus=0 ORDER BY a.CreatDate  LIMIT #{pageNum},10 ;
+	</select>
+	
+	<!-- 客服删除客户 -->
+	<update id="delBee" parameterType="java.lang.Long">
+		 UPDATE wbl_bee
+        <set>
+        	BeeStatus = 1,
+        </set>
+        WHERE ID = #{id};
+	</update>
+	<!--查询全部客户数量  -->
+	<select id="selectAllBeeCount" resultType="java.lang.Integer">
+		select count(0) from wbl_bee;
+	</select>
+	<!--客户经理查询客户信息 （只能查询其名下的客户） -->
+	<select id="selectSaleManBee" resultType="java.util.Map">
+		SELECT a.ID,a.BeeWX,a.Phone,a.BeeName,CONCAT(LEFT(a.BeeCard,6),"********",RIGHT(a.BeeCard,4)) AS BeeCard,a.Company,DATE_FORMAT(a.CreatDate,'%Y-%c-%d %h:%i:%s') AS CreatDate,a.BeeType,b.`CreditLimit`-b.`UsedCredit` AS CreditLimit
+		FROM wbl_bee AS a LEFT JOIN wbl_pollen AS b ON a.`ID`=b.`BeeID` WHERE a.BeeStatus=0 AND (a.BeeWX IN (SELECT ClientWX FROM wbdp_brushcredit WHERE RecomCode=#{code})
+		OR a.ID IN (SELECT BeeID FROM wbdp_brushcredit WHERE RecomCode=#{code}))
+		ORDER BY a.CreatDate LIMIT #{pageNum},10;
+	</select>
+	<!--客户经理查询客户数量  -->
+	<select id="selectSaleManBeeCount" parameterType="java.lang.String" resultType="java.lang.Integer">
+		select count(0) from wbl_bee where BeeStatus=0 AND (BeeWX in (select ClientWX from wbdp_brushcredit where RecomCode=#{code}) 
+		OR ID IN (SELECT BeeID FROM wbdp_brushcredit WHERE RecomCode=#{code}));
+	</select>
+	<!--客户管理员查询客户列表 -->
+	<select id="selectBeeBySaleMan" resultType="java.util.Map">
+		SELECT a.ID,a.BeeWX,a.Phone,a.BeeName,CONCAT(LEFT(a.BeeCard,6),"********",RIGHT(a.BeeCard,4)) AS BeeCard,a.Company,DATE_FORMAT(a.CreatDate,'%Y-%c-%d %h:%i:%s') AS CreatDate,a.BeeType,b.`CreditLimit`-b.`UsedCredit` AS CreditLimit
+		FROM wbl_bee AS a LEFT JOIN wbl_pollen AS b ON a.`ID`=b.`BeeID` WHERE  a.BeeStatus=0 AND
+		(a.BeeWX IN (SELECT ClientWX FROM wbdp_brushcredit WHERE RecomCode IN (SELECT Recommend FROM wbl_saleman WHERE CreatBy = #{username})) 
+		OR a.ID IN (SELECT BeeID FROM wbdp_brushcredit WHERE RecomCode IN (SELECT Recommend FROM wbl_saleman WHERE CreatBy = #{username})))
+		 ORDER BY a.CreatDate LIMIT #{pageNum},10;
+	</select>
+	<!-- 客户管理员查询客户数量 -->
+	<select id="selectBeeBySaleManCount" parameterType="java.lang.String" resultType="java.lang.Integer">
+		SELECT count(0) FROM wbl_bee WHERE BeeStatus=0 AND (BeeWX IN 
+		(SELECT ClientWX FROM wbdp_brushcredit WHERE RecomCode IN (SELECT Recommend FROM wbl_saleman WHERE CreatBy = #{username}))
+		OR ID IN (SELECT BeeID FROM wbdp_brushcredit WHERE RecomCode IN (SELECT Recommend FROM wbl_saleman WHERE CreatBy = #{username}))) ;
+	</select>
+	<!--用户上传集团客户资料  -->
+	<insert id="uploadClient" parameterType="java.util.List">
+		INSERT INTO wbl_bee(BeeName,Phone,BeeCard,Company,BeeType)
+		VALUES
+		<foreach collection="beeList" item="item" index="index" separator="," >  
+	        (#{item.beename},#{item.phone},#{item.beecard},#{item.company},1)  
+	    </foreach>
+	</insert>
+	<!-- 客户经理新增公对公客户 -->
+	<insert id="insertBeeBySaleMan" parameterType="com.wbdp.bee.entity.Wbl_BeeEntity">
+		INSERT INTO wbl_bee(BeeName,Phone,BeeCard,Company,BeeType,Depart,BeeStatus,CreatDate,CreatBy)
+		VALUES
+	    (#{beename},#{phone},#{beecard},#{company},1,#{depart},#{beestatus},#{creatdate},#{creatby})  
+	    <selectKey resultType="Long" order="AFTER" keyProperty="id">
+            SELECT LAST_INSERT_ID() AS id
+        </selectKey>
+	</insert>
+<!-- Bee -->
+ <resultMap id="BeeResult" type="com.wbdp.bee.entity.Wbl_BeeEntity" >
+    <id column="ID" property="id" jdbcType="BIGINT" />
+    <result column="BeeWX" property="beewx" jdbcType="VARCHAR" />
+    <result column="Phone" property="phone" jdbcType="VARCHAR" />
+    <result column="BeeName" property="beename" jdbcType="VARCHAR" />
+    <result column="Sex" property="sex" jdbcType="INTEGER" />
+    <result column="BeeCard" property="beecard" jdbcType="VARCHAR" />
+    <result column="CardImage" property="cardimage" jdbcType="VARCHAR" />
+    <result column="Marriage" property="marriage" jdbcType="INTEGER" />
+    <result column="Education" property="education" jdbcType="VARCHAR" />
+    <result column="BeeStatus" property="beestatus" jdbcType="INTEGER" />
+    <result column="Company" property="company" jdbcType="INTEGER" />
+    <result column="CreatBy" property="creatby" jdbcType="VARCHAR" />
+    <result column="CreatDate" property="creatdate" jdbcType="TIMESTAMP" />
+    <result column="UpDateBy" property="updateby" jdbcType="VARCHAR" />
+    <result column="UpDateTime" property="updatetime" jdbcType="TIMESTAMP" />
+     <collection property="BeeaddressList" resultMap="BeeaddressResult" />    <!-- 地址映射 -->
+     <collection property="LinkmanList" resultMap="LinkmanResult" />           <!-- 联系人映射 -->
+     <collection property="BankcardList" resultMap="BankcardResult" />          <!-- 银行卡映射 -->
+     <collection property="SocialdataList" resultMap="SocialdataResult" />       <!-- 社保映射 -->
+     <collection property="PollenList" resultMap="PollenResult" />                <!-- 花粉信用映射 -->
+  </resultMap>
+</mapper>

@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.wbdp.bee.dao.Wbl_BeecompgradeDAO">
+
+    <sql id="wblBeecompgradeBaseColumnSql">
+        ID,
+        BeeID,
+        Grade,
+        Company,
+        CreatDate,
+        UpdateTime
+    </sql>
+
+    <!-- <sql id="wblBeecompgradeBaseWhereSql">
+        <if test="map!=null">
+            <where>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.id)">
+                    ID = #{map.id}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.beeId)">
+                    AND BeeID = #{map.beeId}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.grade)">
+                    AND Grade = #{map.grade}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.company)">
+                    AND Company = #{map.company}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.creatDate)">
+                    AND CreatDate = #{map.creatDate}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.updateTime)">
+                    AND UpdateTime = #{map.updateTime}
+                </if>
+            </where>
+        </if>
+    </sql>
+
+    <insert id="insertWblBeecompgrade" parameterType="com.wbdp.bee.entity.Wbl_BeecompgradeEntity">
+        INSERT INTO wbl_beecompgrade(
+        <include refid="wblBeecompgradeBaseColumnSql"/>
+        )VALUES(
+            #{id},
+            #{beeId},
+            #{grade},
+            #{company},
+            #{creatDate},
+            #{updateTime}
+        )
+    </insert>
+
+    
+    <delete id="deleteWblBeecompgradeById" parameterType="Long">
+        DELETE FROM wbl_beecompgrade WHERE ID = #{id}
+    </delete>
+
+    <update id="updateWblBeecompgrade" parameterType="com.wbdp.bee.entity.Wbl_BeecompgradeEntity">
+        UPDATE wbl_beecompgrade
+        <set>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(beeId)">
+                BeeID = #{beeId} ,
+            </if>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(grade)">
+                Grade = #{grade} ,
+            </if>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(company)">
+                Company = #{company} ,
+            </if>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(creatDate)">
+                CreatDate = #{creatDate} ,
+            </if>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(updateTime)">
+                UpdateTime = #{updateTime} ,
+            </if>
+        </set>
+        WHERE ID = #{id}
+    </update>
+
+    <select id="searchWblBeecompgradeByParams" parameterType="map" resultMap="wblBeecompgradeMap">
+        SELECT
+        <include refid="wblBeecompgradeBaseColumnSql"/>
+        FROM wbl_beecompgrade
+        <include refid="wblBeecompgradeBaseWhereSql"/>
+    </select> -->
+	<!--新增公司评级记录  -->
+	<insert id="insertBeecompgrade" parameterType="com.wbdp.bee.entity.Wbl_BeecompgradeEntity">
+		insert into wbl_beecompgrade(Grade,Company,CreatDate) values(#{grade},#{company},#{creatDate});
+	</insert>
+	<!--修改公司评级记录  -->
+	<update id="updateBeecompgrade" parameterType="com.wbdp.bee.entity.Wbl_BeecompgradeEntity">
+		update wbl_beecompgrade set Grade=#{grade},UpdateTime=#{updateTime} where Company=#{company};
+	</update>
+    <resultMap type="com.wbdp.bee.entity.Wbl_BeecompgradeEntity" id="wblBeecompgradeMap">
+        <id column="ID" property="id"/>
+        <result column="BeeID" property="beeId"/>
+        <result column="Grade" property="grade"/>
+        <result column="Company" property="company"/>
+        <result column="CreatDate" property="creatDate"/>
+        <result column="UpdateTime" property="updateTime"/>
+    </resultMap>
+
+</mapper>

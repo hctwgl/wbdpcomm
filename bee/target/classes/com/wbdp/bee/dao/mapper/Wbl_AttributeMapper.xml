@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wbdp.bee.dao.Wbl_AttributeDAO" >
+  <resultMap id="BaseResultMap" type="com.wbdp.bee.entity.Wbl_AttributeEntity">
+    <id column="ID" property="id" jdbcType="BIGINT" />
+    <result column="Attribute" property="attribute" jdbcType="VARCHAR"/>
+    <result column="CreatDate" property="creatdate" jdbcType="TIMESTAMP"/>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, Attribute, CreatDate
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from wbl_attribute
+    where ID = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from wbl_attribute
+    where ID = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.wbdp.bee.entity.Wbl_AttributeEntity" >
+    insert into wbl_attribute (ID, Attribute, CreatDate
+      )
+    values (#{id,jdbcType=BIGINT}, #{attribute,jdbcType=VARCHAR}, #{creatdate,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.wbdp.bee.entity.Wbl_AttributeEntity" >
+    insert into wbl_attribute
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="attribute != null" >
+        Attribute,
+      </if>
+      <if test="creatdate != null" >
+        CreatDate,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="attribute != null" >
+        #{attribute,jdbcType=VARCHAR},
+      </if>
+      <if test="creatdate != null" >
+        #{creatdate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wbdp.bee.entity.Wbl_AttributeEntity">
+    update wbl_attribute
+    <set >
+      <if test="attribute != null" >
+        Attribute = #{attribute,jdbcType=VARCHAR},
+      </if>
+      <if test="creatdate != null" >
+        CreatDate = #{creatdate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wbdp.bee.entity.Wbl_AttributeEntity" >
+    update wbl_attribute
+    set Attribute = #{attribute,jdbcType=VARCHAR},
+      CreatDate = #{creatdate,jdbcType=TIMESTAMP}
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  
+  <!--获取属性名列表  -->
+  <select id="listWbl_Attribute" resultType="com.wbdp.bee.entity.Wbl_AttributeEntity">
+  	select * from wbl_attribute;
+  </select>
+   <!--根据属性名获取属性名对象  -->
+  <select id="getWbl_Attribute" parameterType="java.lang.String" resultType="com.wbdp.bee.entity.Wbl_AttributeEntity">
+  	select * from wbl_attribute where Attribute=#{attribute};
+  </select>
+  <!--分页查询属性名与属性值对应视图  -->
+  <select id="selectAttribute" parameterType="java.lang.Integer" resultType="com.wbdp.bee.entity.Wbl_AttributeView">
+  	SELECT * FROM attribute_view LIMIT #{pageNum},10;
+  </select>
+  <!--获取属性名与属性值对应视图长度  -->
+  <select id="getViewcount" resultType="java.lang.Integer">
+  	SELECT count(0) FROM attribute_view;
+  </select>
+  <!--新增属性名称  -->
+  <insert id="insertAttribute" parameterType="com.wbdp.bee.entity.Wbl_AttributeEntity">
+  	<selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER">  
+        SELECT  
+        LAST_INSERT_ID();
+    </selectKey>
+  	insert into wbl_attribute(Attribute,CreatDate) values
+  	(#{attribute},#{creatdate});
+  </insert>
+  
+</mapper>

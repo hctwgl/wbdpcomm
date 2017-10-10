@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.wbdp.bee.dao.Wbl_ModelUserDAO">
+
+    <sql id="wblModelUserBaseColumnSql">
+        ID,
+        UserID,
+        ModelID
+    </sql>
+
+  <!--   <sql id="wblModelUserBaseWhereSql">
+        <if test="map!=null">
+            <where>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.id)">
+                    ID = #{map.id}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.userId)">
+                    AND UserID = #{map.userId}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.modelId)">
+                    AND ModelID = #{map.modelId}
+                </if>
+            </where>
+        </if>
+    </sql>
+
+    <insert id="insertWblModelUser" parameterType="com.wbdp.bee.entity.Wbl_Model_User">
+        INSERT INTO wbl_model_user(
+        <include refid="wblModelUserBaseColumnSql"/>
+        )VALUES(
+            #{id},
+            #{userId},
+            #{modelId}
+        )
+    </insert>
+
+    
+    <delete id="deleteWblModelUserById" parameterType="Long">
+        DELETE FROM wbl_model_user WHERE ID = #{id}
+    </delete>
+
+    <update id="updateWblModelUser" parameterType="com.wbdp.bee.entity.Wbl_Model_User">
+        UPDATE wbl_model_user
+        <set>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(userId)">
+                UserID = #{userId} ,
+            </if>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(modelId)">
+                ModelID = #{modelId} ,
+            </if>
+        </set>
+        WHERE ID = #{id}
+    </update>
+
+    <select id="searchWblModelUserByParams" parameterType="map" resultMap="wblModelUserMap">
+        SELECT
+        <include refid="wblModelUserBaseColumnSql"/>
+        FROM wbl_model_user
+        <include refid="wblModelUserBaseWhereSql"/>
+    </select> -->
+	<!--批量添加用户权限  -->
+	<insert id="insertModel" parameterType="map">
+		    <if test="map.status==null">
+		    	insert into wbl_model_user (UserID,ModelID)   
+		   		 values  
+		    	<foreach collection="map.list" item="item" index="index" separator="," >  
+			        (#{item.userId},#{item.modelId})  
+			    </foreach>  
+		    </if>
+		    <if test="map.status!=null">
+		    	insert into wbl_model_user (UserID,ModelID,ModelStatus)   
+		   		 values  
+		    	<foreach collection="map.list" item="item" index="index" separator="," >  
+			        (#{item.userId},#{item.modelId},1)  
+			    </foreach>  
+		    </if>
+	</insert>
+	<!--批量修改用户权限(赋予权限)  -->
+	<update id="updateModelGive" parameterType="map">
+		update wbl_model_user 
+	    set  ModelStatus= 1
+	    where ModelID IN
+	     <foreach collection="map.list" index="index" item="item" 
+	        separator="," open="(" close=")">
+	        #{item}
+	    </foreach>
+	    AND UserID = #{map.userId};
+	</update>
+	<!--批量修改用户权限(解除权限)  -->
+	<update id="updateModelRel" parameterType="map">
+		update wbl_model_user 
+	    set  ModelStatus= 0
+	    where ModelID NOT IN
+	     <foreach collection="map.list" index="index" item="item" 
+	        separator="," open="(" close=")">
+	        #{item}
+	    </foreach>
+	    AND UserID = #{map.userId}; 
+	</update>
+    <resultMap type="com.wbdp.bee.entity.Wbl_Model_User" id="wblModelUserMap">
+        <id column="ID" property="id"/>
+        <result column="UserID" property="userId"/>
+        <result column="ModelID" property="modelId"/>
+    </resultMap>
+
+</mapper>

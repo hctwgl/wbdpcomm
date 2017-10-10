@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"    
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.wbdp.bee.dao.Wbl_UserDao">
+
+ <!-- 用户登录SQL -->
+<select id="UserLogin" resultType="Map">
+SELECT <include refid="Base_Column_List" /> FROM wbl_user
+WHERE 
+USERNAME=#{username} 
+AND 
+PASSWORD=#{password}
+ </select>
+ 
+<!-- 用户增加 --> 
+<insert id="UserInsert" useGeneratedKeys="true" parameterType="com.wbdp.bee.entity.Wbl_UserEntity">
+	<selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER">  
+        SELECT  
+        LAST_INSERT_ID();
+    </selectKey>  
+    insert into wbl_user
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="username != null" >
+        UserName,
+      </if>
+      <if test="password != null" >
+        PassWord,
+      </if>
+      <if test="phone != null" >
+        Phone,
+      </if>
+      <if test="officephone != null" >
+        OfficePhone,
+      </if>
+      <if test="usertype != null" >
+        UserType,
+      </if>
+      <if test="recomCode != null" >
+        RecomCode,
+      </if>
+      <if test="userstate != null" >
+        UserState,
+      </if>
+      <if test="creatby != null" >
+        CreatBy,
+      </if>
+      <if test="creatdate != null" >
+        CreatDate,
+      </if>
+      <if test="updateby != null" >
+        UpDateBy,
+      </if>
+      <if test="updatetime != null" >
+        UpDateTime,
+      </if>
+      <if test="company != null">
+        Company,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="username != null" >
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null" >
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null" >
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="officephone != null" >
+        #{officephone,jdbcType=VARCHAR},
+      </if>
+      <if test="usertype != null" >
+        #{usertype,jdbcType=INTEGER},
+      </if>
+      <if test="recomCode != null" >
+        #{recomCode,jdbcType=VARCHAR},
+      </if>
+      <if test="userstate != null" >
+        #{userstate,jdbcType=INTEGER},
+      </if>
+      <if test="creatby != null" >
+        #{creatby,jdbcType=VARCHAR},
+      </if>
+      <if test="creatdate != null" >
+        #{creatdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateby != null" >
+        #{updateby,jdbcType=VARCHAR},
+      </if>
+      <if test="updatetime != null" >
+        #{updatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="company != null">
+        #{company,jdbcType=VARCHAR}, 
+      </if>
+    </trim>
+  </insert>
+
+<!-- 用户删除  -->
+<delete id="UserDelete">
+DELETE FROM wbl_user
+WHERE
+ID = #{id,jdbcType=BIGINT}
+</delete>
+
+<!-- 用户停用 -->
+<update id="UserStop">
+UPDATE wbl_user
+SET
+UserState=1
+WHERE
+ID = #{id,jdbcType=BIGINT}
+</update>
+ 
+<!-- 用户修改 -->
+<update id="UserUpdate" parameterType="com.wbdp.bee.entity.Wbl_UserEntity" >
+    update wbl_user
+    <set >
+      <if test="username != null" >
+        UserName = #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null" >
+        PassWord = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null" >
+        Phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="officephone != null" >
+        OfficePhone = #{officephone,jdbcType=VARCHAR},
+      </if>
+      <if test="usertype != null" >
+        UserType = #{usertype,jdbcType=INTEGER},
+      </if>
+      <if test="auditpassword != null" >
+        RecomCode = #{auditpassword,jdbcType=VARCHAR},
+      </if>
+      <if test="userstate != null" >
+        UserState = #{userstate,jdbcType=INTEGER},
+      </if>
+      <if test="creatby != null" >
+        CreatBy = #{creatby,jdbcType=VARCHAR},
+      </if>
+      <if test="creatdate != null" >
+        CreatDate = #{creatdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateby != null" >
+        UpDateBy = #{updateby,jdbcType=VARCHAR},
+      </if>
+      <if test="updatetime != null" >
+        UpDateTime = #{updatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="company != null">
+        Company = #{company,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+ 
+<!-- 用户列表 --> 
+<select id="UserAllList" resultType="com.wbdp.bee.entity.Wbl_UserEntity">
+SELECT <include refid="Base_Column_List" /> FROM wbl_user
+LIMIT #{pageNum},10;
+</select>
+<!-- 用户列表大小 -->
+<select id="UserAllListSize" resultType="Integer">
+SELECT count(1) FROM wbl_user;
+</select>  
+ 
+ <!--重置用户密码  -->
+ <update id="resetPassWord" parameterType="com.wbdp.bee.entity.Wbl_UserEntity">
+ 	update wbl_user set PassWord=password where ID =#{id};
+ </update>
+<!-- 表字段 -->
+ <sql id="Base_Column_List" >
+    ID, UserName, PassWord, Phone, OfficePhone, Company, UserType, RecomCode, UserState, CreatBy, 
+    CreatDate, UpDateBy, UpDateTime
+ </sql> 
+ 
+ <!--业务员登录  -->
+ <select id="clerkLogin" parameterType="java.lang.String" resultType="com.wbdp.bee.entity.Wbl_UserEntity">
+ 	select Phone,RecomCode,UserType,Company from wbl_user where Phone=#{username} and RecomCode=#{password};
+ </select>
+ 
+ <!--非业务员登录  -->
+ <select id="userLogin" parameterType="java.lang.String" resultType="com.wbdp.bee.entity.Wbl_UserEntity">
+ 	select * from wbl_user where  UserName = #{username}  and PassWord = #{password};
+ </select>
+</mapper>

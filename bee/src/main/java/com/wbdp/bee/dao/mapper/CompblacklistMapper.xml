@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.wbdp.bee.dao.CompblacklistMapper">
+
+    <!-- <sql id="wblCompblacklistBaseColumnSql">
+        ID,
+        ComPany,
+        Reason,
+        CreatBy,
+        CreatDate,
+        UpDateBy,
+        UpDateTime
+    </sql>
+
+    <sql id="wblCompblacklistBaseWhereSql">
+        <if test="map!=null">
+            <where>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.id)">
+                    ID = #{map.id}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.comPany)">
+                    AND ComPany = #{map.comPany}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.reason)">
+                    AND Reason = #{map.reason}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.creatBy)">
+                    AND CreatBy = #{map.creatBy}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.creatDate)">
+                    AND CreatDate = #{map.creatDate}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.upDateBy)">
+                    AND UpDateBy = #{map.upDateBy}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.upDateTime)">
+                    AND UpDateTime = #{map.upDateTime}
+                </if>
+            </where>
+        </if>
+    </sql>
+
+    <insert id="insertWblCompblacklist" parameterType="com.wisedp.modle.entity.WblCompblacklist">
+        INSERT INTO wbl_compblacklist(
+        <include refid="wblCompblacklistBaseColumnSql"/>
+        )VALUES(
+            #{id},
+            #{comPany},
+            #{reason},
+            #{creatBy},
+            #{creatDate},
+            #{upDateBy},
+            #{upDateTime}
+        )
+    </insert>
+
+    
+    <delete id="deleteWblCompblacklistById" parameterType="Long">
+        DELETE FROM wbl_compblacklist WHERE ID = #{id}
+    </delete>
+
+    <update id="updateWblCompblacklist" parameterType="com.wisedp.modle.entity.WblCompblacklist">
+        UPDATE wbl_compblacklist
+        <set>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(comPany)">
+                ComPany = #{comPany} ,
+            </if>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(reason)">
+                Reason = #{reason} ,
+            </if>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(creatBy)">
+                CreatBy = #{creatBy} ,
+            </if>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(creatDate)">
+                CreatDate = #{creatDate} ,
+            </if>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(upDateBy)">
+                UpDateBy = #{upDateBy} ,
+            </if>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(upDateTime)">
+                UpDateTime = #{upDateTime} ,
+            </if>
+        </set>
+        WHERE ID = #{id}
+    </update>
+
+    <select id="searchWblCompblacklistByParams" parameterType="map" resultMap="wblCompblacklistMap">
+        SELECT
+        <include refid="wblCompblacklistBaseColumnSql"/>
+        FROM wbl_compblacklist
+        <include refid="wblCompblacklistBaseWhereSql"/>
+    </select> -->
+    <sql id="wblCompblacklistBaseColumnSql">
+        ComPany,
+        Reason,
+        CreatBy,
+        CreatDate
+    </sql>
+	<!--新增公司黑名单数据  -->
+	<insert id="insertCompBlack" parameterType="com.wbdp.bee.entity.CompblacklistNewEntity">
+		insert into wbl_compblacklist(
+			<include refid="wblCompblacklistBaseColumnSql"/>
+		)VALUES(
+            #{comPany},
+            #{reason},
+            #{creatBy},
+            #{creatDate}
+        )
+	</insert>
+	<!--按时间倒序查询公司黑名单数据  -->
+	<select id="selectAllCompBlack" parameterType="java.lang.Integer" resultType="com.wbdp.bee.entity.CompblacklistNewEntity">
+		select ID,ComPany,Reason,CreatBy,CreatDate from wbl_compblacklist limit #{pageNum},10 ORDER BY CreatDate DESC;
+	</select>
+	
+	<!--获取公司黑名单总数量  -->
+	<select id="getCount" resultType="java.lang.Integer">
+		select count(0) from wbl_compblacklist;
+	</select>
+	<!--删除公司黑名单数据  -->
+	<delete id="delCompBlack" parameterType="java.lang.Long">
+		 DELETE FROM wbl_compblacklist WHERE ID = #{id};
+	</delete>
+    <resultMap type="com.wbdp.bee.entity.CompblacklistNewEntity" id="wblCompblacklistMap">
+        <id column="ID" property="id"/>
+        <result column="ComPany" property="comPany"/>
+        <result column="Reason" property="reason"/>
+        <result column="CreatBy" property="creatBy"/>
+        <result column="CreatDate" property="creatDate"/>
+        <result column="UpDateBy" property="upDateBy"/>
+        <result column="UpDateTime" property="upDateTime"/>
+    </resultMap>
+
+</mapper>

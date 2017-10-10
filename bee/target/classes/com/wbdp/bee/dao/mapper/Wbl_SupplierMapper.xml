@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"    
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.wbdp.bee.dao.Wbl_SupplierDAO">
+
+<!-- 运营商增加 -->
+<insert id="SupplierInsert" parameterType="com.wbdp.bee.entity.Wbl_SupplierEntity" >
+    insert into wbl_supplier
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="supplier != null" >
+        Supplier,
+      </if>
+      <if test="contacts != null" >
+        Contacts,
+      </if>
+      <if test="phone != null" >
+        Phone,
+      </if>
+      <if test="email != null" >
+        Email,
+      </if>
+      <if test="city != null" >
+        City,
+      </if>
+      <if test="address != null" >
+        Address,
+      </if>
+      <if test="creatby != null" >
+        CreatBy,
+      </if>
+      <if test="creatdate != null" >
+        CreatDate,
+      </if>
+      <if test="updateby != null" >
+        UpDateBy,
+      </if>
+      <if test="updatetime != null" >
+        UpDateTime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="supplier != null" >
+        #{supplier,jdbcType=VARCHAR},
+      </if>
+      <if test="contacts != null" >
+        #{contacts,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null" >
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="city != null" >
+        #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="creatby != null" >
+        #{creatby,jdbcType=VARCHAR},
+      </if>
+      <if test="creatdate != null" >
+        #{creatdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateby != null" >
+        #{updateby,jdbcType=VARCHAR},
+      </if>
+      <if test="updatetime != null" >
+        #{updatetime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+
+<!-- 运营商删除 -->
+<delete id="SupplierDelete">
+delete from wbl_supplier
+where ID = #{id,jdbcType=BIGINT}
+</delete>
+
+<!-- 运营商修改 -->
+<update id="SupplierUpdate" parameterType="com.wbdp.bee.entity.Wbl_SupplierEntity" >
+    update wbl_supplier
+    <set >
+      <if test="supplier != null" >
+        Supplier = #{supplier,jdbcType=VARCHAR},
+      </if>
+      <if test="contacts != null" >
+        Contacts = #{contacts,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null" >
+        Phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        Email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="city != null" >
+        City = #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        Address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="creatby != null" >
+        CreatBy = #{creatby,jdbcType=VARCHAR},
+      </if>
+      <if test="creatdate != null" >
+        CreatDate = #{creatdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateby != null" >
+        UpDateBy = #{updateby,jdbcType=VARCHAR},
+      </if>
+      <if test="updatetime != null" >
+        UpDateTime = #{updatetime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+
+
+<!-- 运营商列表 -->
+<select id="SupplierAllList" resultType="com.wbdp.bee.entity.Wbl_SupplierEntity">
+select <include refid="Base_Column_List" /> from wbl_supplier
+LIMIT #{pageNum},10;
+</select>
+<!-- 运营商列表大小 -->
+<select id="SupplierAllListSize" resultType="Integer">
+select count(1) from wbl_supplier
+</select>
+
+<!-- 运营商列表，用于添加商品时ajax调用 -->
+<select id="listSupplier" resultType="com.wbdp.bee.entity.Wbl_SupplierEntity">
+select ID,Supplier,City from wbl_supplier;
+</select>
+
+
+
+
+
+
+
+<!-- 表字段 -->
+<sql id="Base_Column_List" >
+    ID, Supplier, Contacts, Phone, Email, City, Address, CreatBy, CreatDate, UpDateBy, UpDateTime
+</sql>
+</mapper>

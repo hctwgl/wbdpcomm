@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"    
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.wbdp.bee.dao.Wbl_BeeDao">
+
+<!-- 客户列表 -->
+<select id="BeeAllList" resultType="Map">
+SELECT 
+<include refid="bee_Column_List" />,
+CONCAT(LEFT(be.BeeCard,6),"********",RIGHT(be.BeeCard,4)) BeeCard,
+pn.CreditLimit
+FROM wbl_bee AS be
+LEFT JOIN wbl_pollen AS pn
+ON be.ID=pn.BeeID
+WHERE BeeStatus=0 
+ORDER BY ID DESC
+LIMIT #{pageNum},10;
+</select>
+<!-- 客户列表大小 -->
+<select id="BeeAllListSize" resultType="Integer">
+SELECT
+count(1)
+FROM
+wbl_bee
+</select>
+
+<!-- 根据业务员推荐码查询业务员所属客户 -->
+<select id="selectBeeByCode" resultType="Map">
+	SELECT ID,BeeName,Phone,Sex,CONCAT(LEFT(BeeCard,6),"********",RIGHT(BeeCard,4)) AS BeeCard,Marriage,Education,Company,BeeStatus 
+	FROM `wbl_bee` WHERE BeeWX IN (SELECT  ClientWX FROM `wbdp_brushcredit` WHERE RecomCode=#{recomCode}) or ID IN 
+		(SELECT  BeeID FROM `wbdp_brushcredit` WHERE RecomCode=#{recomCode})
+	 limit #{pageNum},10;
+</select>
+
+<!-- 根据业务员推荐码查询业务员所属客户数量 -->
+<select id="selectBeeByCodeNum" parameterType="java.lang.String" resultType="java.lang.Integer">
+	SELECT count(0) FROM `wbl_bee` WHERE BeeWX IN (SELECT  ClientWX FROM `wbdp_brushcredit` WHERE RecomCode=#{recomCode});
+</select>
+<!--客户经理管理员查询客户  -->
+<select id="selectBeeByCodeMan" resultType="Map">
+	select ID,BeeName,Phone,Sex,CONCAT(LEFT(BeeCard,6),"********",RIGHT(BeeCard,4)) AS BeeCard,Marriage,Education,Company,BeeStatus
+	from `wbl_bee` WHERE BeeWX IN (SELECT  ClientWX FROM `wbdp_brushcredit` WHERE RecomCode=#{recomCode}) or ID IN 
+	(SELECT  BeeID FROM `wbdp_brushcredit` WHERE RecomCode=#{recomCode}) or BeeWX IN
+	(SELECT  ClientWX FROM `wbdp_brushcredit` WHERE RecomCode IN (SELECT Recommend FROM wbl_saleman WHERE CreatBy = #{username})) or
+	ID IN 
+	(SELECT BeeID FROM `wbdp_brushcredit` WHERE RecomCode IN (SELECT Recommend FROM wbl_saleman WHERE CreatBy = #{username}))
+	limit #{pageNum},10;
+</select>
+<!--客户经理管理员查询客户数量  -->
+<select id="selectBeeByManNum" resultType="java.lang.Integer">
+	select count(0)
+	from `wbl_bee` WHERE BeeWX IN (SELECT  ClientWX FROM `wbdp_brushcredit` WHERE RecomCode=#{recomCode}) or ID IN 
+	(SELECT  BeeID FROM `wbdp_brushcredit` WHERE RecomCode=#{recomCode}) or BeeWX IN
+	(SELECT  ClientWX FROM `wbdp_brushcredit` WHERE RecomCode IN (SELECT Recommend FROM wbl_saleman WHERE CreatBy = #{username})) or
+	ID IN 
+	(SELECT BeeID FROM `wbdp_brushcredit` WHERE RecomCode IN (SELECT Recommend FROM wbl_saleman WHERE CreatBy = #{username}))
+	;
+</select>
+<!-- 客户列表详细(根据客户id查询) -->
+<select id="BeeAllListOfID" resultMap="BeeResult">
+SELECT
+<include refid="bee_Column_List"/>,CONCAT(LEFT(be.BeeCard,6),"********",RIGHT(be.BeeCard,4)) BeeCard,
+<include refid="beeaddress_Column_List"/>,
+<include refid="linkman_Column_List"/>,
+<include refid="bankcard_Column_List"/>,CONCAT(LEFT(bd.BankCard,5),"**********",RIGHT(bd.BankCard,4)) BankCard,
+<include refid="socialdata_Column_List"/>,
+<include refid="pollen_Column_List" />
+FROM
+  wbl_bee AS be
+LEFT JOIN wbl_beeaddress AS bs ON be.ID = bs.BeeID
+LEFT JOIN wbl_linkman AS ln ON bs.BeeID=ln.BeeID
+LEFT JOIN wbl_bankcard AS bd ON ln.BeeID=bd.BeeID
+LEFT JOIN wbl_socialdata AS sa ON bd.BeeID=sa.BeeID
+LEFT JOIN wbl_pollen AS pn ON sa.BeeID=pn.BeeID
+<where>
+<if test="id!=null">
+ be.id=#{id}
+</if>
+</where>
+</select>
+
+<!--用户上传公对公集团客户资料  -->
+<insert id="uploadClient" parameterType="java.util.List">
+	INSERT INTO wbl_bee(BeeName,Phone,BeeCard,Company,BeeType,Depart)
+	VALUES
+	<foreach collection="beeList" item="item" index="index" separator="," >  
+        (#{item.beename},#{item.phone},#{item.beecard},#{item.company},1,#{item.depart})  
+    </foreach>
+</insert>
+
+
+
+<!-- Bee字段 -->
+ <sql id="bee_Column_List" >
+    be.ID,be.BeeWX,be.Phone,be.BeeName,be.Sex,be.CardImage,be.Marriage,be.Education,be.BeeStatus,be.Company,be.CreatBy,be.CreatDate,be.UpDateBy,be.UpDateTime
+  </sql>
+<!-- Bee地址字段 -->  
+ <sql id="beeaddress_Column_List" >
+    bs.ID,bs.BeeID,bs.Province,bs.City,bs.Area,bs.DetAddress,bs.CreatDate,bs.type
+  </sql>
+<!-- Bee联系人字段 -->  
+  <sql id="linkman_Column_List" >
+    ln.ID,ln.BeeID,ln.LinkManName,ln.Relation,ln.Phone,ln.CreatBy,ln.CreatDate,ln.UpDateBy,ln.UpDateTime
+  </sql>
+<!-- Bee银行卡字段 --> 
+   <sql id="bankcard_Column_List" >
+    bd.ID,bd.BeeID,bd.Bank,bd.OpenBank,bd.City,bd.CreatBy,bd.CreatDate,bd.UpDateBy,bd.UpDateTime
+  </sql>
+<!-- Bee社保字段 -->  
+   <sql id="socialdata_Column_List" >
+    sa.ID,sa.BeeID,sa.SocialAccount,sa.SocialPassWord,sa.Base,sa.Balance,sa.Company,sa.PayTime,sa.SocialState,sa.CreatBy,sa.CreatDate,sa.UpdateBy,sa.UpdateTime
+  </sql>
+<!-- Bee花粉信用字段 -->  
+  <sql id="pollen_Column_List" >
+	 pn.ID,pn.BeeID,pn.CreditLimit,pn.CreditDate,pn.CreatDate,pn.UpdateTime
+  </sql> 
+  <!--审核用户并修改用户状态  -->
+  <update id="updateBee" parameterType="com.wbdp.bee.entity.Wbl_BeeEntity">
+  	update wbl_bee set BeeStatus=#{beestatus} where ID=#{id};
+  </update>
+  <!--查询所有用户的手机号与ID  -->
+  <select id="getPhoneAndID" resultType="com.wbdp.bee.entity.Wbl_BeeEntity">
+  	select ID,Phone from wbl_bee;
+  </select>
+  <!--查询所有用户的手机号与微信号  -->
+  <select id="getPhoneAndWX" resultType="com.wbdp.bee.entity.Wbl_BeeEntity">
+  	select Phone,BeeWX from wbl_bee;
+  </select>
+  <!--客户经理下载其名下公拉私客户数据  -->
+  <select id="downLoadBee" parameterType="java.lang.Long" resultType="java.util.Map">
+  	select BeeName,BeeCard,Phone from wbl_bee where Company = (SELECT Company FROM wbl_beecompgrade WHERE ID = #{id}) and BeeType = 2 and BeeStatus=0;
+  </select>
+  <!--根据手机号查询用户是否存在  -->
+  <select id="selectBeeByPhone" parameterType="java.lang.String" resultType="com.wbdp.bee.entity.Wbl_BeeEntity">
+  	SELECT * FROM wbl_bee WHERE Phone = #{phone};
+  </select>
+<!-- Bee -->
+ <resultMap id="BeeResult" type="com.wbdp.bee.entity.Wbl_BeeEntity" >
+    <id column="ID" property="id" jdbcType="BIGINT" />
+    <result column="BeeWX" property="beewx" jdbcType="VARCHAR" />
+    <result column="Phone" property="phone" jdbcType="VARCHAR" />
+    <result column="BeeName" property="beename" jdbcType="VARCHAR" />
+    <result column="Sex" property="sex" jdbcType="INTEGER" />
+    <result column="BeeCard" property="beecard" jdbcType="VARCHAR" />
+    <result column="CardImage" property="cardimage" jdbcType="VARCHAR" />
+    <result column="Marriage" property="marriage" jdbcType="INTEGER" />
+    <result column="Education" property="education" jdbcType="VARCHAR" />
+    <result column="BeeStatus" property="beestatus" jdbcType="INTEGER" />
+    <result column="Company" property="company" jdbcType="INTEGER" />
+    <result column="CreatBy" property="creatby" jdbcType="VARCHAR" />
+    <result column="CreatDate" property="creatdate" jdbcType="TIMESTAMP" />
+    <result column="UpDateBy" property="updateby" jdbcType="VARCHAR" />
+    <result column="UpDateTime" property="updatetime" jdbcType="TIMESTAMP" />
+     <collection property="BeeaddressList" resultMap="BeeaddressResult" />    <!-- 地址映射 -->
+     <collection property="LinkmanList" resultMap="LinkmanResult" />           <!-- 联系人映射 -->
+     <collection property="BankcardList" resultMap="BankcardResult" />          <!-- 银行卡映射 -->
+     <collection property="SocialdataList" resultMap="SocialdataResult" />       <!-- 社保映射 -->
+     <collection property="PollenList" resultMap="PollenResult" />                <!-- 花粉信用映射 -->
+  </resultMap>
+  
+  <!-- Bee地址 -->
+   <resultMap id="BeeaddressResult" type="com.wbdp.bee.entity.Wbl_BeeaddressEntity" >
+   <result column="ID" property="id" jdbcType="BIGINT" />
+    <result column="BeeID" property="beeid" jdbcType="BIGINT" />
+    <result column="Province" property="province" jdbcType="VARCHAR" />
+    <result column="City" property="city" jdbcType="VARCHAR" />
+    <result column="Area" property="area" jdbcType="VARCHAR" />
+    <result column="DetAddress" property="detaddress" jdbcType="VARCHAR" />
+    <result column="CreatDate" property="creatdate" jdbcType="TIMESTAMP" />
+    <result column="type" property="type" jdbcType="INTEGER" />
+  </resultMap>
+  <!-- Bee常用联系人 -->
+   <resultMap id="LinkmanResult" type="com.wbdp.bee.entity.Wbl_LinkmanEntity" >
+   <result column="ID" property="id" jdbcType="BIGINT" />
+    <result column="BeeID" property="beeid" jdbcType="BIGINT" />
+    <result column="LinkManName" property="linkmanname" jdbcType="VARCHAR" />
+    <result column="Relation" property="relation" jdbcType="VARCHAR" />
+    <result column="Phone" property="phone" jdbcType="VARCHAR" />
+    <result column="CreatBy" property="creatby" jdbcType="VARCHAR" />
+    <result column="CreatDate" property="creatdate" jdbcType="TIMESTAMP" />
+    <result column="UpDateBy" property="updateby" jdbcType="VARCHAR" />
+    <result column="UpDateTime" property="updatetime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <!-- Bee客户银行 -->
+   <resultMap id="BankcardResult" type="com.wbdp.bee.entity.Wbl_BankcardEntity" >
+   <result column="ID" property="id" jdbcType="BIGINT" />
+    <result column="BeeID" property="beeid" jdbcType="BIGINT" />
+    <result column="Bank" property="bank" jdbcType="VARCHAR" />
+    <result column="OpenBank" property="openbank" jdbcType="VARCHAR" />
+    <result column="BankCard" property="bankcard" jdbcType="VARCHAR" />
+    <result column="City" property="city" jdbcType="VARCHAR" />
+    <result column="CreatBy" property="creatby" jdbcType="VARCHAR" />
+    <result column="CreatDate" property="creatdate" jdbcType="TIMESTAMP" />
+    <result column="UpDateBy" property="updateby" jdbcType="VARCHAR" />
+    <result column="UpDateTime" property="updatetime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <!-- Bee社保 -->
+  <resultMap id="SocialdataResult" type="com.wbdp.bee.entity.Wbl_SocialdataEntity" >
+  <result column="ID" property="id" jdbcType="BIGINT" />
+    <result column="BeeID" property="beeid" jdbcType="BIGINT" />
+    <result column="SocialAccount" property="socialaccount" jdbcType="VARCHAR" />
+    <result column="SocialPassWord" property="socialpassword" jdbcType="VARCHAR" />
+    <result column="Base" property="base" jdbcType="INTEGER" />
+    <result column="Balance" property="balance" jdbcType="INTEGER" />
+    <result column="Company" property="company" jdbcType="VARCHAR" />
+    <result column="PayTime" property="paytime" jdbcType="INTEGER" />
+    <result column="SocialState" property="socialstate" jdbcType="INTEGER" />
+    <result column="CreatBy" property="creatby" jdbcType="VARCHAR" />
+    <result column="CreatDate" property="creatdate" jdbcType="TIMESTAMP" />
+    <result column="UpdateBy" property="updateby" jdbcType="VARCHAR" />
+    <result column="UpdateTime" property="updatetime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <!-- Bee花粉信用 -->
+   <resultMap id="PollenResult" type="com.wbdp.bee.entity.Wbl_PollenEntity" >
+    <result column="ID" property="id" jdbcType="BIGINT" />
+    <result column="BeeID" property="beeid" jdbcType="BIGINT" />
+    <result column="CreditLimit" property="creditlimit" jdbcType="INTEGER" />
+    <result column="CreditDate" property="creditdate" jdbcType="TIMESTAMP" />
+    <result column="CreatDate" property="creatdate" jdbcType="TIMESTAMP" />
+    <result column="UpdateTime" property="updatetime" jdbcType="TIMESTAMP" />
+  </resultMap>
+</mapper>
