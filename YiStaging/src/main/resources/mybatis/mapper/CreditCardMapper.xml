@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wbdp.wx.mapper.CreditCardMapper" >
+  <resultMap id="BaseResultMap" type="com.wbdp.wx.entity.CreditCard" >
+    <id column="ID" property="id" jdbcType="INTEGER" />
+    <result column="BeeID" property="beeid" jdbcType="BIGINT" />
+    <result column="CreditCard" property="creditcard" jdbcType="VARCHAR" />
+    <result column="BankName" property="bankname" jdbcType="VARCHAR" />
+    <result column="CreateDate" property="createdate" jdbcType="TIMESTAMP" />
+    <result column="CreatBy" property="creatby" jdbcType="VARCHAR" />
+    <result column="UpDateBy" property="updateby" jdbcType="VARCHAR" />
+    <result column="UpDateTime" property="updatetime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, BeeID, CreditCard, BankName, CreateDate, CreatBy, UpDateBy, UpDateTime
+  </sql>
+  <!-- 插入信用卡  -->
+  <insert id="insertCreditCard" >
+    insert into wbl_creditcard (BeeID, CreditCard, 
+      BankName, CreateDate, CreatBy)
+    values (#{beeid,jdbcType=BIGINT}, #{creditcard,jdbcType=VARCHAR}, 
+      #{bankname,jdbcType=VARCHAR}, #{createdate,jdbcType=TIMESTAMP}, #{creatby,jdbcType=VARCHAR})
+  </insert>
+  <!-- 查询信用卡  -->
+  <select id="selectCreditCardByBeeID" resultType="com.wbdp.wx.model.UserCreditCard" parameterType="java.lang.Long" >
+    select ID as id,CreditCard as creditcard,BankName as bankname
+    from wbl_creditcard
+    where BeeID = #{beeid,jdbcType=BIGINT}
+  </select>
+  <!-- 修改信用卡  -->
+  <update id="updateCreditCardByBeeID" >
+    update wbl_creditcard
+    set 
+    <if test="creditcard != 'creditcard'" >
+    	CreditCard = #{creditcard,jdbcType=VARCHAR},
+    </if>
+    BankName = #{bankname,jdbcType=VARCHAR},
+    UpDateBy = #{updateby,jdbcType=VARCHAR},
+    UpDateTime = #{updatetime,jdbcType=TIMESTAMP}
+    where BeeID = #{beeid,jdbcType=BIGINT}
+  </update>
+  
+  
+</mapper>

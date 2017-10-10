@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wbdp.wx.mapper.GoodsMapper" >
+  <resultMap id="BaseResultMap" type="com.wbdp.wx.entity.Goods" >
+    <id column="ID" property="id" jdbcType="BIGINT" />
+    <result column="GoodsName" property="goodsname" jdbcType="VARCHAR" />
+    <result column="GoodsState" property="goodsstate" jdbcType="INTEGER" />
+    <result column="CreatBy" property="creatby" jdbcType="VARCHAR" />
+    <result column="CreatDate" property="creatdate" jdbcType="TIMESTAMP" />
+    <result column="UpDateBy" property="updateby" jdbcType="VARCHAR" />
+    <result column="UpDateTime" property="updatetime" jdbcType="TIMESTAMP" />
+    <result column="GoodsTypeID" property="goodstypeid" jdbcType="BIGINT" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, GoodsName, GoodsState, CreatBy, CreatDate, UpDateBy, UpDateTime, GoodsTypeID
+  </sql>
+  <!--分页查询-->
+  <select id="selectGoodsByLimitAndGoodsTypeID" resultType="com.wbdp.wx.model.GoodsModel">
+    select gi.Url as goodImg,g.ID as goodID,g.GoodsName as goodName,
+    (select gsku.Price as goodPrice from wbl_goodssku gsku where gsku.GoodsID = g.ID order by gsku.Price asc limit 0,1) as goodPrice,
+    gs.Supplier as supplier
+    from wbl_goods g  
+    cross join wbl_goodsimage gi on g.ID = gi.GoodsID
+    join wbl_supplier gs on g.SupID = gs.ID
+    where g.GoodsTypeID=#{phoneTypeID}
+    order by
+
+    <if test="sortType == 0" >
+      goodPrice desc
+    </if>
+
+    <if test="sortType == 1" >
+      goodPrice asc
+    </if>
+
+    limit #{limit},10;
+  </select>
+  <!--手机品牌查询-->
+  <select id="selectGoodsByLimit" resultType="com.wbdp.wx.model.GoodsModel">
+    select gi.Url as goodImg,g.ID as goodID,g.GoodsName as goodName,
+    (select gsku.Price as goodPrice from wbl_goodssku gsku where gsku.GoodsID = g.ID order by gsku.Price asc limit 0,1) as goodPrice,
+    gs.Supplier as supplier
+    from wbl_goods g 
+    join wbl_goodsimage gi on g.ID = gi.GoodsID
+    join wbl_supplier gs on g.SupID = gs.ID
+    order by
+
+    <if test="sortType == 0" >
+      goodPrice desc
+    </if>
+
+    <if test="sortType == 1" >
+      goodPrice asc
+    </if>
+      limit #{limit},10;
+  </select>
+  <!--运营商查询-->
+  <select id="selectGoodsByOperatorTypeSort" resultType="com.wbdp.wx.model.GoodsModel">
+    select gi.Url as goodImg,g.ID as goodID,g.GoodsName as goodName,
+    (select gsku.Price as goodPrice from wbl_goodssku gsku where gsku.GoodsID = g.ID order by gsku.Price asc limit 0,1) as goodPrice,
+    gs.Supplier as supplier
+    from wbl_goods g  
+    join wbl_goodsimage gi on g.ID = gi.GoodsID
+    join wbl_goods_attribute ga on g.ID = ga.GoodsID
+    join wbl_supplier gs on g.SupID = gs.ID
+    where ga.AttributeID=7 and ga.ValueID =#{valueID}
+    order by
+
+    <if test="sortType == 0" >
+      goodPrice desc
+    </if>
+
+    <if test="sortType == 1" >
+      goodPrice asc
+    </if>
+
+    limit #{limit},10;
+  </select>
+  <!--查询商品详情-->
+  <select id="selectCommodityDetailsByGoodID"   resultType="com.wbdp.wx.model.CommodityDetails">
+    select gi.Url as goodImg,g.ID as goodID,g.GoodsName as goodName,
+      (select gsku.Price as goodPrice from wbl_goodssku gsku where gsku.GoodsID = g.ID order by gsku.Price asc limit 0,1) as goodPrice,
+      ga.AttributeValue as goodType,gs.Supplier as supplier,g.SupID as supID,gs.Payer as payer
+      from wbl_goods g
+      join wbl_goodsimage gi on g.ID = gi.GoodsID
+      join wbl_attributevalue ga on g.GoodsTypeID = ga.ID
+      join wbl_supplier gs on g.SupID = gs.ID
+      where g.ID=#{goodID};
+
+  </select>
+  <!--查询商品所有的颜色/存储/运营商-->
+  <select id="selectGoodsColorType" resultType="com.wbdp.wx.model.ColorMode">
+    select ga.ValueID as id,gav.AttributeValue as value 
+      from wbl_goods g
+      join wbl_goods_attribute ga on g.ID = ga.GoodsID
+      join wbl_attributevalue gav on ga.ValueID = gav.ID
+    where g.ID=#{goodID} and
+    <if test="sortType == 0" >
+      ga.AttributeID = 1;
+    </if>
+    <if test="sortType == 1" >
+      ga.AttributeID = 6;
+    </if>
+  </select>
+  <!--查询价格-->
+  <select id="selectGoodPiceByCSO" resultType="com.wbdp.wx.model.SKU">
+    select gsku.Price as goodPice,gsku.ID as gskuID,gsku.SkuStatus as skuStatus
+    from wbl_goodssku gsku 
+    where gsku.GoodsID = #{goodID}
+    and gsku.ValueIDStr like #{cType}
+    and gsku.ValueIDStr like #{sType}
+    and gsku.SupID = #{supID} ;
+  </select>
+
+
+  <!--查询商品详情-->
+  <select id="selectOneCommodityDetailsByGoodID"   resultType="com.wbdp.wx.model.CommodityDetails">
+    select gi.Url as goodImg,g.ID as goodID,g.GoodsName as goodName,gs.Supplier as supplier,gs.Payer as payer
+    from wbl_goods g
+    join wbl_goodsimage gi on g.ID = gi.GoodsID
+    join wbl_supplier gs on g.SupID = gs.ID
+    where g.ID=#{goodID};
+  </select>
+
+
+  <!--根据城市查询	-->
+  <select id="selectGoodsByLimitAndCity" resultType="com.wbdp.wx.model.GoodsModel">
+	select gi.Url as goodImg,g.ID as goodID,g.GoodsName as goodName,
+      (select gsku.Price as goodPrice from wbl_goodssku gsku where gsku.GoodsID = g.ID order by gsku.Price asc limit 0,1) as goodPrice,
+      ga.AttributeValue as goodType,gs.Supplier as supplier
+	  
+      from wbl_supplier s 
+	  join wbl_goodssku gku on gku.SupID = s.ID
+	  join wbl_goods g on g.ID = gku.GoodsID
+      join wbl_goodsimage gi on gku.GoodsID = gi.GoodsID
+      join wbl_attributevalue ga on g.GoodsTypeID = ga.ID
+      join wbl_supplier gs on g.SupID = gs.ID
+	  
+      where s.City=#{city}
+    	order by
+
+   		 <if test="sortType == 0" >
+      		goodPrice desc
+    	</if>
+
+    	<if test="sortType == 1" >
+      		goodPrice asc
+   		</if>
+
+   		 limit #{limit},10;
+
+  </select>
+  <!-- 根据运营商和城市选择 -->
+  <select id="getGoodsByCityAndOtype" resultType="com.wbdp.wx.model.GoodsModel">
+  select gi.Url as goodImg,g.ID as goodID,g.GoodsName as goodName,
+      (select gsku.Price as goodPrice from wbl_goodssku gsku where gsku.GoodsID = g.ID order by gsku.Price asc limit 0,1) as goodPrice,
+      ga.AttributeValue as goodType,gs.Supplier as supplier
+	  
+      from wbl_supplier s 
+	  join wbl_goodssku gku on gku.SupID = s.ID
+	  join wbl_goods g on g.ID = gku.GoodsID
+      join wbl_goodsimage gi on gku.GoodsID = gi.GoodsID
+      join wbl_attributevalue ga on g.GoodsTypeID = ga.ID
+      join wbl_supplier gs on g.SupID = gs.ID
+	  
+      where gs.Supplier like #{otype}
+    	order by
+
+   		 <if test="sortType == 0" >
+      		goodPrice desc
+    	</if>
+
+    	<if test="sortType == 1" >
+      		goodPrice asc
+   		</if>
+
+   		 limit #{limit},10;
+  
+  </select>
+  
+  <!--查询套餐	-->
+  <select id="selectpackageBySKUID" resultType="com.wbdp.wx.model.PhonePackage">
+  select ps.Payable as payable,p.CallPackage as wpackage,p.Details as details,ps.ID as pID,p.PacPrice as PacPrice
+    from wbl_package_sku ps
+    join wbl_package p on p.ID = ps.PacID
+    where ps.SkuID = #{skuID};
+  </select>
+  <!-- 手机品牌/城市/运营商 筛选 -->
+   <select id="selectGoodsByLimitAndGoodsTypeIDAndSupplier" resultType="com.wbdp.wx.model.GoodsModel">
+    select gi.Url as goodImg,g.ID as goodID,g.GoodsName as goodName,
+    (select gsku.Price as goodPrice from wbl_goodssku gsku where gsku.GoodsID = g.ID order by gsku.Price asc limit 0,1) as goodPrice,
+    gs.Supplier as supplier
+    from wbl_goods g  
+    join wbl_goodsimage gi on g.ID = gi.GoodsID
+    join wbl_supplier gs on g.SupID = gs.ID
+    where 
+    
+   <if test="phoneTypeIDType==1" > 
+   	 g.GoodsTypeID in 
+	    <foreach item="item" index="index" collection="phoneTypeID" 
+	       open="(" separator="," close=")">
+	       #{item}
+	    </foreach>
+    </if>
+    
+   <if test="otypeType==1" > 
+	    <if test="phoneTypeIDType==1"> 
+	    	and
+	    </if>
+	     gs.Supplier in
+	    <foreach item="item" index="index" collection="otype" 
+	        open="(" separator="," close=")">
+	        #{item}
+	    </foreach>
+    </if>
+   order by
+
+    <if test="sortType == 0" >
+      goodPrice desc
+    </if>
+
+    <if test="sortType == 1" >
+      goodPrice asc
+    </if>
+
+    limit #{limit},10; 
+  </select>
+</mapper>

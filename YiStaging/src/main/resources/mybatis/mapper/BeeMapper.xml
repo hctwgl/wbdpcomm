@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wbdp.wx.mapper.BeeMapper" >
+  <resultMap id="BaseResultMap" type="com.wbdp.wx.entity.Bee" >
+    <id column="ID" property="id" jdbcType="BIGINT" />
+    <result column="BeeWX" property="beewx" jdbcType="VARCHAR" />
+    <result column="Phone" property="phone" jdbcType="VARCHAR" />
+    <result column="BeeName" property="beename" jdbcType="VARCHAR" />
+    <result column="Sex" property="sex" jdbcType="INTEGER" />
+    <result column="BeeCard" property="beecard" jdbcType="VARCHAR" />
+    <result column="CardImage" property="cardimage" jdbcType="VARCHAR" />
+    <result column="Marriage" property="marriage" jdbcType="INTEGER" />
+    <result column="Education" property="education" jdbcType="VARCHAR" />
+    <result column="CreatBy" property="creatby" jdbcType="VARCHAR" />
+    <result column="CreatDate" property="creatdate" jdbcType="TIMESTAMP" />
+    <result column="UpDateBy" property="updateby" jdbcType="VARCHAR" />
+    <result column="UpDateTime" property="updatetime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, BeeWX, Phone, BeeName, Sex, BeeCard, CardImage, Marriage, Education, CreatBy, 
+    CreatDate, UpDateBy, UpDateTime,InsuranceNum
+  </sql>
+<!--通过ID查询用户信息，用于银行卡验证  -->
+<select id="selectByID" parameterType="java.lang.Long" resultType="com.wbdp.wx.entity.Bee">
+	select BeeName,BeeCard from wbl_bee where  ID=#{id};
+</select>
+  <!--注册时先插入手机以及微信号-->
+  <insert id="insertPhoneAndWXID">
+     insert into wbl_bee   (BeeWX,Phone,CreatDate)  values ( #{wxid,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR},now());
+  </insert>
+  <!--基本资料以及身份证正反面修改-->
+  <update id="updateInfoByWXIDAndPhone" >
+    update wbl_bee
+    set BeeName = #{userBasicInfo.name,jdbcType=VARCHAR},
+    PlateNum = #{userBasicInfo.plateNum,jdbcType=VARCHAR},
+    InsuranceComp = #{userBasicInfo.insuranceComp,jdbcType=VARCHAR},
+    Sex = #{userBasicInfo.gender,jdbcType=INTEGER},
+    InsuranceNum = #{userBasicInfo.insuranceNum,jdbcType=INTEGER},
+    BeeCard = #{userBasicInfo.IDNum,jdbcType=VARCHAR},
+    Company = #{userBasicInfo.companyName,jdbcType=VARCHAR},
+    CardImage = #{imgPath,jdbcType=VARCHAR},
+    Marriage = #{userBasicInfo.maritalStatus,jdbcType=INTEGER},
+    Education = #{userBasicInfo.education,jdbcType=VARCHAR},
+    UpDateBy = #{updateby,jdbcType=VARCHAR},
+    UpDateTime = #{updatetime,jdbcType=TIMESTAMP},
+    BeeType = #{userBasicInfo.beeType,jdbcType=INTEGER}
+    where BeeWX = #{wxid,jdbcType=VARCHAR} and Phone = #{phone,jdbcType=VARCHAR}
+  </update>
+  <!--通过微信号和手机号查询用户id-->
+  <select id="selectIDByPhoneAndWXID" resultType="java.lang.Object">
+    select ID as id from wbl_bee  where BeeWX = #{wxid,jdbcType=VARCHAR} and Phone = #{phone,jdbcType=VARCHAR} and BeeStatus = 0
+  </select>
+  <!--通过微信id查询用户信息-->
+  <select id="selectUserInfosByWXid" resultType="com.wbdp.wx.model.UserBasicInfo">
+    select ID as id, Phone as phone, BeeName as name, BeeCard as IDNum,Sex as gender,
+    Company as companyName,Marriage as maritalStatus, Education as education from wbl_bee where BeeWX = #{wxid,jdbcType=VARCHAR}  and BeeStatus = 0; 
+  </select>
+  <!--通过微信号查询用户id-->
+  <select id="selectIDByWXID" resultType="com.wbdp.wx.model.ISBlackBee">
+    select ID as id,BeeStatus as beeStatus from wbl_bee  where BeeWX = #{wxid,jdbcType=VARCHAR}
+  </select>
+  <!---基本资料修改-->
+  <update id="updateUserInfoByID" >
+    update wbl_bee
+    set BeeName = #{userBasicInfo.name,jdbcType=VARCHAR},
+    Sex = #{userBasicInfo.gender,jdbcType=INTEGER},
+   <if test="userBasicInfo.IDNum != '' and userBasicInfo.IDNum!=null" >
+   		 BeeCard = #{userBasicInfo.IDNum,jdbcType=VARCHAR},
+    </if>
+    BeeType = #{userBasicInfo.beeType,jdbcType=INTEGER},
+    Marriage = #{userBasicInfo.maritalStatus,jdbcType=INTEGER},
+    Company = #{userBasicInfo.companyName,jdbcType=VARCHAR},
+    Education = #{userBasicInfo.education,jdbcType=VARCHAR},
+    UpDateBy = #{updateby,jdbcType=VARCHAR},
+    UpDateTime = #{updatetime,jdbcType=TIMESTAMP}
+    where ID = #{id,jdbcType=BIGINT} 
+  </update>
+  <!--通过微信号查询用户身份证正反面图片地址-->
+  <select id="selectCardImageByWXID" resultType="java.lang.String">
+    select CardImage  from wbl_bee  where BeeWX = #{wxid,jdbcType=VARCHAR}
+  </select>
+  <!---身份证正反面图片地址修改-->
+  <update id="updateCardImageByID" >
+    update wbl_bee
+    set CardImage = #{imgPath,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=BIGINT} 
+  </update>
+  <!--通过ID查询用户基本资料-->
+  <select id="selectInsNumByBeeID" resultType="com.wbdp.wx.model.MyInsurance">
+    select InsuranceNum as insuranceNum,PlateNum as plateNum,InsuranceComp as insuranceComp,IsNoOlder as isNoOlder from wbl_bee  where ID = #{beeid,jdbcType=VARCHAR}
+  </select>
+ <!---保险信息修改-->
+  <update id="updateInsNumByBeeID" parameterType="map">
+    UPDATE wbl_bee
+      <set>
+    	<if test="map.insuranceNum!= null and map.insuranceNum!= ''">
+         InsuranceNum = #{map.insuranceNum,jdbcType=VARCHAR},
+        </if>
+        <if test="map.plateNum!=null and map.plateNum!=''">
+        PlateNum = #{map.plateNum,jdbcType=VARCHAR},
+        </if>
+        <!--当指定 jdbcType=INTEGER时，不能判定值为''，不然值为零的时候会出现问题 -->
+         <if test="map.isNoOlder!=null">
+        	IsNoOlder = #{map.isNoOlder,jdbcType=INTEGER},
+        </if> 
+        <if test="map.insuranceComp!=null and map.insuranceComp!=''">
+        InsuranceComp = #{map.insuranceComp,jdbcType=VARCHAR},
+        </if>
+    </set>
+        WHERE ID = #{map.beeid,jdbcType=BIGINT}
+  </update>
+  
+  <!--通过openID查询用户是否存在 -->
+  <select id="selectBeeByWX" parameterType="java.lang.String" resultType="java.lang.Integer">
+  	select count(0) from wbl_bee where BeeWX=#{openid};
+  </select>
+  <!--通过openID查询用户基本信息 -->
+  <select id="selectBeeByWx" parameterType="java.lang.String" resultType="com.wbdp.wx.entity.Bee">
+  	select * from wbl_bee where BeeWX=#{openid};
+  </select>
+  
+  <!--查询用户填写公司是否已存在于数据库  -->
+  <select id="selectBeeByCompany" parameterType="java.lang.String" resultType="java.lang.Integer">
+  	select count(0) from wbl_beecompgrade where Company = #{company} and CheckStatus=3;
+  </select>
+
+
+
+
+
+
+
+
+
+
+</mapper>

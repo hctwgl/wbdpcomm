@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>消费借款合同</title>
+		<script src="jquery/jquery-3.1.0.min.js"></script>
+		<script src="js/contract.js"></script>
+		<style>
+			/*页面初始化*/
+			body,
+			h1,
+			h2,
+			h3,
+			h4,
+			h5,
+			h6,
+			hr,
+			p,
+			blockquote,
+			dl,
+			dt,
+			dd,
+			ul,
+			ol,
+			li,
+			pre,
+			form,
+			fieldset,
+			legend,
+			button,
+			input,
+			textarea,
+			th,
+			td {
+				margin: 0;
+				padding: 0;
+			}
+			
+			body {
+				width: 7.5rem;
+			}
+			
+			.all {
+				width: 7.5rem;
+				display: -webkit-flex;
+				/* Safari */
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				background: #FFFFFF;
+				font: "微软雅黑";
+			}
+			.title{
+				margin-top: 0.4rem;
+				width: 7.5rem;
+				color: #ff5500;
+				font-weight: bold;
+				font-size: 0.32rem;
+				text-align: center;
+			}
+			
+			.detail{
+				display: -webkit-flex;
+				/* Safari */
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				margin-top: 0.5rem;
+				font-size: 0.15rem;
+				color: #666666;
+			}
+			.detail div{
+				width: 7.1rem;
+				line-height: 0.6rem;
+			}
+			.bold{
+				font-weight: bold;
+			}
+			
+			#sub {
+				width: 100%;
+				display: flex;
+				justify-content: center;
+				margin-top: 0.5rem;
+			}
+			
+			#sub span {
+				display: block;
+				width: 100%;
+				height: 0.8rem;
+				text-align: center;
+				line-height: 0.8rem;
+				background: #FF5500;
+				color: #FFFFFF;
+				font-size: 0.4rem;
+			}
+		</style>
+	</head>
+	
+	<body>
+		<div class="all">
+			<div class="title">0元购机咨询服务申请合约</div>
+			<div class="detail">
+				<div class="gap"></div>
+				<div>甲方与乙方根据有关法律、法规，在平等、自愿的基础上，为明确责任，恪守信用，签订本合同。</div>
+				<div class="bold">第一条 个人信息/资料的提供及使用 </div>
+				<div>一、甲方有权要求乙方提供申请购机咨询服务所需的相关个人信息/资料（包括但不限于身份证号码、手机号码、家庭住址、位置信息、财产、资信、个人信用信息、通话详单、交易记录、公积金、社保等），乙方保证向甲方提供的所有信息资料真实、准确、完整、合法且有效。</div>
+				<div>二、乙方同意甲方及/或甲方认为必需的第三方收集、处理、传递、应用及保留乙方的个人信息/资料，无论乙方申请成功与否或是否终止，甲方及/或甲方认为必需的第三方对乙方提供的个人信息/资料均不予退回但予以保密。甲方认为必需的第三方，包括但不限于甲方分支机构、甲方的子公司、甲方关联公司、甲方的合作机构及相关资信或征信机构、通讯运营商及运营服务商、数据运营商及运营服务商等，如芝麻信用、立木征信和鹏元征信等。</div>
+				<div>三、目的和范围：甲方出于为乙方提供与购机咨询服务有关的目的和范围，包括但不限于个人基本信息及信用信息核实、进行购机审批、购机管理维护、购机债权转让、售后催收等。 </div>
+				<div class="bold">第二条 申请</div>
+				<div>一、在申请过程中，如甲方需要乙方继续补充提供资料，乙方需及时配合提供。 </div>
+				<div>二、申请成功后，甲方协助乙方办理协议签署等手续。乙方需提供本人或共同借款人名下的指定银行的借记卡作为收款及还款专用账户，具体指定银行经咨询甲方工作人员后确定。</div>
+				<div class="bold">第三条 收费</div>
+				<div>一、在乙方借款申请审批通过前，甲方不收取任何费用，在乙方借款申请审批通过后，甲方所收取的费用将体现在双方后续签署的（无论采用纸质形式还是电子形式）协议中。</div>
+				<div>二、如乙方在借款申请审批通过前，自行给任何个人或机构缴纳的费用，而给乙方带来的任何损失，由乙方自行承担。由此引起的纠纷由乙方自行解决，甲方不负任何责任，乙方不得以纠纷为由拒绝归还借款相关款项及应付给甲方的所有费用。</div>
+				<div class="bold">第四条 信息变更 </div>
+				<div>乙方如发生本人、乙方的家庭联系人及紧急联系人工作单位、居住地址、住所电话、手机号码、电子邮箱的变更，须及时与甲方联系并办理资料变更手续。否则，由此产生的损失由乙方自行承担。</div>
+				<div class="bold">第五条 争议解决 </div>
+				<div>双方因本合同引起的或与本合同有关的争议，均同意提请中国广州仲裁委员会, 按照申请仲裁时该会现行有效的网络仲裁规则进行网络仲裁。仲裁裁决是终局的，对双方均有约束力。
+乙方确认以注册手机号为联络手机号码和短信通知号码，为双方之间及涉诉纠纷相关材料送达地址。按本合同约定由任何一方发给其他方的任何通知，应以短信形式发出，送至约定手
+机号码。收件人指定系统接受材料或通知之日，即视为送达和收到之日。如乙方需变更联络手机号码的，应当及时联系甲方客服。</div>
+				<div class="bold">第六条 其他约定 </div>
+				<div>一、乙方已全部知悉并了解本合约的各项条款，特别是本合约中粗体表述的部分，并自愿遵守本合约的规定。</div>
+				<div>二、本合约采用电子文本形式制成，甲乙双方均认可该形式的法律效力且双方知晓并认可以该种形式签订本合约。本合约以乙方通过移动端或网页端点击确认的方式签署，一经点击确认即视为乙方本人真实意愿并以乙方本人名义签署本合约，对乙方及甲方均具有法律效力。</div>
+				<div class="gap"></div>
+			</div>
+			<div id="sub">
+
+				<span>确定</span>
+
+			</div>
+		</div>
+	</body>
+</html>
